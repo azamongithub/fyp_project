@@ -25,14 +25,14 @@ class InputTextField extends StatelessWidget {
       keyboardType: keyBoardType,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),),
+          borderRadius: BorderRadius.circular(15)),
         //contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
         //hintText: hintText,
         labelText: labelText,
-        hintStyle: TextStyle(
-          fontSize: 18,
-          color: Color(0xFF414041),
-        ),
+        // hintStyle: TextStyle(
+        //   fontSize: 60,
+        //   color: Colors.red,
+        // ),
       ),
 
 

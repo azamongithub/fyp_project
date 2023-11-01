@@ -5,7 +5,8 @@ class PasswordTextField extends StatefulWidget {
   final String labelText;
   final String? Function(String?)? validator;
 
-  PasswordTextField({
+  const PasswordTextField({
+    super.key,
     required this.controller,
     required this.labelText,
     this.validator,
@@ -27,10 +28,6 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),),
         labelText: widget.labelText,
-        hintStyle: TextStyle(
-          fontSize: 18,
-          color: Color(0xFF414041),
-        ),
         suffixIcon: IconButton(
           icon: Icon(
             _obscureText ? Icons.visibility : Icons.visibility_off,

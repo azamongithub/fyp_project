@@ -35,7 +35,6 @@ class MyTextStyle {
     );
   }
 
-
   static TextStyle customTextStyle({
     Color? color,
     FontWeight? fontWeight,
