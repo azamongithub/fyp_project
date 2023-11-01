@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "568414520943",
+    "project_id": "coachbot-de293",
+    "storage_bucket": "coachbot-de293.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:568414520943:android:57d3715d09064393682f9a",
+        "android_client_info": {
+          "package_name": "com.fyp.coachbot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "568414520943-3cbkrt7fn81cm9kav60d3h14tokb0u9i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDZ0w6OqtlakC8MDmGKpFBVULo2-RFKeE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "568414520943-3cbkrt7fn81cm9kav60d3h14tokb0u9i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
