@@ -26,7 +26,7 @@ class SignUpController with ChangeNotifier {
       print(authCredential!.uid);
       if (authCredential.uid.isNotEmpty) {
         setLoading(false);
-        Navigator.pushNamed(context, RouteName.ProfileForm);
+        Navigator.pushReplacementNamed(context, RouteName.ProfileForm);
       } else {
         setLoading(false);
         Fluttertoast.showToast(msg: "Something is wrong");

@@ -57,7 +57,6 @@ class _ProfileFormState extends State<ProfileForm> {
 
   void findAgeGroup() {
     int age = calculateAge(_selectedDate);
-
     setState(() {
       if (age >= 13 && age <= 19) {
         ageGroup = 'Teenager';
@@ -222,3 +221,137 @@ class _ProfileFormState extends State<ProfileForm> {
     );
   }
 }
+
+
+
+//
+//
+// import 'package:CoachBot/res/component/custom_button.dart';
+// import 'package:CoachBot/utils/routes/route_name.dart';
+// import 'package:CoachBot/view_model/profile/profile_controller.dart';
+// import 'package:CoachBot/view_model/profile/profile_form_controller.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/foundation.dart';
+// import 'package:flutter/material.dart';
+// import 'package:provider/provider.dart';
+// import '../../../res/component/input_text_field.dart';
+// import '../../res/component/calender_text_field.dart';
+//
+// class ProfileForm extends StatefulWidget {
+//   const ProfileForm({Key? key}) : super(key: key);
+//
+//   @override
+//   _ProfileFormState createState() => _ProfileFormState();
+// }
+//
+// class _ProfileFormState extends State<ProfileForm> {
+//   final _formKey = GlobalKey<FormState>();
+//   final List<String> _genders = ['Male', 'Female'];
+//   bool _isLoading = false;
+//   String? newSelectedGender;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     final height = MediaQuery.of(context).size.height * 1;
+//     return Consumer2<ProfileController, ProfileFormController>(
+//       builder: (context, profileController, profileFormController, _) {
+//         return Scaffold(
+//           appBar: AppBar(
+//             title: const Text('Your Personal Details'),
+//             backgroundColor: const Color(0xff3140b0),
+//             automaticallyImplyLeading: false,
+//           ),
+//           body: SingleChildScrollView(
+//             child: Form(
+//               key: _formKey,
+//               child: Padding(
+//                 padding: const EdgeInsets.all(16.0),
+//                 child: Column(
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   children: <Widget>[
+//                     SizedBox(height: height * 0.01),
+//                     InputTextField(
+//                       myController: profileFormController.nameController,
+//                       keyBoardType: TextInputType.name,
+//                       labelText: 'Name',
+//                       onValidator: (value) {
+//                         if (value!.isEmpty) {
+//                           return 'Please enter your name.';
+//                         }
+//                         return null;
+//                       },
+//                     ),
+//                     SizedBox(height: height * 0.02),
+//                     CalendarTextField(
+//                       calenderController: profileFormController.dateOfBirthController,
+//                       labelText: 'Date of birth',
+//                       //calenderField: 'Date of birth',
+//                       calenderValidationText:
+//                       "Please select your date of birth",
+//                       onDateSelected: profileFormController.selectedDate,
+//                     ),
+//                     // ),
+//                     SizedBox(height: height * 0.02),
+//                     Container(
+//                       padding: const EdgeInsets.symmetric(horizontal: 8),
+//                       decoration: BoxDecoration(
+//                         border: Border.all(
+//                           color: Colors.grey,
+//                         ),
+//                         borderRadius: BorderRadius.circular(8.0),
+//                       ),
+//                       child: DropdownButtonFormField<String>(
+//                         decoration: const InputDecoration(
+//                           labelText: 'Gender',
+//                         ),
+//                         value: profileFormController.selectedGender,
+//                         onChanged: (newValue) {
+//                           //setState(() {
+//                           newSelectedGender = newValue;
+//                           // profileFormController.selectedGender = newValue;
+//                           // });
+//                         },
+//                         items: _genders.map((gender) {
+//                           return DropdownMenuItem<String>(
+//                             value: gender,
+//                             child: Text(gender),
+//                           );
+//                         }).toList(),
+//                         validator: (value) {
+//                           if (value == null) {
+//                             return 'Please select your gender.';
+//                           }
+//                           return null;
+//                         },
+//                       ),
+//                     ),
+//                     SizedBox(height: height * 0.04),
+//                     CustomButton(
+//                       title: 'Continue',
+//                       loading: _isLoading,
+//                       onTap: () {
+//                         if (_formKey.currentState!.validate()) {
+//                           setState(() {
+//                             _isLoading = true;
+//                           });
+//                           profileFormController.saveProfileDetails();
+//                           Navigator.pushNamed(context, RouteName.FitnessAnalyzerForm);
+//                           // int age = calculateAge(date);
+//                           // ageController.text = age.toString();
+//                           //
+//                           // // Update the age group
+//                           // findAgeGroup(age);
+//                         }
+//                       },
+//                     )
+//                   ],
+//                 ),
+//               ),
+//             ),
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }

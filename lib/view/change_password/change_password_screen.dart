@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../../res/component/password_text_field.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
+  const ChangePasswordScreen({super.key});
+
   @override
   _ChangePasswordScreenState createState() => _ChangePasswordScreenState();
 }
@@ -22,8 +24,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   String _confirmPasswordError = '';
 
   Future<void> _changePassword(BuildContext context) async {
-    final String? currentPassword = _currentPasswordController.text.trim();
-    final String? newPassword = _newPasswordController.text.trim();
+    final String currentPassword = _currentPasswordController.text.trim();
+    final String newPassword = _newPasswordController.text.trim();
     final String? confirmPassword = _confirmPasswordController.text.trim();
 
     setState(() {

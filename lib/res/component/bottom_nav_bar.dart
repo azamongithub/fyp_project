@@ -25,52 +25,57 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: screens[index],
-      bottomNavigationBar: NavigationBarTheme(
-        data: NavigationBarThemeData(
-            indicatorColor: Colors.blue.shade100,
-            labelTextStyle: MaterialStateProperty.all(
-                const TextStyle(fontSize: 14, fontWeight: FontWeight.w500))),
-        child: NavigationBar(
-          backgroundColor: const Color(0xFFf1f5fb),
-          selectedIndex: index,
-          onDestinationSelected: (index) => setState(() => this.index = index),
-          destinations: const [
-            NavigationDestination(
-              // icon: Icon(FontAwesomeIcons.houseUser , color: Color(0xff3140b0), size: 20,),
-              icon: Icon(Icons.home_outlined, color: Color(0xff3140b0)),
-              label: 'Dashboard',
-            ),
-            NavigationDestination(
-              // icon: Icon(
-              //   FontAwesomeIcons.dumbbell,
-              //   color: Color(0xff3140b0),
-              //   size: 20,
+    return WillPopScope(
+      onWillPop: () async {
+        return true;
+      },
+      child: Scaffold(
+        body: screens[index],
+        bottomNavigationBar: NavigationBarTheme(
+          data: NavigationBarThemeData(
+              indicatorColor: Colors.blue.shade100,
+              labelTextStyle: MaterialStateProperty.all(
+                  const TextStyle(fontSize: 14, fontWeight: FontWeight.w500))),
+          child: NavigationBar(
+            backgroundColor: const Color(0xFFf1f5fb),
+            selectedIndex: index,
+            onDestinationSelected: (index) => setState(() => this.index = index),
+            destinations: const [
+              NavigationDestination(
+                // icon: Icon(FontAwesomeIcons.houseUser , color: Color(0xff3140b0), size: 20,),
+                icon: Icon(Icons.home_outlined, color: Color(0xff3140b0)),
+                label: 'Dashboard',
+              ),
+              NavigationDestination(
+                // icon: Icon(
+                //   FontAwesomeIcons.dumbbell,
+                //   color: Color(0xff3140b0),
+                //   size: 20,
+                // ),
+                icon:
+                    Icon(Icons.edit_calendar_outlined, color: Color(0xff3140b0)),
+                label: 'My Plans',
+              ),
+              // NavigationDestination(
+              //   icon: Icon(FontAwesomeIcons.utensils , color: Color(0xff3140b0)),
+              //   label: 'Meal',
               // ),
-              icon:
-                  Icon(Icons.edit_calendar_outlined, color: Color(0xff3140b0)),
-              label: 'My Plans',
-            ),
-            // NavigationDestination(
-            //   icon: Icon(FontAwesomeIcons.utensils , color: Color(0xff3140b0)),
-            //   label: 'Meal',
-            // ),
-            NavigationDestination(
-              // icon: Icon(FontAwesomeIcons.chartLine, color: Color(0xff3140b0)),
-              icon: Icon(Icons.assessment_outlined , color: Color(0xff3140b0)),
+              NavigationDestination(
+                // icon: Icon(FontAwesomeIcons.chartLine, color: Color(0xff3140b0)),
+                icon: Icon(Icons.assessment_outlined , color: Color(0xff3140b0)),
 
-              label: 'Stats',
-            ),
-            NavigationDestination(
-              icon: Icon(FontAwesomeIcons.userAstronaut, color: Color(0xff3140b0)),
-              label: 'AI Trainer',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.settings_outlined, color: Color(0xff3140b0)),
-              label: 'Settings',
-            ),
-          ],
+                label: 'Stats',
+              ),
+              NavigationDestination(
+                icon: Icon(FontAwesomeIcons.userAstronaut, color: Color(0xff3140b0)),
+                label: 'AI Trainer',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.settings_outlined, color: Color(0xff3140b0)),
+                label: 'Settings',
+              ),
+            ],
+          ),
         ),
       ),
     );

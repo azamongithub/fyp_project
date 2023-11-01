@@ -25,7 +25,7 @@ class _MealTabState extends State<MealTab> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Nutrition'),
+        title: const Text('Nutrition'),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -34,10 +34,10 @@ class _MealTabState extends State<MealTab> with TickerProviderStateMixin {
             controller: _tabController,
             labelColor: Colors.white, // Set text color of selected tab
             unselectedLabelColor: Colors.black, // Set text color of unselected tab
-            indicator: BoxDecoration(
+            indicator: const BoxDecoration(
               color: Colors.black, // Set background color of selected tab
             ),
-            tabs: [
+            tabs: const [
               Tab(text: 'Meal Plans'),
               Tab(text: 'Recipes'),
             ],
@@ -57,13 +57,13 @@ class _MealTabState extends State<MealTab> with TickerProviderStateMixin {
   }
 
   Widget _buildMealPlansTab() {
-    return Center(
+    return const Center(
       child: Text('Meal Plans Tab'),
     );
   }
 
   Widget _buildRecipesTab() {
-    return Center(
+    return const Center(
       child: Text('Recipes Tab'),
     );
   }

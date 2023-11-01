@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../res/component/bottom_nav_bar.dart';
+
 class HealthStatusForm extends StatefulWidget {
   const HealthStatusForm({super.key});
 
@@ -47,11 +49,13 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
           .doc(user!.uid)
           .set(healthData);
 
-      // Navigator.push(
+      // Navigator.pushAndRemoveUntil(
       //   context,
       //   MaterialPageRoute(builder: (context) => BottomNavBar()),
+      //   ModalRoute.withName(RouteName.SplashScreen),
       // );
       Navigator.pushNamed(context, RouteName.BottomNavBar);
+
     } catch (e) {
       print(e.toString());
     }

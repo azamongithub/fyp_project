@@ -1,9 +1,8 @@
-import 'package:CoachBot/res/component/drawer.dart';
 import 'package:flutter/material.dart';
 
-import '../../res/component/bottom_nav_bar.dart';
-
 class StatsTab extends StatefulWidget {
+  const StatsTab({super.key});
+
   @override
   _StatsTabState createState() => _StatsTabState();
 }
@@ -27,7 +26,7 @@ class _StatsTabState extends State<StatsTab> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Progress Tracking'),
+        title: const Text('Progress Tracking'),
         automaticallyImplyLeading: false,
       ),
       body: Column(
@@ -37,10 +36,10 @@ class _StatsTabState extends State<StatsTab> with TickerProviderStateMixin {
             controller: _tabController,
             labelColor: Colors.white, // Set text color of selected tab
             unselectedLabelColor: Colors.black, // Set text color of unselected tab
-            indicator: BoxDecoration(
+            indicator: const BoxDecoration(
               color: Colors.black, // Set background color of selected tab
             ),
-            tabs: [
+            tabs: const [
               Tab(text: 'Workouts'),
               Tab(text: 'Measurements'),
               Tab(text: 'Photos'),
@@ -62,19 +61,19 @@ class _StatsTabState extends State<StatsTab> with TickerProviderStateMixin {
   }
 
   Widget _buildWorkoutsTab() {
-    return Center(
+    return const Center(
       child: Text('Workouts Tab'),
     );
   }
 
   Widget _buildMeasurementsTab() {
-    return Center(
+    return const Center(
       child: Text('Measurements Tab'),
     );
   }
 
   Widget _buildPhotosTab() {
-    return Center(
+    return const Center(
       child: Text('Photos Tab'),
     );
   }

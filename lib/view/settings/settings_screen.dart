@@ -90,12 +90,12 @@ class SettingsScreen extends StatelessWidget {
                   FirebaseAuth.instance
                       .signOut(); // Sign out the user from Firebase Auth
                   FirebaseFirestore.instance.terminate();
-                  Fluttertoast.showToast(msg: "You are Logged Out");
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => const LoginForm()),
                     (route) => false,
                   );
+                  Fluttertoast.showToast(msg: "You are Logged Out");
                 },
               ),
               // ListTile(

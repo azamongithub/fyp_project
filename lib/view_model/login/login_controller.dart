@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../res/component/bottom_nav_bar.dart';
+import '../../utils/routes/route_name.dart';
 
 class LoginController with ChangeNotifier {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -26,8 +27,7 @@ class LoginController with ChangeNotifier {
       print(authCredential!.uid);
       if (authCredential.uid.isNotEmpty) {
         setLoading(false);
-        Navigator.pushReplacement(
-            context, CupertinoPageRoute(builder: (_) => const BottomNavBar()));
+        Navigator.pushReplacementNamed(context, RouteName.BottomNavBar);
       } else {
         setLoading(false);
         Fluttertoast.showToast(msg: "Something is wrong");

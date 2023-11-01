@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import '../../res/component/bottom_nav_bar.dart';
-import '../../view/login/login_screen.dart';
+import '../../utils/routes/route_name.dart';
 import 'session_controller.dart';
 
 class SplashServices {
@@ -15,18 +13,11 @@ class SplashServices {
     if(user != null) {
       SessionController().userId = user.uid.toString();
       Timer(const Duration(seconds: 2),()=>
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) =>
-              const BottomNavBar())));
-
+      Navigator.pushReplacementNamed(context, RouteName.BottomNavBar));
     }
     else {
       Timer(const Duration(seconds: 2),()=>
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) =>
-                  const LoginForm())));
+          Navigator.pushReplacementNamed(context, RouteName.LoginForm));
     }
-
-
   }
 }
