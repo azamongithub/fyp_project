@@ -67,7 +67,7 @@ class _LoginFormState extends State<LoginForm> {
                     key: _formKey,
                     child: Column(
                       children: [
-                        InputTextField(
+                        CustomTextField(
                             myController: emailController,
                             keyBoardType: TextInputType.emailAddress,
                             labelText: AppStrings.email,

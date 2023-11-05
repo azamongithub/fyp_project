@@ -73,7 +73,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     key: _formKey,
                     child: Column(
                       children: [
-                        InputTextField(
+                        CustomTextField(
                             myController: emailController,
                             keyBoardType: TextInputType.emailAddress,
                             labelText: 'Email',

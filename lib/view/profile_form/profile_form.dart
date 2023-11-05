@@ -126,7 +126,7 @@ class _ProfileFormState extends State<ProfileForm> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       SizedBox(height: height * 0.01),
-                      InputTextField(
+                      CustomTextField(
                         myController: nameController,
                         keyBoardType: TextInputType.name,
                         labelText: 'Name',

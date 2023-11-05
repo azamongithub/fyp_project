@@ -1,4 +1,5 @@
 import 'package:CoachBot/notifications_services/notifications_services.dart';
+import 'package:CoachBot/view/nutrition_info/nutrition_info_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,6 @@ NotificationServices notificationServices = NotificationServices();
     // TODO: implement initState
     super.initState();
     notificationServices.requestNotificationPermission();
-    //notificationServices.isTokenRefresh();
     notificationServices.getDeviceToken().then((value){
     notificationServices.firebaseInit(context);
     notificationServices.setupInteractMessage(context);
@@ -118,20 +118,23 @@ NotificationServices notificationServices = NotificationServices();
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        'Nutrition Summary',
+                        'Nutrition',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(height: 10),
-                      const Text('Track your daily nutrition intake'),
+                      const Text('Find nutrition facts of any Item'),
                       const SizedBox(height: 10),
                       ElevatedButton(
                         onPressed: () {
-                          // Action to view nutrition details
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => NutritionDataScreen()),
+                          );
                         },
-                        child: const Text('View Nutrition'),
+                        child: const Text('Nutrition Facts'),
                       ),
                     ],
                   ),

@@ -100,7 +100,7 @@ class _FitnessAnalyzerFormState extends State<FitnessAnalyzerForm> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 SizedBox(height: height * 0.01),
-                InputTextField(
+                CustomTextField(
                     myController: _weightController,
                     keyBoardType:
                         const TextInputType.numberWithOptions(decimal: true),
@@ -116,7 +116,7 @@ class _FitnessAnalyzerFormState extends State<FitnessAnalyzerForm> {
                       return null;
                     }),
                 SizedBox(height: height * 0.02),
-                InputTextField(
+                CustomTextField(
                     myController: _heightController,
                     keyBoardType:
                         const TextInputType.numberWithOptions(decimal: true),

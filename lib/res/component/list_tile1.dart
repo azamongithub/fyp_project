@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ListTile1 extends StatelessWidget {
-  final String title;
+  final Widget title;
   final Widget trailing;
 
   const ListTile1(
@@ -15,7 +15,7 @@ class ListTile1 extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          title: Text(title),
+          title: title,
           trailing: trailing,
         ),
         Divider(color: Colors.grey.withOpacity(0.6)),

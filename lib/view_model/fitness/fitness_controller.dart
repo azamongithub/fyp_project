@@ -61,7 +61,7 @@ class FitnessController with ChangeNotifier {
             content: SingleChildScrollView(
               child: Column(
                 children: [
-                  InputTextField(
+                  CustomTextField(
                     myController: heightController,
                     keyBoardType: TextInputType.number,
                     labelText: 'Height',
@@ -116,7 +116,7 @@ class FitnessController with ChangeNotifier {
             content: SingleChildScrollView(
               child: Column(
                 children: [
-                  InputTextField(
+                  CustomTextField(
                       myController: weightController,
                       keyBoardType: TextInputType.number,
                       labelText: 'Weight',

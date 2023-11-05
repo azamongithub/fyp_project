@@ -61,7 +61,7 @@ class ProfileController with ChangeNotifier {
                 children: [
                   Form(
                     key: _formKey,
-                    child: InputTextField(
+                    child: CustomTextField(
                       myController: nameController,
                       keyBoardType: TextInputType.name,
                       labelText: 'Name',

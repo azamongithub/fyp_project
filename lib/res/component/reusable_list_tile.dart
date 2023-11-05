@@ -3,14 +3,14 @@ import 'dart:async';
 
 class ReusableListTile extends StatefulWidget {
   final String title;
-  final IconData iconData;
-  final VoidCallback onTap;
+  final IconData? iconData;
+  final VoidCallback? onTap;
 
   const ReusableListTile({
     Key? key,
     required this.title,
-    required this.iconData,
-    required this.onTap,
+    this.iconData,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -34,7 +34,7 @@ class _ReusableListTileState extends State<ReusableListTile> {
                 //_isTapped = false;
               });
             });
-            widget.onTap();
+            widget.onTap!();
           },
           child: ListTile(
             shape: RoundedRectangleBorder(

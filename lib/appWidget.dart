@@ -4,7 +4,6 @@ import 'package:CoachBot/view_model/profile/profile_controller.dart';
 import 'package:CoachBot/view_model/profile/profile_form_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'constants/app_string_constants.dart';
 
 class MyApp extends StatelessWidget {

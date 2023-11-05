@@ -25,7 +25,7 @@ class _SignupFormState extends State<SignupForm> {
 
 
   final _formKey = GlobalKey<FormState>();
-  bool loading = false;
+  //bool loading = false;
 
   @override
   void dispose() {
@@ -75,7 +75,7 @@ class _SignupFormState extends State<SignupForm> {
                           child: Column(
                             children: [
                               SizedBox(height: height * 0.03),
-                              InputTextField(
+                              CustomTextField(
                                   myController: emailController,
                                   keyBoardType: TextInputType.emailAddress,
                                   labelText: AppStrings.email,
