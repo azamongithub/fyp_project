@@ -160,19 +160,19 @@ class FitnessController with ChangeNotifier {
         });
   }
 
-  Future<void> userFoodPreferencesDialogAlert(
-      BuildContext context, String? initialFoodPreference,
+  Future<void> userFitnessGoalDialogAlert(
+      BuildContext context, String? initialFitnessGoal,
       {String? gender}) {
-    _selectedValue = initialFoodPreference;
+    _selectedValue = initialFitnessGoal;
 
     return showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Update Food Preference'),
+          title: const Text('Update Fitness Goal'),
           content: DropdownButtonFormField<String>(
             decoration: const InputDecoration(
-              labelText: 'Select Food Preference',
+              labelText: 'Select Fitness Goal',
             ),
             value: _selectedValue,
             onChanged: (newValue) {
@@ -181,17 +181,21 @@ class FitnessController with ChangeNotifier {
             },
             items: const [
               DropdownMenuItem<String>(
-                value: 'Vegetarian',
-                child: Text('Vegetarian'),
+                value: 'muscleBuilding',
+                child: Text('Muscle Building'),
               ),
               DropdownMenuItem<String>(
-                value: 'Non-Vegetarian',
-                child: Text('Non-Vegetarian'),
+                value: 'weightGain',
+                child: Text('Weight Gain'),
+              ),
+              DropdownMenuItem<String>(
+                value: 'weightLoss',
+                child: Text('Weight Loss'),
               ),
             ],
             validator: (value) {
               if (value == null) {
-                return 'Please select your food preference.';
+                return 'Please select your fitness goal.';
               }
               return null;
             },
@@ -214,11 +218,11 @@ class FitnessController with ChangeNotifier {
                     .collection('UserFitnessCollection')
                     .doc(user!.uid)
                     .update({
-                  'foodPreferences': _selectedValue,
+                  'fitnessGoal': _selectedValue,
                 });
 
                 Navigator.pop(context);
-                Utils.positiveToastMessage('Food Preferences updated successfully');
+                Utils.positiveToastMessage('Fitness Goal updated successfully');
               },
 
               child: const Text(

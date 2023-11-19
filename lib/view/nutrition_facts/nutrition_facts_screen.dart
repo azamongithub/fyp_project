@@ -1,12 +1,10 @@
 import 'package:CoachBot/res/component/custom_button.dart';
 import 'package:CoachBot/res/component/list_tile1.dart';
-import 'package:CoachBot/res/component/reusable_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
 import '../../res/component/input_text_field.dart';
-import '../../view_model/nutrition_info/nutrition_info_provider.dart';
+import '../../view_model/nutrition_facts/nutrition_facts_provider.dart';
 
 class NutritionDataScreen extends StatelessWidget {
   final TextEditingController _itemController = TextEditingController();
@@ -50,7 +48,7 @@ class NutritionDataScreen extends StatelessWidget {
                         if (query.isNotEmpty) {
                           Provider.of<NutritionDataProvider>(context,
                                   listen: false)
-                              .fetchData(query);
+                              .fetchNutritionFactsData(query);
                         }
                       }),
                   // ElevatedButton(

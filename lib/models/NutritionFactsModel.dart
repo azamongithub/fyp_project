@@ -11,9 +11,8 @@ class NutritionInfoModel {
   final double totalCarbohydrates;
   final double fiber;
   final double sugar;
-  final String error = 'No item found with this name';
 
-  NutritionInfoModel( {
+  NutritionInfoModel({
     required this.name,
     required this.calories,
     required this.servingSize,

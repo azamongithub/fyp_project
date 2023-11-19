@@ -26,6 +26,7 @@ class SignUpController with ChangeNotifier {
       print(authCredential!.uid);
       if (authCredential.uid.isNotEmpty) {
         setLoading(false);
+        Fluttertoast.showToast(msg: "Your Account Created Successfully");
         Navigator.pushReplacementNamed(context, RouteName.ProfileForm);
       } else {
         setLoading(false);

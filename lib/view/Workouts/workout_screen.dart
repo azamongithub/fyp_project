@@ -44,12 +44,6 @@ Instructions:
 // Call the function to store the paragraph
     storeParagraph();
 
-
-
-
-
-
-
     final auth = FirebaseAuth.instance;
     final videosStream =
         FirebaseFirestore.instance.collection('your_collection').snapshots();

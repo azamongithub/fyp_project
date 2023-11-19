@@ -75,9 +75,6 @@ class FitnessDetails extends StatelessWidget {
         }
         final userData = snapshot.data!.data() as Map<String, dynamic>?;
         updateBMI();
-
-
-
         return Scaffold(
             // appBar: AppBar(
             //   title: Text('Fitness Details'),
@@ -96,22 +93,22 @@ class FitnessDetails extends StatelessWidget {
                           GestureDetector(
                             onTap: () {
                               provider.userHeightDialogAlert(
-                                  context, userData?['height']);
+                                  context, userData!['height']);
                             },
                             child: TrailingListTile(
                               title: 'Height',
-                              trailing: Text(userData?['height'] + ' cm' ?? ''),
+                              trailing: Text(userData!['height'] + ' cm' ?? ''),
                               iconData: FontAwesomeIcons.rulerVertical,
                             ),
                           ),
                           GestureDetector(
                             onTap: () {
                               provider.userWeightDialogAlert(
-                                  context, userData?['weight']);
+                                  context, userData!['weight']);
                             },
                             child: TrailingListTile(
                               title: 'Weight',
-                              trailing: Text(userData?['weight'] + ' kg' ?? ''),
+                              trailing: Text(userData!['weight'] + ' kg' ?? ''),
                               iconData: FontAwesomeIcons.gaugeHigh,
                             ),
                           ),
@@ -121,7 +118,7 @@ class FitnessDetails extends StatelessWidget {
                             },
                             child: TrailingListTile(
                               title: 'BMI',
-                              trailing: Text(userData?['bmi'].toStringAsFixed(2) ?? ''),
+                              trailing: Text(userData!['bmi'].toStringAsFixed(2) ?? ''),
                               iconData: FontAwesomeIcons.calculator,
                             ),
                           ),
@@ -131,19 +128,19 @@ class FitnessDetails extends StatelessWidget {
                             },
                             child: TrailingListTile(
                               title: 'Category',
-                              trailing: Text(userData?['bmiCategory'] ?? ''),
+                              trailing: Text(userData!['bmiCategory'] ?? ''),
                               iconData: FontAwesomeIcons.chartLine,
                             ),
                           ),
                           GestureDetector(
                             onTap: () {
-                              provider.userFoodPreferencesDialogAlert(
-                                  context, userData?['foodPreferences']);
+                              provider.userFitnessGoalDialogAlert(
+                                  context, userData!['fitnessGoal'] ?? '');
                             },
                             child: TrailingListTile(
-                              title: 'Food Preferences',
-                              trailing: Text(userData?['foodPreferences'] ?? ''),
-                              iconData: FontAwesomeIcons.burger,
+                              title: 'Fitness Goal',
+                              trailing: Text(userData!['fitnessGoal'] ?? ''),
+                              iconData: FontAwesomeIcons.manatSign,
                             ),
                           ),
                         ],

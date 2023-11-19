@@ -18,8 +18,8 @@ class _FitnessAnalyzerFormState extends State<FitnessAnalyzerForm> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _weightController = TextEditingController();
   final TextEditingController _heightController = TextEditingController();
-  final List<String> _foodPreferences = ['Vegetarian', 'Non-Vegetarian'];
-  String? _selectedFoodPreferences;
+  final List<String> _fitnessGoal = ['Muscle Building', 'Weight Gain', 'Weight Loss'];
+  String? _selectedFitnessGoal;
   double bmi = 0;
   bool _isLoading = false;
   String? bmiCategory;
@@ -55,7 +55,7 @@ class _FitnessAnalyzerFormState extends State<FitnessAnalyzerForm> {
         'email': user!.email,
         'weight': _weightController.text,
         'height': _heightController.text,
-        'foodPreferences': _selectedFoodPreferences,
+        'fitnessGoal': _selectedFitnessGoal,
         'bmi': bmi,
         'bmiCategory': bmiCategory,
       };
@@ -143,28 +143,60 @@ class _FitnessAnalyzerFormState extends State<FitnessAnalyzerForm> {
                   ),
                   child: DropdownButtonFormField<String>(
                     decoration: const InputDecoration(
-                      labelText: 'Food Preferences',
+                      labelText: 'Fitness Goal',
                     ),
-                    value: _selectedFoodPreferences,
+                    value: _selectedFitnessGoal,
                     onChanged: (newValue) {
                       setState(() {
-                        _selectedFoodPreferences = newValue;
+                        _selectedFitnessGoal = newValue;
                       });
                     },
-                    items: _foodPreferences.map((foodPreference) {
+                    items: _fitnessGoal.map((fitnessGoal) {
                       return DropdownMenuItem<String>(
-                        value: foodPreference,
-                        child: Text(foodPreference),
+                        value: fitnessGoal,
+                        child: Text(fitnessGoal),
                       );
                     }).toList(),
                     validator: (value) {
                       if (value == null) {
-                        return 'Please select your food preference.';
+                        return 'Please select your fitness goal.';
                       }
                       return null;
                     },
                   ),
                 ),
+                // Container(
+                //   padding: const EdgeInsets.symmetric(horizontal: 8),
+                //   decoration: BoxDecoration(
+                //     border: Border.all(
+                //       color: Colors.grey,
+                //     ),
+                //     borderRadius: BorderRadius.circular(8.0),
+                //   ),
+                //   child: DropdownButtonFormField<String>(
+                //     decoration: const InputDecoration(
+                //       labelText: 'Food Preferences',
+                //     ),
+                //     value: _selectedFoodPreferences,
+                //     onChanged: (newValue) {
+                //       setState(() {
+                //         _selectedFoodPreferences = newValue;
+                //       });
+                //     },
+                //     items: _foodPreferences.map((foodPreference) {
+                //       return DropdownMenuItem<String>(
+                //         value: foodPreference,
+                //         child: Text(foodPreference),
+                //       );
+                //     }).toList(),
+                //     validator: (value) {
+                //       if (value == null) {
+                //         return 'Please select your food preference.';
+                //       }
+                //       return null;
+                //     },
+                //   ),
+                // ),
                 const SizedBox(height: 16.0),
                 CustomButton(
                   title: 'Continue',

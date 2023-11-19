@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import '../all_meal_plans/meal_plan_screen.dart';
 
 class PlansTab extends StatelessWidget {
   const PlansTab({super.key});
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Workouts'),
+        title: const Text('My Plans'),
         automaticallyImplyLeading: false,
       ),
       body: Padding(
@@ -26,17 +28,18 @@ class PlansTab extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
-                  _buildWorkoutCard(
+                  MyPlansCard(
                     title: 'Workout Plan',
                     description: 'High-intensity cardio workout',
                     onPressed: () {
                       // Action when Cardio Blast workout is selected
                     },
                   ),
-                  _buildWorkoutCard(
+                  MyPlansCard(
                     title: 'Meal Plan',
                     description: 'Balanced eating made easy',
                     onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => DisplayMealPlansScreen() ));
                       // Action when Strength Training workout is selected
                     },
                   ),
@@ -50,7 +53,7 @@ class PlansTab extends StatelessWidget {
     );
   }
 
-  Widget _buildWorkoutCard({
+  Widget MyPlansCard({
     required String title,
     required String description,
     required VoidCallback onPressed,
