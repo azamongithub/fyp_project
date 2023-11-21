@@ -1,4 +1,6 @@
+import 'package:CoachBot/constants/app_string_constants.dart';
 import 'package:CoachBot/notifications_services/notifications_services.dart';
+import 'package:CoachBot/theme/text_style_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +46,10 @@ class _DashboardState extends State<Dashboard> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dashboard'),
+        title: Text(
+          AppStrings.dashboard,
+          style: MyTextStyle.appBarStyle(),
+        ),
         automaticallyImplyLeading: false,
         // actions: [
         //   ElevatedButton.icon(
@@ -460,7 +465,7 @@ class _DashboardState extends State<Dashboard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        'Recommended Workouts',
+                        AppStrings.recommendedWorkouts,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -505,7 +510,8 @@ class _DashboardState extends State<Dashboard> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => FindNutritionFactsScreen()),
+                                builder: (context) =>
+                                    FindNutritionFactsScreen()),
                           );
                         },
                         child: const Text('Nutrition Facts'),

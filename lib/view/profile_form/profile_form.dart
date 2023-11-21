@@ -291,18 +291,21 @@ class _ProfileFormState extends State<ProfileForm> {
                         title: 'Continue',
                         loading: _isLoading,
                         onTap: () {
-                          if (_formKey.currentState!.validate() &&
-                              _selectedGender != null) {
-                            setState(() {
-                              _isLoading = true;
-                            });
-                            _saveProfileDetails();
-                          } else {
-                            Utils.positiveToastMessage(
-                                "Please select your gender");
+                          if (_formKey.currentState!.validate()) {
+                            if (_selectedGender != null) {
+                              // Gender is selected, proceed with saving profile details
+                              setState(() {
+                                _isLoading = true;
+                              });
+                              _saveProfileDetails();
+                            } else {
+                              // Gender is not selected, show toast message
+                              Utils.positiveToastMessage("Please select your gender");
+                            }
                           }
                         },
                       )
+
                     ],
                   ),
                 ),

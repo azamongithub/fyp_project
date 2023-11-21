@@ -20,20 +20,20 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             title: AppStrings.title,
-            // theme: ThemeData(
-            //   primarySwatch: Colors.indigo,
-            // ),
-
             theme: ThemeData(
               primarySwatch: Colors.indigo,
-              textTheme: const TextTheme(
-                bodyMedium: TextStyle(
-                  fontFamily: 'Roboto-Black',
-                  //fontFamily: 'Rubik-Medium',
-                  letterSpacing: 1,
-                ),
-              ),
             ),
+
+            // theme: ThemeData(
+            //   primarySwatch: Colors.indigo,
+            //   textTheme: const TextTheme(
+            //     bodyMedium: TextStyle(
+            //       fontFamily: 'Roboto-Black',
+            //       //fontFamily: 'Rubik-Medium',
+            //       letterSpacing: 1,
+            //     ),
+            //   ),
+            // ),
 
             initialRoute: RouteName.SplashScreen,
             onGenerateRoute: Routes.generateRoute,

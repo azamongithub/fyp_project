@@ -1,8 +1,10 @@
+import 'package:CoachBot/constants/app_string_constants.dart';
+import 'package:CoachBot/theme/color_util.dart';
 import 'package:CoachBot/view/bottom_nav_tabs/ai_trainer_tab.dart';
 import 'package:CoachBot/view/bottom_nav_tabs/dashboard.dart';
-import 'package:CoachBot/view/bottom_nav_tabs/stats_tab.dart';
 import 'package:CoachBot/view/bottom_nav_tabs/plans_tab.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../view/settings/settings_screen.dart';
 
@@ -18,9 +20,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
   final screens = [
     Dashboard(),
     PlansTab(),
-    StatsTab(),
     AiTrainerTab(),
-    SettingsScreen(),
+    const SettingsScreen(),
+    // StatsTab(),
   ];
 
   @override
@@ -39,40 +41,37 @@ class _BottomNavBarState extends State<BottomNavBar> {
           child: NavigationBar(
             backgroundColor: const Color(0xFFf1f5fb),
             selectedIndex: index,
-            onDestinationSelected: (index) => setState(() => this.index = index),
-            destinations: const [
+            onDestinationSelected: (index) =>
+                setState(() => this.index = index),
+            destinations: [
               NavigationDestination(
-                // icon: Icon(FontAwesomeIcons.houseUser , color: Color(0xff3140b0), size: 20,),
-                icon: Icon(Icons.home_outlined, color: Color(0xff3140b0)),
-                label: 'Dashboard',
+                icon: Icon(Icons.home_outlined,
+                    color: ColorUtil.themeColor, size: 30.sp),
+                selectedIcon: Icon(Icons.home_outlined,
+                    color: ColorUtil.themeColor, size: 35.sp),
+                label: AppStrings.dashboard,
+                //selectedIcon: Icon(Icons.home_outlined, color: Color(0xff3140b0), ),
               ),
               NavigationDestination(
-                // icon: Icon(
-                //   FontAwesomeIcons.dumbbell,
-                //   color: Color(0xff3140b0),
-                //   size: 20,
-                // ),
-                icon:
-                    Icon(Icons.edit_calendar_outlined, color: Color(0xff3140b0)),
-                label: 'My Plans',
-              ),
-              // NavigationDestination(
-              //   icon: Icon(FontAwesomeIcons.utensils , color: Color(0xff3140b0)),
-              //   label: 'Meal',
-              // ),
-              NavigationDestination(
-                // icon: Icon(FontAwesomeIcons.chartLine, color: Color(0xff3140b0)),
-                icon: Icon(Icons.assessment_outlined , color: Color(0xff3140b0)),
-
-                label: 'Stats',
+                icon: Icon(Icons.edit_calendar_outlined,
+                    color: ColorUtil.themeColor, size: 25.sp),
+                selectedIcon: Icon(Icons.edit_calendar_outlined,
+                    color: ColorUtil.themeColor, size: 30.sp),
+                label: AppStrings.myPlans,
               ),
               NavigationDestination(
-                icon: Icon(FontAwesomeIcons.userAstronaut, color: Color(0xff3140b0)),
+                icon: Icon(FontAwesomeIcons.userAstronaut,
+                    color: ColorUtil.themeColor, size: 25.sp),
+                selectedIcon: Icon(FontAwesomeIcons.userAstronaut,
+                    color: ColorUtil.themeColor, size: 30.sp),
                 label: 'AI Trainer',
               ),
               NavigationDestination(
-                icon: Icon(Icons.settings_outlined, color: Color(0xff3140b0)),
-                label: 'Settings',
+                icon: Icon(Icons.settings_outlined,
+                    color: ColorUtil.themeColor, size: 30.sp),
+                selectedIcon: Icon(Icons.settings_outlined,
+                    color: ColorUtil.themeColor, size: 35.sp),
+                label: AppStrings.settings,
               ),
             ],
           ),
@@ -81,7 +80,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     );
   }
 }
-// //
+
 // class BottomNavBar extends StatefulWidget {
 //   const BottomNavBar({Key? key}) : super(key: key);
 //
@@ -96,7 +95,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
 //     return [
 //       Dashboard(),
 //       PlansTab(),
-//       StatsTab(),
 //       AiTrainerTab(),
 //       const SettingsScreen(),
 //     ];
@@ -113,19 +111,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
 //          //     color: Colors.white),
 //       ),
 //       PersistentBottomNavBarItem(
+//
 //         title: ("My Plan" ),
 //         activeColorPrimary: Colors.indigo,
 //         icon: const Icon(Icons.calendar_month_outlined,
 //           color: Color(0xff3140b0)),
 //         // inactiveIcon: const Icon(FontAwesomeIcons.calendarDays ,
-//         //     color: Colors.white),
-//       ),
-//       PersistentBottomNavBarItem(
-//         title: ("My Progress" ),
-//         activeColorPrimary: Colors.indigo,
-//         icon: const Icon(Icons.bar_chart ,
-//             color: Color(0xff3140b0)),
-//         // inactiveIcon: const Icon(FontAwesomeIcons.chartLine ,
 //         //     color: Colors.white),
 //       ),
 //       PersistentBottomNavBarItem(
@@ -156,12 +147,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
 //       screens: _buildScreen(),
 //       items: _navBarTabs(),
 //       controller: controller,
-//       backgroundColor: Colors.indigo.shade100,
+//       //backgroundColor: Colors.indigo.shade100,
 //       //Color(0xFFf1f5fb),
 //       decoration: NavBarDecoration(
+//
 //         borderRadius: BorderRadius.circular(1),
 //       ),
 //     );
 //   }
 // }
-//

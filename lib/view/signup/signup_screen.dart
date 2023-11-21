@@ -65,9 +65,7 @@ class _SignupFormState extends State<SignupForm> {
                         Center(
                             child: Text(
                               AppStrings.signup,
-                              style: MyTextStyle.customTitleStyle(
-                                fontSize: 30.sp,
-                              ),
+                              style: MyTextStyle.headingStyle32(),
                             )),
                         SizedBox(height: 15.h),
                         Form(

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../models/meal_plan_model.dart';
+import '../../theme/text_style_util.dart';
 import 'meal_plan_details_screen.dart';
 
 class MealPlanDaysScreen extends StatelessWidget {
@@ -22,7 +24,7 @@ class MealPlanDaysScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Meal Plan '),
+        title: Text('Meal Plan ', style: MyTextStyle.appBarStyle()),
       ),
       body: FutureBuilder<List<MealPlanModel>>(
         future: fetchMealPlansByCalories(totalCalories, type, disease),
@@ -48,10 +50,11 @@ class MealPlanDaysScreen extends StatelessWidget {
             'Saturday': DateTime.saturday,
             'Sunday': DateTime.sunday,
           };
-          List<MapEntry<String, dynamic>> orderedDays = mealPlans.first.days.entries.toList()
-            ..sort((a, b) {
-              return weekdaysMap[a.key]! - weekdaysMap[b.key]!;
-            });
+          List<MapEntry<String, dynamic>> orderedDays =
+              mealPlans.first.days.entries.toList()
+                ..sort((a, b) {
+                  return weekdaysMap[a.key]! - weekdaysMap[b.key]!;
+                });
           return ListView(
             children: [
               for (var dayEntry in orderedDays)
@@ -90,10 +93,19 @@ Widget daysCard({
       height: 80,
       child: Center(
         child: ListTile(
-          title: Text(day),
-          leading: Text(calories!),
-          subtitle: Text(type!),
-          trailing: const Icon(Icons.arrow_forward),
+          title: Text(
+            day,
+            style: MyTextStyle.titleStyle20(),
+          ),
+          leading: Text(
+              calories!,
+            style: MyTextStyle.subTitleStyle14(),
+          ),
+          subtitle: Text(
+              type!,
+            style: MyTextStyle.subTitleStyle14(),
+          ),
+          trailing:  Icon(Icons.arrow_forward, size: 28.sp,),
           onTap: onPressed,
         ),
       ),

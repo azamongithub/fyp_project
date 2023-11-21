@@ -58,9 +58,7 @@ class _LoginFormState extends State<LoginForm> {
                   Center(
                       child: Text(
                     AppStrings.login,
-                    style: MyTextStyle.customTitleStyle(
-                      fontSize: 30.sp,
-                    ),
+                    style: MyTextStyle.headingStyle32(),
                   )),
                   SizedBox(height: 30.h),
                   Form(
