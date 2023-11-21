@@ -52,7 +52,7 @@ class _LoginFormState extends State<LoginForm> {
                   Image(
                     height: 150.h,
                     width: 150.w,
-                    image: const AssetImage(ImageConstants.APP_LOGO),
+                    image: const AssetImage(ImageConstants.appLogo),
                   ),
                   SizedBox(height: 20.h),
                   Center(

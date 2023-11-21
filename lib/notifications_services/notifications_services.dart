@@ -144,7 +144,7 @@ class NotificationServices {
   }
   void handleMessage(BuildContext context, RemoteMessage message){
     if(message.data['type'] == 'msg'){
-      Navigator.push(context, MaterialPageRoute(builder: (context) => const PlansTab() ));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => PlansTab() ));
     }
 
   }

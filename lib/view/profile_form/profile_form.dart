@@ -1,10 +1,13 @@
+import 'package:CoachBot/constants/assets_constants.dart';
 import 'package:CoachBot/res/component/custom_button.dart';
 import 'package:CoachBot/utils/routes/route_name.dart';
+import 'package:CoachBot/utils/utils.dart';
 import 'package:CoachBot/view_model/profile/profile_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../../../res/component/input_text_field.dart';
 import '../../res/component/calender_text_field.dart';
@@ -21,12 +24,13 @@ class _ProfileFormState extends State<ProfileForm> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController dateOfBirthController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
-  final List<String> _genders = ['Male', 'Female'];
+  bool isMaleSelected = false;
+  bool isFemaleSelected = false;
   String ageGroup = '';
   String? _selectedGender;
+  String? errorText;
   bool _isLoading = false;
   late DateTime _selectedDate;
-
 
   @override
   void dispose() {
@@ -123,9 +127,107 @@ class _ProfileFormState extends State<ProfileForm> {
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(height: height * 0.01),
+                      SizedBox(height: 60.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            children: [
+                              GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _selectedGender = 'Male';
+                                      errorText = null;
+                                    });
+                                  },
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.transparent,
+                                    radius: 60.sp,
+                                    child: Stack(
+                                      children: [
+                                        CircleAvatar(
+                                          radius: 60.sp,
+                                          backgroundImage: const AssetImage(
+                                              ImageConstants.maleAvatar),
+                                        ),
+                                        Positioned.fill(
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                color: _selectedGender == 'Male'
+                                                    ? Colors.green
+                                                    : Colors.grey,
+                                                width: _selectedGender == 'Male'
+                                                    ? 4
+                                                    : 1,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )),
+                              const SizedBox(height: 8),
+                              const Text(
+                                'Male',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(width: 30),
+                          Column(
+                            children: [
+                              GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _selectedGender = 'Female';
+                                      errorText = null;
+                                    });
+                                  },
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.transparent,
+                                    radius: 60.sp,
+                                    child: Stack(
+                                      children: [
+                                        CircleAvatar(
+                                          radius: 60.sp,
+                                          backgroundImage: const AssetImage(
+                                              ImageConstants.femaleAvatar),
+                                        ),
+                                        Positioned.fill(
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                color:
+                                                    _selectedGender == 'Female'
+                                                        ? Colors.green
+                                                        : Colors.grey,
+                                                width:
+                                                    _selectedGender == 'Female'
+                                                        ? 4
+                                                        : 1,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )),
+                              const SizedBox(height: 8),
+                              const Text(
+                                'Female',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: height * 0.05),
                       CustomTextField(
                         myController: nameController,
                         keyBoardType: TextInputType.name,
@@ -137,76 +239,67 @@ class _ProfileFormState extends State<ProfileForm> {
                           return null;
                         },
                       ),
-                      SizedBox(height: height * 0.02),
-                     // InkWell(
-                        // onTap: ()
-                        // // {
-                        // //   DatePicker.showDatePicker(context,
-                        // //       showTitleActions: true,
-                        // //       minTime: DateTime(1933, 1, 1),
-                        // //       maxTime: DateTime(2006, 1, 1),
-                        // //       onChanged: _onDateSelected, onConfirm: (date) {
-                        // //     dateOfBirthController.text =
-                        // //         DateFormat('yyyy-MM-dd').format(date);
-                        // //   });
-                        // // },
-                        CalendarTextField(
-                          calenderController: dateOfBirthController,
-                          labelText: 'Date of birth',
-                          //calenderField: 'Date of birth',
-                          calenderValidationText:
-                              "Please select your date of birth",
-                          onDateSelected: _onDateSelected,
-                        ),
-                     // ),
-                      SizedBox(height: height * 0.02),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.grey,
-                          ),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        child: DropdownButtonFormField<String>(
-                          decoration: const InputDecoration(
-                            labelText: 'Gender',
-                          ),
-                          value: _selectedGender,
-                          onChanged: (newValue) {
-                            setState(() {
-                              _selectedGender = newValue;
-                            });
-                          },
-                          items: _genders.map((gender) {
-                            return DropdownMenuItem<String>(
-                              value: gender,
-                              child: Text(gender),
-                            );
-                          }).toList(),
-                          validator: (value) {
-                            if (value == null) {
-                              return 'Please select your gender.';
-                            }
-                            return null;
-                          },
-                        ),
+                      SizedBox(height: height * 0.05),
+                      CalendarTextField(
+                        calenderController: dateOfBirthController,
+                        labelText: 'Date of birth',
+                        //calenderField: 'Date of birth',
+                        onValidator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please select your date of birth';
+                          }
+                          return null;
+                        },
+                        onDateSelected: _onDateSelected,
                       ),
+                      // ),
+                      SizedBox(height: height * 0.02),
+                      // Container(
+                      //   padding: const EdgeInsets.symmetric(horizontal: 8),
+                      //   decoration: BoxDecoration(
+                      //     border: Border.all(
+                      //       color: Colors.grey,
+                      //     ),
+                      //     borderRadius: BorderRadius.circular(8.0),
+                      //   ),
+                      //   child: DropdownButtonFormField<String>(
+                      //     decoration: const InputDecoration(
+                      //       labelText: 'Gender',
+                      //     ),
+                      //     value: _selectedGender,
+                      //     onChanged: (newValue) {
+                      //       setState(() {
+                      //         _selectedGender = newValue;
+                      //       });
+                      //     },
+                      //     items: _genders.map((gender) {
+                      //       return DropdownMenuItem<String>(
+                      //         value: gender,
+                      //         child: Text(gender),
+                      //       );
+                      //     }).toList(),
+                      //     validator: (value) {
+                      //       if (value == null) {
+                      //         return 'Please select your gender.';
+                      //       }
+                      //       return null;
+                      //     },
+                      //   ),
+                      // ),
                       SizedBox(height: height * 0.04),
                       CustomButton(
                         title: 'Continue',
                         loading: _isLoading,
                         onTap: () {
-                          if (_formKey.currentState!.validate()) {
+                          if (_formKey.currentState!.validate() &&
+                              _selectedGender != null) {
                             setState(() {
                               _isLoading = true;
                             });
                             _saveProfileDetails();
-                            // int age = calculateAge(date);
-                            // ageController.text = age.toString();
-                            //
-                            // // Update the age group
-                            // findAgeGroup(age);
+                          } else {
+                            Utils.positiveToastMessage(
+                                "Please select your gender");
                           }
                         },
                       )
@@ -221,8 +314,6 @@ class _ProfileFormState extends State<ProfileForm> {
     );
   }
 }
-
-
 
 //
 //

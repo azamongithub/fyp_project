@@ -7,6 +7,7 @@ class CustomTextField extends StatelessWidget {
   final String labelText;
   final bool autoFocus;
   final FocusNode? focusNode;
+  final void Function(String)? onChange;
 
 
 
@@ -18,6 +19,7 @@ class CustomTextField extends StatelessWidget {
     //this.enable = true,
     this.autoFocus = false,
     this.focusNode,
+    this.onChange,
   }) : super(key: key);
 
 
@@ -26,6 +28,7 @@ class CustomTextField extends StatelessWidget {
     return TextFormField(
       controller: myController,
       validator: onValidator,
+      onChanged: onChange,
       keyboardType: keyBoardType,
       autofocus: autoFocus,
       //autofocus: autoFocus,

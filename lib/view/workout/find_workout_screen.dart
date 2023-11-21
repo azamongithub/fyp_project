@@ -56,18 +56,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../../res/component/input_text_field.dart';
 
-class ExerciseListScreen extends StatelessWidget {
+class FindWorkoutsScreen extends StatelessWidget {
   final TextEditingController _muscleController = TextEditingController();
   late final isLoading;
 
-  ExerciseListScreen({super.key});
+  FindWorkoutsScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => ExerciseDataProvider(),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Nutrition Facts'),
+          title: const Text('All Workouts'),
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 25.h),
@@ -77,37 +77,36 @@ class ExerciseListScreen extends StatelessWidget {
               bool hasError = exerciseProvider.loading;
               return Column(
                 children: [
-                  // TextField(
-                  // autofocus: true,
-                  // ),
                   CustomTextField(
                     myController: _muscleController,
                     keyBoardType: TextInputType.text,
                     autoFocus: true,
-                    labelText: 'Enter muscle name',
+                    labelText: 'Search by muscle name',
+                    onChange: (value){
+                      String muscle= _muscleController.text;
+                      if (muscle.isNotEmpty) {
+                        Provider.of<ExerciseDataProvider>(context,
+                            listen: false)
+                            .fetchExerciseDataByMuscle(muscle);
+                      }
+                    },
                     onValidator: (value) {
                       if (value == null) {}
                     },
+
                   ),
                   SizedBox(height: 20.h),
-                  CustomButton(
-                      title: 'Search',
-                      loading: exerciseProvider.loading,
-                      onTap: () {
-                        String muscle= _muscleController.text;
-                        if (muscle.isNotEmpty) {
-                          Provider.of<ExerciseDataProvider>(context,
-                              listen: false)
-                              .fetchExerciseDataByMuscle(muscle);
-                        }
-                      }),
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     isLoading = true;
-                  //
-                  //   },
-                  //   child: const Text('Search'),
-                  // ),
+                  // CustomButton(
+                  //     title: 'Search',
+                  //     loading: exerciseProvider.loading,
+                  //     onTap: () {
+                  //       String muscle= _muscleController.text;
+                  //       if (muscle.isNotEmpty) {
+                  //         Provider.of<ExerciseDataProvider>(context,
+                  //             listen: false)
+                  //             .fetchExerciseDataByMuscle(muscle);
+                  //       }
+                  //     }),
                   SizedBox(height: 50.h),
                   hasError
                       ? const Center(
@@ -122,24 +121,25 @@ class ExerciseListScreen extends StatelessWidget {
                         itemBuilder: (BuildContext context, int index) {
                           var exercise = exerciseProvider.exercisesList[index];
                   print('Length: ${exerciseProvider.exercisesList.length.toString()}');
-                  return Container(
-                    color: Colors.red,
-
-                    child: Column(
-                      children: [
-                        Text(exercise.name),
-                        Text(exercise.type),
-                        Text(exercise.difficulty),
-                        Text(exercise.equipment),
-                        Text(exercise.instructions),
-
-                        // title: Text(exercise.name),
-                        // subtitle: Text(exercise.type),
-                        // leading: Text(exercise.type),
-                        // trailing: Text(exercise.type),
-                      ],
-                    ),
-
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          const Text("Title ",
+                            style: TextStyle(
+                              fontSize: 22,
+                            ),
+                          ),
+                          Text(exercise.name),
+                        ],
+                      ),
+                      Text("Workout Type: ${exercise.type}"),
+                      Text("Difficulty Level: ${exercise.difficulty}"),
+                      Text("Equipments Required: ${exercise.equipment}"),
+                      Text("Instructions: ${exercise.instructions}"),
+                    ],
                   );
 
                         }

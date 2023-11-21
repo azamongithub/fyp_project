@@ -1,4 +1,3 @@
-import 'package:CoachBot/res/component/custom_button.dart';
 import 'package:CoachBot/res/component/list_tile1.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,11 +5,11 @@ import 'package:provider/provider.dart';
 import '../../res/component/input_text_field.dart';
 import '../../view_model/nutrition_facts/nutrition_facts_provider.dart';
 
-class NutritionDataScreen extends StatelessWidget {
+class FindNutritionFactsScreen extends StatelessWidget {
   final TextEditingController _itemController = TextEditingController();
   late final isLoading;
 
-  NutritionDataScreen({super.key});
+  FindNutritionFactsScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -27,30 +26,35 @@ class NutritionDataScreen extends StatelessWidget {
               bool hasError = nutritionProvider.loading;
               return Column(
                 children: [
-                  // TextField(
-                  // autofocus: true,
-                  // ),
                   CustomTextField(
                     myController: _itemController,
                     keyBoardType: TextInputType.text,
                     autoFocus: true,
                     labelText: 'Enter food item',
+                    onChange: (value){
+                      String query = _itemController.text;
+                      if (query.isNotEmpty) {
+                        Provider.of<NutritionDataProvider>(context,
+                            listen: false)
+                            .fetchNutritionFactsData(query);
+                      }
+                    },
                     onValidator: (value) {
                       if (value == null) {}
                     },
                   ),
                   SizedBox(height: 20.h),
-                  CustomButton(
-                      title: 'Search',
-                      loading: nutritionProvider.loading,
-                      onTap: () {
-                        String query = _itemController.text;
-                        if (query.isNotEmpty) {
-                          Provider.of<NutritionDataProvider>(context,
-                                  listen: false)
-                              .fetchNutritionFactsData(query);
-                        }
-                      }),
+                  // CustomButton(
+                  //     title: 'Search',
+                  //     loading: nutritionProvider.loading,
+                  //     onTap: () {
+                  //       String query = _itemController.text;
+                  //       if (query.isNotEmpty) {
+                  //         Provider.of<NutritionDataProvider>(context,
+                  //                 listen: false)
+                  //             .fetchNutritionFactsData(query);
+                  //       }
+                  //     }),
                   // ElevatedButton(
                   //   onPressed: () {
                   //     isLoading = true;
@@ -162,8 +166,8 @@ class NutritionDataScreen extends StatelessWidget {
                               ),
                             )
                           : Center(
-                              child: Container(),
-                            ),
+                    child: Container(),
+                  ),
                   // Center(
                   //         child: Container(),
                   //       ),

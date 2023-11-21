@@ -19,6 +19,9 @@ class _FitnessAnalyzerFormState extends State<FitnessAnalyzerForm> {
   final TextEditingController _weightController = TextEditingController();
   final TextEditingController _heightController = TextEditingController();
   final List<String> _fitnessGoal = ['Muscle Building', 'Weight Gain', 'Weight Loss'];
+  final TextEditingController _caloriesController = TextEditingController();
+  final TextEditingController _workoutController = TextEditingController();
+
   String? _selectedFitnessGoal;
   double bmi = 0;
   bool _isLoading = false;
@@ -58,6 +61,8 @@ class _FitnessAnalyzerFormState extends State<FitnessAnalyzerForm> {
         'fitnessGoal': _selectedFitnessGoal,
         'bmi': bmi,
         'bmiCategory': bmiCategory,
+        'calories': _caloriesController.text,
+        'workout': _workoutController.text,
       };
       calculateBMI();
       await FirebaseFirestore.instance
@@ -165,6 +170,34 @@ class _FitnessAnalyzerFormState extends State<FitnessAnalyzerForm> {
                     },
                   ),
                 ),
+                SizedBox(height: height * 0.02),
+                CustomTextField(
+                    myController: _caloriesController,
+                    keyBoardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                    labelText: 'Calories Required',
+                    onValidator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter calories.';
+                      }
+                      double? calories = double.tryParse(value);
+                      if (calories == null || calories < 1200 || calories > 4000) {
+                        return 'Please enter a valid height.';
+                      }
+                      return null;
+                    }),
+                SizedBox(height: height * 0.02),
+                CustomTextField(
+                    myController: _workoutController,
+                    keyBoardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                    labelText: 'Workout Name',
+                    onValidator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your workout name.';
+                      }
+                      return null;
+                    }),
                 // Container(
                 //   padding: const EdgeInsets.symmetric(horizontal: 8),
                 //   decoration: BoxDecoration(

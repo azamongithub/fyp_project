@@ -95,7 +95,7 @@ class Day {
 }
 
 class Meal {
-  int? mealCalories;
+  String? mealCalories;
   String? title1;
   String? title2;
   String? title3;

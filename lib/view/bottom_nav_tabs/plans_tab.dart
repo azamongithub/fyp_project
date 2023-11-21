@@ -1,12 +1,34 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../all_meal_plans/meal_plan_screen.dart';
-
+import '../all_meal_plans/meal_plan_days_screen.dart';
 class PlansTab extends StatelessWidget {
-  const PlansTab({super.key});
+  late double retrievedCalories;
 
+ PlansTab({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+
+    Future<void> fetchCalories() async {
+      try {
+        CollectionReference userFitnessCollection =
+        FirebaseFirestore.instance.collection('UserFitnessCollection');
+        DocumentSnapshot userSnapshot =
+        await userFitnessCollection.doc(user!.uid).get();
+        retrievedCalories = double.parse(userSnapshot['calories']);
+        if (kDebugMode) {
+          print('Calories: $retrievedCalories');
+        }
+      } catch (e) {
+        if (kDebugMode) {
+          print('Error fetching calories: $e');
+        }
+      }
+    }
+    fetchCalories();
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Plans'),
@@ -28,19 +50,29 @@ class PlansTab extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
-                  MyPlansCard(
+                  myPlansCard(
                     title: 'Workout Plan',
                     description: 'High-intensity cardio workout',
                     onPressed: () {
                       // Action when Cardio Blast workout is selected
                     },
                   ),
-                  MyPlansCard(
+                  myPlansCard(
                     title: 'Meal Plan',
                     description: 'Balanced eating made easy',
-                    onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => DisplayMealPlansScreen() ));
-                      // Action when Strength Training workout is selected
+                    onPressed: () async {
+                      int totalCalories = retrievedCalories.toInt();
+                      String type = 'Low Caloric Diet';
+                      String disease = 'none';
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MealPlanDaysScreen(
+                              totalCalories: totalCalories,
+                              type: type,
+                              disease: disease),
+                        ),
+                      );
                     },
                   ),
                   // Add more workout cards as needed
@@ -52,8 +84,11 @@ class PlansTab extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget MyPlansCard({
+
+
+  Widget myPlansCard({
     required String title,
     required String description,
     required VoidCallback onPressed,
@@ -67,4 +102,4 @@ class PlansTab extends StatelessWidget {
       ),
     );
   }
-}
+

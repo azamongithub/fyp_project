@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Image(
               height: 150,
               width: 150,
-              image: AssetImage(ImageConstants.APP_LOGO),
+              image: AssetImage(ImageConstants.appLogo),
             ),
             Text(
               AppStrings.title,

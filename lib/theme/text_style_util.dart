@@ -31,7 +31,6 @@ class MyTextStyle {
       color: ColorUtil.titleColor,
       fontSize: fontSize,
       fontWeight: FontWeight.bold,
-      fontFamily: 'Roboto',
     );
   }
 
@@ -45,7 +44,6 @@ class MyTextStyle {
       color: ColorUtil.titleColor,
       fontSize: fontSize,
       fontWeight: FontWeight.bold,
-      fontFamily: 'Roboto',
     );
   }
 

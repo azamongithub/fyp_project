@@ -19,8 +19,6 @@ class FitnessDetails extends StatelessWidget {
         .collection('UserFitnessCollection')
         .doc(user!.uid)
         .snapshots();
-
-
     return StreamBuilder<DocumentSnapshot>(
       stream: userFitnessStream,
       builder: (context, snapshot) {
@@ -141,6 +139,17 @@ class FitnessDetails extends StatelessWidget {
                               title: 'Fitness Goal',
                               trailing: Text(userData!['fitnessGoal'] ?? ''),
                               iconData: FontAwesomeIcons.manatSign,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              provider.userHeightDialogAlert(
+                                  context, userData!['calories']);
+                            },
+                            child: TrailingListTile(
+                              title: 'Calories',
+                              trailing: Text(userData!['calories'] ?? ''),
+                              iconData: FontAwesomeIcons.rulerVertical,
                             ),
                           ),
                         ],
