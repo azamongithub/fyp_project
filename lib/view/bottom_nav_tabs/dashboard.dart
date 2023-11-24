@@ -51,359 +51,279 @@ class _DashboardState extends State<Dashboard> {
           style: MyTextStyle.appBarStyle(),
         ),
         automaticallyImplyLeading: false,
-        // actions: [
-        //   ElevatedButton.icon(
-        //       onPressed: () async {
-        //         MealPlanModel mealPlan = MealPlanModel(
-        //           id: 'low-caloric-none-2600',
-        //           type: 'Low Caloric Diet',
-        //           disease: 'none',
-        //           totalCalories: 2600,
-        //           days: {
-        //             'Monday': Day(
-        //               breakfast: Meal(
-        //                 title1: 'Avocado-Egg Toast',
-        //                 title2: '1 slice whole-grain bread',
-        //                 title3: '1/2 medium avocado',
-        //                 title4:
-        //                     '1 large egg, cooked in 1/4 tsp. olive oil or coat pan with a thin layer of cooking spray (1-second spray)',
-        //                 title5: 'Season egg with a pinch of salt and pepper.',
-        //                 title6: '2 clementines',
-        //                 mealCalories: '382 Calories',
-        //               ),
-        //               morningSnack: Meal(
-        //                 title1: '1 medium apple',
-        //                 title2: '2 Tbsp. peanut butter',
-        //                 mealCalories: '305 Calories',
-        //               ),
-        //               lunch: Meal(
-        //                 title1: '2 cups Ravioli and Vegetable Soup',
-        //                 title2:
-        //                     '2 diagonal slices baguette (1/4 inch thick), preferably whole-wheat',
-        //                 title3:
-        //                     '3 Tbsp. shredded Cheddar cheese Top baguette slices with 1 1/2 Tbsp. cheese each and a pinch of pepper. Toast until cheese is melted.',
-        //                 title4: 'diced grilled veggies (2 tablespoons onion',
-        //                 title5: '1/4 cup diced zucchini, 1/2 cup bell pepper)',
-        //                 title6: '1 teaspoon chopped cilantro',
-        //                 title7: '1 tablespoon vinaigrette',
-        //                 mealCalories: '407 Calories',
-        //               ),
-        //               afternoonSnack: Meal(
-        //                 title1: '4 Tbsp. hummus',
-        //                 title2: '1 cup sliced cucumber',
-        //                 title3: '2 medium carrots',
-        //                 mealCalories: '169 Calories',
-        //               ),
-        //               dinner: Meal(
-        //                 title1: 'Salmon and Vegetables',
-        //                 title2: '4 oz. baked salmon',
-        //                 title3: '1 cup roasted Brussels sprouts',
-        //                 title4: '1 cup brown rice',
-        //                 title5: '1/8 tsp. salt',
-        //                 title6: '1/8 tsp. pepper',
-        //                 title7: '1 Tbsp. walnuts',
-        //                 title8: 'Vinaigrette',
-        //                 title9:
-        //                     'Combine 1 1/2 tsp. each olive oil, lemon juice and maple syrup; season with 1/8 tsp. salt.',
-        //                 title10:
-        //                     'Toss Brussels sprouts in 1/2 tsp. olive oil and bake at 425°F until lightly browned, 15 to 20 minutes. Coat salmon with 1/4 tsp. olive oil or a thin layer of cooking spray (1-second spray) and season with 1/8 tsp. each salt and pepper. Bake at 425°F until opaque in the middle, 4 to 6 minutes. Serve Brussels sprouts, salmon and brown rice drizzled with vinaigrette and topped with walnuts.',
-        //                 mealCalories: '560 Calories',
-        //               ),
-        //             ).toJson(),
-        //             'Tuesday': Day(
-        //               breakfast: Meal(
-        //                 title1: 'Avocado-Egg Toast',
-        //                 title2: '1 slice whole-grain bread',
-        //                 title3: '1/2 medium avocado',
-        //                 title4:
-        //                     '1 large egg, cooked in 1/4 tsp. olive oil or coat pan with a thin layer of cooking spray (1-second spray)',
-        //                 title5: 'Season egg with a pinch of salt and pepper.',
-        //                 title6: '2 clementines',
-        //                 mealCalories: '382 Calories',
-        //               ),
-        //               morningSnack: Meal(
-        //                 title1: '8 dried apricots',
-        //                 title2: '8 walnut halves',
-        //                 mealCalories: '172 Calories',
-        //               ),
-        //               lunch: Meal(
-        //                 title1: 'Leftover soup',
-        //                 title2: '2 cups Ravioli and Vegetable Soup',
-        //                 title3:
-        //                     '2 diagonal slices baguette (1/4 inch thick), preferably whole-wheat',
-        //                 title4:
-        //                     '3 Tbsp. shredded Cheddar cheese Top each baguette slice with 1 1/2 Tbsp. cheese and a pinch of pepper. Toast until cheese is melted',
-        //                 title5: '1 clementine',
-        //                 mealCalories: '441 Calories',
-        //               ),
-        //               afternoonSnack: Meal(
-        //                 title1: '4 Tbsp. hummus',
-        //                 title2: '2 medium carrots',
-        //                 mealCalories: '154 Calories',
-        //               ),
-        //               eveningSnack: Meal(
-        //                 title1: '2 Medjool dates',
-        //                 mealCalories: '133 Calories',
-        //               ),
-        //               dinner: Meal(
-        //                 title1: '1 1/2 cups Delicata Squash and Tofu Curry',
-        //                 title2: 'Serve curry over 1 cup brown rice',
-        //                 mealCalories: '533 Calories',
-        //               ),
-        //               planAhead: Meal(
-        //                 title1:
-        //                     'Plan Ahead: Make Maple-Nut Granola for tomorrow. You can also buy granola, to make things easier. Aim for a granola that has around 130 calories (or less) and less than 6 grams of sugar per 1/4 cup.',
-        //               ),
-        //             ).toJson(),
-        //             'Wednesday': Day(
-        //               breakfast: Meal(
-        //                 title1: '1/2 cup Maple-Nut Granola',
-        //                 title2: '1 cup nonfat plain Greek yogurt',
-        //                 title3: '1/4 cup blueberries',
-        //                 mealCalories: '405 Calories',
-        //               ),
-        //               morningSnack: Meal(
-        //                 title1: '3 Tbsp. hummus',
-        //                 title2: '2 medium carrots',
-        //                 mealCalories: '128 Calories',
-        //               ),
-        //               lunch: Meal(
-        //                 title1: 'Apple and Cheddar Pita Pocket',
-        //                 title2: '1 whole-wheat pita round (6-1/2-inch)',
-        //                 title3: '1 Tbsp. mustard',
-        //                 title4: '1/2 medium apple, sliced',
-        //                 title5: '1 1/2 oz. Cheddar cheese',
-        //                 title6: '1 cup mixed greens',
-        //                 title7:
-        //                     'Cut pita in half and spread mustard inside. Fill with apple slices and cheese. Toast until the cheese begins to melt. Add greens and serve.',
-        //                 title8: '1 clementine',
-        //                 mealCalories: '443 Calories',
-        //               ),
-        //               afternoonSnack: Meal(
-        //                 title1: '1/2 medium apple, sliced',
-        //                 title2: '1 Tbsp. peanut butter',
-        //                 title3: '1/4 cup Maple-Nut Granola',
-        //                 title4:
-        //                     'Dip apple slices into peanut butter and granola',
-        //                 mealCalories: '278 Calories',
-        //               ),
-        //               eveningSnack: Meal(
-        //                 title1:
-        //                     '1 Tbsp. chocolate chips, preferably dark chocolate',
-        //                 mealCalories: '50 Calories',
-        //               ),
-        //               dinner: Meal(
-        //                 title1: '1 Moroccan-Style Stuffed Pepper',
-        //                 title2: '2 cups spinach',
-        //                 title3:
-        //                     'Saute spinach in 1 tsp. olive oil with a pinch of salt and pepper',
-        //                 title4: '1 cup sliced carrots, steamed',
-        //                 mealCalories: '507 Calories',
-        //               ),
-        //               planAhead: Meal(
-        //                 title1:
-        //                     "Plan Ahead: Hard-boil 2 eggs-save one for Day 5. Make Carrot-Ginger Vinaigrette or opt for a healthy, store-bought Asian-style dressing. When buying salad dressing, choose one made with healthy fats, such as olive oil or canola oil. Cook a chicken breast for tomorrow's lunch or substitute precooked chicken or sliced chicken or turkey breast from the grocery store. When choosing deli items, go for low-sodium, preservative-free options.",
-        //               ),
-        //             ).toJson(),
-        //
-        //             'Thursday': Day(
-        //               breakfast: Meal(
-        //                 title1: 'Avocado-Egg Toast',
-        //                 title2: '1 slice whole-grain bread',
-        //                 title3: '1/2 medium avocado',
-        //                 title4:
-        //                     '1 large egg, cooked in 1/4 tsp. olive oil or coat pan with a thin layer of cooking spray (1-second spray)',
-        //                 title5: 'Season egg with a pinch of salt and pepper.',
-        //                 title6: '2 clementines',
-        //                 mealCalories: '382 Calories',
-        //               ),
-        //               morningSnack: Meal(
-        //                 title1: '1 medium apple',
-        //                 title2: '2 Tbsp. peanut butter',
-        //                 mealCalories: '305 Calories',
-        //               ),
-        //               lunch: Meal(
-        //                 title1: '2 cups Ravioli and Vegetable Soup',
-        //                 title2:
-        //                     '2 diagonal slices baguette (1/4 inch thick), preferably whole-wheat',
-        //                 title3:
-        //                     '3 Tbsp. shredded Cheddar cheese Top baguette slices with 1 1/2 Tbsp. cheese each and a pinch of pepper. Toast until cheese is melted.',
-        //                 title4: 'diced grilled veggies (2 tablespoons onion',
-        //                 title5: '1/4 cup diced zucchini, 1/2 cup bell pepper)',
-        //                 title6: '1 teaspoon chopped cilantro',
-        //                 title7: '1 tablespoon vinaigrette',
-        //                 mealCalories: '407 Calories',
-        //               ),
-        //               afternoonSnack: Meal(
-        //                 title1: '4 Tbsp. hummus',
-        //                 title2: '1 cup sliced cucumber',
-        //                 title3: '2 medium carrots',
-        //                 mealCalories: '169 Calories',
-        //               ),
-        //               dinner: Meal(
-        //                 title1: 'Salmon and Vegetables',
-        //                 title2: '4 oz. baked salmon',
-        //                 title3: '1 cup roasted Brussels sprouts',
-        //                 title4: '1 cup brown rice',
-        //                 title5: '1/8 tsp. salt',
-        //                 title6: '1/8 tsp. pepper',
-        //                 title7: '1 Tbsp. walnuts',
-        //                 title8: 'Vinaigrette',
-        //                 title9:
-        //                     'Combine 1 1/2 tsp. each olive oil, lemon juice and maple syrup; season with 1/8 tsp. salt.',
-        //                 title10:
-        //                     'Toss Brussels sprouts in 1/2 tsp. olive oil and bake at 425°F until lightly browned, 15 to 20 minutes. Coat salmon with 1/4 tsp. olive oil or a thin layer of cooking spray (1-second spray) and season with 1/8 tsp. each salt and pepper. Bake at 425°F until opaque in the middle, 4 to 6 minutes. Serve Brussels sprouts, salmon and brown rice drizzled with vinaigrette and topped with walnuts.',
-        //                 mealCalories: '560 Calories',
-        //               ),
-        //             ).toJson(),
-        //             'Friday': Day(
-        //               breakfast: Meal(
-        //                 title1: 'Avocado-Egg Toast',
-        //                 title2: '1 slice whole-grain bread',
-        //                 title3: '1/2 medium avocado',
-        //                 title4:
-        //                     '1 large egg, cooked in 1/4 tsp. olive oil or coat pan with a thin layer of cooking spray (1-second spray)',
-        //                 title5: 'Season egg with a pinch of salt and pepper.',
-        //                 title6: '2 clementines',
-        //                 mealCalories: '382 Calories',
-        //               ),
-        //               morningSnack: Meal(
-        //                 title1: '8 dried apricots',
-        //                 title2: '8 walnut halves',
-        //                 mealCalories: '172 Calories',
-        //               ),
-        //               lunch: Meal(
-        //                 title1: 'Leftover soup',
-        //                 title2: '2 cups Ravioli and Vegetable Soup',
-        //                 title3:
-        //                     '2 diagonal slices baguette (1/4 inch thick), preferably whole-wheat',
-        //                 title4:
-        //                     '3 Tbsp. shredded Cheddar cheese Top each baguette slice with 1 1/2 Tbsp. cheese and a pinch of pepper. Toast until cheese is melted',
-        //                 title5: '1 clementine',
-        //                 mealCalories: '441 Calories',
-        //               ),
-        //               afternoonSnack: Meal(
-        //                 title1: '4 Tbsp. hummus',
-        //                 title2: '2 medium carrots',
-        //                 mealCalories: '154 Calories',
-        //               ),
-        //               eveningSnack: Meal(
-        //                 title1: '2 Medjool dates',
-        //                 mealCalories: '133 Calories',
-        //               ),
-        //               dinner: Meal(
-        //                 title1: '1 1/2 cups Delicata Squash and Tofu Curry',
-        //                 title2: 'Serve curry over 1 cup brown rice',
-        //                 mealCalories: '533 Calories',
-        //               ),
-        //               planAhead: Meal(
-        //                 title1:
-        //                     'Plan Ahead: Make Maple-Nut Granola for tomorrow. You can also buy granola, to make things easier. Aim for a granola that has around 130 calories (or less) and less than 6 grams of sugar per 1/4 cup.',
-        //               ),
-        //             ).toJson(),
-        //             'Saturday': Day(
-        //               breakfast: Meal(
-        //                 title1: '1/2 cup Maple-Nut Granola',
-        //                 title2: '1 cup nonfat plain Greek yogurt',
-        //                 title3: '1/4 cup blueberries',
-        //                 mealCalories: '405 Calories',
-        //               ),
-        //               morningSnack: Meal(
-        //                 title1: '3 Tbsp. hummus',
-        //                 title2: '2 medium carrots',
-        //                 mealCalories: '128 Calories',
-        //               ),
-        //               lunch: Meal(
-        //                 title1: 'Apple and Cheddar Pita Pocket',
-        //                 title2: '1 whole-wheat pita round (6-1/2-inch)',
-        //                 title3: '1 Tbsp. mustard',
-        //                 title4: '1/2 medium apple, sliced',
-        //                 title5: '1 1/2 oz. Cheddar cheese',
-        //                 title6: '1 cup mixed greens',
-        //                 title7:
-        //                     'Cut pita in half and spread mustard inside. Fill with apple slices and cheese. Toast until the cheese begins to melt. Add greens and serve.',
-        //                 title8: '1 clementine',
-        //                 mealCalories: '443 Calories',
-        //               ),
-        //               afternoonSnack: Meal(
-        //                 title1: '1/2 medium apple, sliced',
-        //                 title2: '1 Tbsp. peanut butter',
-        //                 title3: '1/4 cup Maple-Nut Granola',
-        //                 title4:
-        //                     'Dip apple slices into peanut butter and granola',
-        //                 mealCalories: '278 Calories',
-        //               ),
-        //               eveningSnack: Meal(
-        //                 title1:
-        //                     '1 Tbsp. chocolate chips, preferably dark chocolate',
-        //                 mealCalories: '50 Calories',
-        //               ),
-        //               dinner: Meal(
-        //                 title1: '1 Moroccan-Style Stuffed Pepper',
-        //                 title2: '2 cups spinach',
-        //                 title3:
-        //                     'Saute spinach in 1 tsp. olive oil with a pinch of salt and pepper',
-        //                 title4: '1 cup sliced carrots, steamed',
-        //                 mealCalories: '507 Calories',
-        //               ),
-        //               planAhead: Meal(
-        //                 title1:
-        //                     "Plan Ahead: Hard-boil 2 eggs-save one for Day 5. Make Carrot-Ginger Vinaigrette or opt for a healthy, store-bought Asian-style dressing. When buying salad dressing, choose one made with healthy fats, such as olive oil or canola oil. Cook a chicken breast for tomorrow's lunch or substitute precooked chicken or sliced chicken or turkey breast from the grocery store. When choosing deli items, go for low-sodium, preservative-free options.",
-        //               ),
-        //             ).toJson(),
-        //             'Sunday': Day(
-        //               breakfast: Meal(
-        //                 title1: 'Avocado-Egg Toast',
-        //                 title2: '1 slice whole-grain bread',
-        //                 title3: '1/2 medium avocado',
-        //                 title4:
-        //                     '1 large egg, cooked in 1/4 tsp. olive oil or coat pan with a thin layer of cooking spray (1-second spray)',
-        //                 title5: 'Season egg with a pinch of salt and pepper.',
-        //                 title6: '2 clementines',
-        //                 mealCalories: '382 Calories',
-        //               ),
-        //               morningSnack: Meal(
-        //                 title1: '8 dried apricots',
-        //                 title2: '8 walnut halves',
-        //                 mealCalories: '172 Calories',
-        //               ),
-        //               lunch: Meal(
-        //                 title1: 'Leftover soup',
-        //                 title2: '2 cups Ravioli and Vegetable Soup',
-        //                 title3:
-        //                     '2 diagonal slices baguette (1/4 inch thick), preferably whole-wheat',
-        //                 title4:
-        //                     '3 Tbsp. shredded Cheddar cheese Top each baguette slice with 1 1/2 Tbsp. cheese and a pinch of pepper. Toast until cheese is melted',
-        //                 title5: '1 clementine',
-        //                 mealCalories: '441 Calories',
-        //               ),
-        //               afternoonSnack: Meal(
-        //                 title1: '4 Tbsp. hummus',
-        //                 title2: '2 medium carrots',
-        //                 mealCalories: '154 Calories',
-        //               ),
-        //               eveningSnack: Meal(
-        //                 title1: '2 Medjool dates',
-        //                 mealCalories: '133 Calories',
-        //               ),
-        //               dinner: Meal(
-        //                 title1: '1 1/2 cups Delicata Squash and Tofu Curry',
-        //                 title2: 'Serve curry over 1 cup brown rice',
-        //                 mealCalories: '533 Calories',
-        //               ),
-        //               planAhead: Meal(
-        //                 title1:
-        //                     'Plan Ahead: Make Maple-Nut Granola for tomorrow. You can also buy granola, to make things easier. Aim for a granola that has around 130 calories (or less) and less than 6 grams of sugar per 1/4 cup.',
-        //               ),
-        //             ).toJson(),
-        //             // Repeat for day3, day4, ..., day7
-        //           },
-        //         );
-        //         addMealPlan(mealPlan);
-        //       },
-        //       icon: const Icon(Icons.add),
-        //       label: const Text('Add'))
-        // ],
+        actions: [
+          ElevatedButton.icon(
+              onPressed: () async {
+                MealPlanModel mealPlan = MealPlanModel(
+                  id: 'carb-controlled-harmony-diabetes',
+                  name: 'Carb-Controlled Harmony',
+                  disease: 'Diabetes',
+                  description: 'Balanced with controlled carbs; include whole grains, lean proteins, healthy fats, and veggies.',
+                  days: {
+                    'Monday': Day(
+                      breakfast: Meal(
+                        title1: 'Greek Yogurt Parfait',
+                        title2: '1 cup plain Greek yogurt',
+                        title3: '1/2 cup mixed berries',
+                        title4: '1/4 cup granola (whole grain)',
+                        title5: '1 tablespoon chia seeds',
+                      ),
+                      morningSnack: Meal(
+                        title1: 'Handful of Almonds',
+                        title2: '1 medium apple',
+                      ),
+                      lunch: Meal(
+                        title1: 'Grilled Chicken Salad',
+                        title2: '4 oz. grilled chicken breast',
+                        title3: '2 cups mixed greens',
+                        title4: '1/2 cup cherry tomatoes',
+                        title5: '1/4 cup cucumber slices',
+                        title6: '1/4 cup quinoa (whole grain)',
+                        title7: '1 tablespoon olive oil dressing',
+                      ),
+                      afternoonSnack: Meal(
+                        title1: 'Carrot Sticks with Hummus',
+                        title2: '1/2 cup hummus',
+                      ),
+                      dinner: Meal(
+                        title1: 'Baked Cod with Sweet Potato and Broccoli',
+                        title2: '6 oz. baked cod fillet',
+                        title3: '1 medium sweet potato, baked',
+                        title4: '1 cup steamed broccoli',
+                        title5: '1 tablespoon olive oil drizzle',
+                      ),
+                    ).toJson(),
+                    'Tuesday': Day(
+                      breakfast: Meal(
+                        title1: 'Oatmeal with Berries and Nuts',
+                        title2: '1/2 cup rolled oats (whole grain)',
+                        title3: '1 cup almond milk',
+                        title4: '1/2 cup mixed berries',
+                        title5: '1 tablespoon chopped nuts',
+                        title6: '1 teaspoon honey',
+                      ),
+                      morningSnack: Meal(
+                        title1: 'Banana with Almond Butter',
+                        title2: '1 medium banana',
+                        title3: '2 tablespoons almond butter',
+                      ),
+                      lunch: Meal(
+                        title1: 'Quinoa and Black Bean Bowl',
+                        title2: '1 cup cooked quinoa (whole grain)',
+                        title3: '1/2 cup black beans',
+                        title4: '1/2 cup corn kernels',
+                        title5: '1/4 cup diced avocado',
+                        title6: '1 tablespoon lime juice',
+                      ),
+                      afternoonSnack: Meal(
+                        title1: 'Greek Yogurt with Pineapple',
+                        title2: '1 cup plain Greek yogurt',
+                        title3: '1/2 cup fresh pineapple chunks',
+                      ),
+                      dinner: Meal(
+                        title1: 'Vegetarian Stir-Fry',
+                        title2: '1 cup tofu cubes',
+                        title3: '1 cup broccoli florets',
+                        title4: '1/2 cup sliced bell peppers',
+                        title5: '1/4 cup sliced carrots',
+                        title6: '2 tablespoons soy sauce',
+                        title7: '1 tablespoon sesame oil',
+                      ),
+                    ).toJson(),
+                    'Wednesday': Day(
+                      breakfast: Meal(
+                        title1: 'Whole Grain Pancakes with Berries',
+                        title2: '2 whole grain pancakes',
+                        title3: '1/2 cup mixed berries',
+                        title4: '1 tablespoon maple syrup',
+                      ),
+                      morningSnack: Meal(
+                        title1: 'Handful of Walnuts',
+                        title2: '1 medium orange',
+                      ),
+                      lunch: Meal(
+                        title1: 'Turkey and Veggie Wrap',
+                        title2: '4 oz. sliced turkey breast',
+                        title3: '1 whole grain wrap',
+                        title4: '1/4 cup hummus',
+                        title5: '1/2 cup mixed greens',
+                        title6: '1/4 cup shredded carrots',
+                        title7: '1/4 cup sliced cucumber',
+                      ),
+                      afternoonSnack: Meal(
+                        title1: 'Yogurt with Mixed Nuts',
+                        title2: '1 cup low-fat yogurt',
+                        title3: '1/4 cup mixed nuts',
+                      ),
+                      dinner: Meal(
+                        title1: 'Grilled Salmon with Quinoa and Asparagus',
+                        title2: '6 oz. grilled salmon fillet',
+                        title3: '1 cup cooked quinoa (whole grain)',
+                        title4: '1 cup steamed asparagus',
+                        title5: '1 tablespoon olive oil drizzle',
+                      ),
+                    ).toJson(),
+                    'Thursday': Day(
+                      breakfast: Meal(
+                        title1: 'Spinach and Feta Omelette',
+                        title2: '3 large eggs, beaten',
+                        title3: '1 cup fresh spinach',
+                        title4: '2 tablespoons feta cheese',
+                        title5: '1/2 cup cherry tomatoes, sliced',
+                        title6: '1 teaspoon olive oil',
+                      ),
+                      morningSnack: Meal(
+                        title1: 'Mixed Berries Smoothie',
+                        title2: '1/2 cup mixed berries',
+                        title3: '1/2 banana',
+                        title4: '1/2 cup low-fat yogurt',
+                        title5: '1/2 cup almond milk',
+                      ),
+                      lunch: Meal(
+                        title1: 'Quinoa Salad with Chickpeas',
+                        title2: '1 cup cooked quinoa (whole grain)',
+                        title3: '1/2 cup canned chickpeas, rinsed',
+                        title4: '1/4 cup diced red onion',
+                        title5: '1/4 cup diced cucumber',
+                        title6: '1/4 cup cherry tomatoes, halved',
+                        title7: '1/4 cup crumbled feta cheese',
+                        title8: '1 tablespoon olive oil dressing',
+                      ),
+                      afternoonSnack: Meal(
+                        title1: 'Carrot and Celery Sticks with Hummus',
+                        title2: '1 cup carrot and celery sticks',
+                        title3: '1/4 cup hummus',
+                      ),
+                      dinner: Meal(
+                        title1: 'Chicken and Vegetable Stir-Fry',
+                        title2: '4 oz. chicken breast, sliced',
+                        title3: '1 cup broccoli florets',
+                        title4: '1/2 cup snap peas',
+                        title5: '1/2 cup bell peppers, sliced',
+                        title6: '1 tablespoon soy sauce',
+                        title7: '1 tablespoon sesame oil',
+                        title8: '1/2 cup cooked brown rice',
+                      ),
+                    ).toJson(),
+                    'Friday': Day(
+                      breakfast: Meal(
+                        title1: 'Whole Wheat Toast with Smashed Avocado',
+                        title2: '2 slices whole wheat toast',
+                        title3: '1/2 medium avocado, smashed',
+                        title4: '1 poached egg on top',
+                        title5: 'Salt and pepper to taste',
+                      ),
+                      morningSnack: Meal(
+                        title1: 'Mixed Fruit Salad',
+                        title2: '1 cup mixed fruits (e.g., pineapple, mango, kiwi)',
+                        title3: 'Handful of grapes',
+                      ),
+                      lunch: Meal(
+                        title1: 'Shrimp and Quinoa Bowl',
+                        title2: '6 oz. grilled shrimp',
+                        title3: '1 cup cooked quinoa (whole grain)',
+                        title4: '1/2 cup black beans, drained and rinsed',
+                        title5: '1/4 cup corn kernels',
+                        title6: '1/4 cup diced tomatoes',
+                        title7: '1 tablespoon lime juice',
+                      ),
+                      afternoonSnack: Meal(
+                        title1: 'Cottage Cheese with Pineapple',
+                        title2: '1 cup low-fat cottage cheese',
+                        title3: '1/2 cup fresh pineapple chunks',
+                      ),
+                      dinner: Meal(
+                        title1: 'Vegetarian Quinoa Stir-Fry',
+                        title2: '1 cup cooked quinoa (whole grain)',
+                        title3: '1/2 cup tofu cubes',
+                        title4: '1 cup mixed vegetables (e.g., broccoli, bell peppers, carrots)',
+                        title5: '2 tablespoons soy sauce',
+                        title6: '1 tablespoon olive oil',
+                      ),
+                    ).toJson(),
+                    'Saturday': Day(
+                      breakfast: Meal(
+                        title1: 'Smoothie Bowl with Granola',
+                        title2: '1 cup mixed berries (frozen or fresh)',
+                        title3: '1/2 banana',
+                        title4: '1/2 cup low-fat yogurt',
+                        title5: '1/4 cup granola (whole grain)',
+                        title6: '1 tablespoon honey',
+                      ),
+                      morningSnack: Meal(
+                        title1: 'Handful of Almonds',
+                        title2: '1 medium pear',
+                      ),
+                      lunch: Meal(
+                        title1: 'Turkey and Avocado Wrap',
+                        title2: '4 oz. sliced turkey breast',
+                        title3: '1 whole grain wrap',
+                        title4: '1/4 cup mashed avocado',
+                        title5: '1/2 cup lettuce',
+                        title6: '1/4 cup shredded carrots',
+                        title7: '1 tablespoon Greek yogurt dressing',
+                      ),
+                      afternoonSnack: Meal(
+                        title1: 'Vegetable Sticks with Hummus',
+                        title2: '1 cup mixed vegetable sticks (e.g., carrots, cucumber, bell peppers)',
+                        title3: '1/4 cup hummus',
+                      ),
+                      dinner: Meal(
+                        title1: 'Salmon Salad with Quinoa',
+                        title2: '6 oz. grilled salmon fillet',
+                        title3: '2 cups mixed greens',
+                        title4: '1/2 cup cooked quinoa (whole grain)',
+                        title5: '1/4 cup cherry tomatoes, halved',
+                        title6: '1/4 cup cucumber slices',
+                        title7: '1 tablespoon balsamic vinaigrette',
+                      ),
+                    ).toJson(),
+                    'Sunday': Day(
+                      breakfast: Meal(
+                        title1: 'Vegetable Omelette with Whole Wheat Toast',
+                        title2: '3 large eggs, beaten',
+                        title3: '1/2 cup mixed bell peppers, diced',
+                        title4: '1/4 cup red onion, diced',
+                        title5: '1/4 cup feta cheese, crumbled',
+                        title6: '2 slices whole wheat toast',
+                      ),
+                      morningSnack: Meal(
+                        title1: 'Mixed Nuts and Dried Fruits',
+                        title2: '1/4 cup mixed nuts (almonds, walnuts)',
+                        title3: '1/4 cup dried fruits (apricots, cranberries)',
+                      ),
+                      lunch: Meal(
+                        title1: 'Chicken and Quinoa Salad',
+                        title2: '4 oz. grilled chicken breast, sliced',
+                        title3: '1 cup cooked quinoa (whole grain)',
+                        title4: '2 cups mixed salad greens',
+                        title5: '1/2 cup cherry tomatoes, halved',
+                        title6: '1/4 cup sliced cucumber',
+                        title7: '1 tablespoon olive oil dressing',
+                      ),
+                      afternoonSnack: Meal(
+                        title1: 'Greek Yogurt with Berries',
+                        title2: '1 cup plain Greek yogurt',
+                        title3: '1/2 cup mixed berries',
+                      ),
+                      dinner: Meal(
+                        title1: 'Vegetarian Stir-Fry with Brown Rice',
+                        title2: '1 cup tofu cubes',
+                        title3: '1 cup broccoli florets',
+                        title4: '1/2 cup snap peas',
+                        title5: '1/2 cup carrots, sliced',
+                        title6: '2 tablespoons soy sauce',
+                        title7: '1 tablespoon sesame oil',
+                        title8: '1/2 cup cooked brown rice',
+                      ),
+                    ).toJson(),
+                  },
+                );
+                addMealPlan(mealPlan);
+              },
+              icon: const Icon(Icons.add),
+              label: const Text('Add'))
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(

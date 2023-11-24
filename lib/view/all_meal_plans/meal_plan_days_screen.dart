@@ -7,16 +7,16 @@ import 'meal_plan_details_screen.dart';
 
 class MealPlanDaysScreen extends StatelessWidget {
   late double cal;
-  final int totalCalories;
-  final String type;
-  final String disease;
+  final int? totalCalories;
+  final String name;
+  final String? disease;
   final String? mealPlanId;
 
   MealPlanDaysScreen({
     super.key,
-    required this.totalCalories,
-    required this.type,
-    required this.disease,
+    this.totalCalories,
+    required this.name,
+    this.disease,
     this.mealPlanId,
   });
 
@@ -27,7 +27,7 @@ class MealPlanDaysScreen extends StatelessWidget {
         title: Text('Meal Plan ', style: MyTextStyle.appBarStyle()),
       ),
       body: FutureBuilder<List<MealPlanModel>>(
-        future: fetchMealPlansByCalories(totalCalories, type, disease),
+        future: fetchMealPlansByCalories(name),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -61,7 +61,7 @@ class MealPlanDaysScreen extends StatelessWidget {
                 daysCard(
                   day: dayEntry.key,
                   calories: mealPlans.first.totalCalories.toString(),
-                  type: mealPlans.first.type.toString(),
+                  name: mealPlans.first.name.toString(),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -85,7 +85,7 @@ class MealPlanDaysScreen extends StatelessWidget {
 Widget daysCard({
   required String day,
   String? calories,
-  String? type,
+  String? name,
   required VoidCallback onPressed,
 }) {
   return Card(
@@ -102,7 +102,7 @@ Widget daysCard({
             style: MyTextStyle.subTitleStyle14(),
           ),
           subtitle: Text(
-              type!,
+              name!,
             style: MyTextStyle.subTitleStyle14(),
           ),
           trailing:  Icon(Icons.arrow_forward, size: 28.sp,),
@@ -114,30 +114,61 @@ Widget daysCard({
 }
 
 Future<List<MealPlanModel>> fetchMealPlansByCalories(
-    int totalCalories, String type, String disease) async {
+    String name) async {
   try {
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection('meal_plans')
-        .where('type', isEqualTo: type)
-        .where('disease', isEqualTo: disease)
+        .where('name', isEqualTo: name)
+    //.where('disease', isEqualTo: disease)
         .get();
 
     List<MealPlanModel> mealPlans = querySnapshot.docs.map((doc) {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
       return MealPlanModel.fromJson(doc.id, data);
     }).toList();
+    return [mealPlans.first];
 
-    if (mealPlans.isNotEmpty) {
-      mealPlans
-          .sort((a, b) => (a.totalCalories - totalCalories).abs().compareTo(
-                (b.totalCalories - totalCalories).abs(),
-              ));
-      return [mealPlans.first];
-    } else {
-      return [];
-    }
+    // if (mealPlans.isNotEmpty) {
+    //   mealPlans
+    //       .sort((a, b) => (a.totalCalories - totalCalories).abs().compareTo(
+    //             (b.totalCalories - totalCalories).abs(),
+    //           ));
+    //   return [mealPlans.first];
+    // } else {
+    //   return [];
+    // }
   } catch (e) {
     print('Error fetching meal plans: $e');
     return [];
   }
 }
+
+// Future<List<MealPlanModel>> fetchMealPlansByCalories(
+//     int totalCalories, String name, String disease) async {
+//   try {
+//     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+//         .collection('meal_plans')
+//         .where('name', isEqualTo: type)
+//         //.where('disease', isEqualTo: disease)
+//         .get();
+//
+//     List<MealPlanModel> mealPlans = querySnapshot.docs.map((doc) {
+//       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+//       return MealPlanModel.fromJson(doc.id, data);
+//     }).toList();
+//     return [mealPlans.first];
+//
+//     // if (mealPlans.isNotEmpty) {
+//     //   mealPlans
+//     //       .sort((a, b) => (a.totalCalories - totalCalories).abs().compareTo(
+//     //             (b.totalCalories - totalCalories).abs(),
+//     //           ));
+//     //   return [mealPlans.first];
+//     // } else {
+//     //   return [];
+//     // }
+//   } catch (e) {
+//     print('Error fetching meal plans: $e');
+//     return [];
+//   }
+// }

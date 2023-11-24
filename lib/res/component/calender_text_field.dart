@@ -23,7 +23,7 @@ class CalendarTextField extends StatelessWidget {
       context: context,
       initialDate: DateTime(2006),
       firstDate: DateTime(1933),
-      lastDate: DateTime(2006),
+      lastDate: DateTime(2014),
     );
 
     if (picked != null) {

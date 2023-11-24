@@ -1,7 +1,6 @@
 abstract class AppStrings {
   AppStrings._();
 
-
   //Main Title
   static const String title = 'CoachBot';
 
@@ -20,6 +19,14 @@ abstract class AppStrings {
   static const String registerNow = 'Register now';
   static const String loginNow = 'Login now';
 
+  //Profile Form
+
+  //Finess Form
+
+  //Health Status Form
+  static const String yourMedicalCondition = 'Your Medical Condition';
+  static const String medicalConditionMessage =
+      'Share medical conditions or history for a personalized meal and workout plan.';
 
   //Dashboard Screen
   //Bottom Nav Bar
@@ -27,11 +34,5 @@ abstract class AppStrings {
   static const String myPlans = 'My Plans';
   static const String settings = 'Settings';
 
-
   static const String recommendedWorkouts = 'Recommended Workouts';
-
-
-
-
-
 }

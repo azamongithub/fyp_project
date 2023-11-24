@@ -6,7 +6,7 @@ import 'package:CoachBot/view/bottom_nav_tabs/plans_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../view/settings/settings_screen.dart';
+import '../../view/bottom_nav_tabs/settings_tab.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     Dashboard(),
     PlansTab(),
     AiTrainerTab(),
-    const SettingsScreen(),
+    const SettingsTab(),
     // StatsTab(),
   ];
 
@@ -50,7 +50,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 selectedIcon: Icon(Icons.home_outlined,
                     color: ColorUtil.themeColor, size: 35.sp),
                 label: AppStrings.dashboard,
-                //selectedIcon: Icon(Icons.home_outlined, color: Color(0xff3140b0), ),
+                //selectedIcon: Icon(Icons.home_outlined, color: Color(0xff3140b0)),
               ),
               NavigationDestination(
                 icon: Icon(Icons.edit_calendar_outlined,

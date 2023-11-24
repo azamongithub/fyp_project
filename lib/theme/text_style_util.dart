@@ -93,6 +93,35 @@ class MyTextStyle {
     );
   }
 
+  //For text 20
+  static TextStyle textStyle20({
+    Color? color,
+    FontWeight? fontWeight,
+    String? fontFamily,
+    double? fontSize,
+  }) {
+    return TextStyle(
+      color: ColorUtil.titleColor,
+      fontSize: 20.sp,
+      fontWeight: fontWeight,
+    );
+  }
+
+  //For text 22
+  static TextStyle textStyle22({
+    Color? color,
+    FontWeight? fontWeight,
+    String? fontFamily,
+    double? fontSize,
+  }) {
+    return TextStyle(
+      color: ColorUtil.titleColor,
+      fontSize: 22.sp,
+      fontWeight: fontWeight,
+    );
+  }
+
+
   //For text 24
   static TextStyle textStyle24({
     Color? color,

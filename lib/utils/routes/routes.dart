@@ -4,6 +4,7 @@ import 'package:CoachBot/view/account_details/account_details_screen.dart';
 import 'package:CoachBot/view/account_details/profile_details_tabs/fitness_details.dart';
 import 'package:CoachBot/view/account_details/profile_details_tabs/health_details.dart';
 import 'package:CoachBot/view/account_details/profile_details_tabs/profile_details.dart';
+import 'package:CoachBot/view/account_details/profile_details_tabs/profile_details_screen.dart';
 import 'package:CoachBot/view/bottom_nav_tabs/ai_trainer_tab.dart';
 import 'package:CoachBot/view/bottom_nav_tabs/meal_tab.dart';
 import 'package:CoachBot/view/bottom_nav_tabs/dashboard.dart';
@@ -15,9 +16,10 @@ import 'package:CoachBot/view/health_status_form/health_status_form.dart';
 import 'package:CoachBot/view/login/login_screen.dart';
 import 'package:CoachBot/view/profile_form/profile_form.dart';
 import 'package:CoachBot/view/settings/forgot_password/forgot_password_screen.dart';
-import 'package:CoachBot/view/settings/settings_screen.dart';
+import 'package:CoachBot/view/bottom_nav_tabs/settings_tab.dart';
 import 'package:CoachBot/view/signup/signup_screen.dart';
 import 'package:CoachBot/view/splash/splash_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Routes {
@@ -26,54 +28,56 @@ class Routes {
     switch (routs.name) {
 
       case RouteName.SplashScreen:
-        return MaterialPageRoute(builder: (_) => const SplashScreen());
+        return CupertinoPageRoute(builder: (_) => const SplashScreen());
       case RouteName.SignupForm:
-        return MaterialPageRoute(builder: (_) => SignupForm());
+        return CupertinoPageRoute(builder: (_) => const SignupForm());
       case RouteName.LoginForm:
-        return MaterialPageRoute(builder: (_) => const LoginForm());
+        return CupertinoPageRoute(builder: (_) => const LoginForm());
 
       case RouteName.ForgotPasswordScreen:
-        return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
+        return CupertinoPageRoute(builder: (_) => const ForgotPasswordScreen());
       case RouteName.ChangePasswordScreen:
-        return MaterialPageRoute(builder: (_) => ChangePasswordScreen());
-      case RouteName.AccountDetailsScreen:
-        return MaterialPageRoute(builder: (_) => const AccountDetailsScreen());
-      case RouteName.SettingsScreen:
-        return MaterialPageRoute(builder: (_) => const SettingsScreen());
+        return CupertinoPageRoute(builder: (_) => const ChangePasswordScreen());
+      // case RouteName.AccountDetailsScreen:
+      //   return CupertinoPageRoute(builder: (_) => const AccountDetailsScreen());
+
 
 
       case RouteName.BottomNavBar:
-        return MaterialPageRoute(builder: (_) => const BottomNavBar());
+        return CupertinoPageRoute(builder: (_) => const BottomNavBar());
 
       case RouteName.MyPlanTab:
-        return MaterialPageRoute(builder: (_) => Dashboard());
+        return CupertinoPageRoute(builder: (_) => Dashboard());
       case RouteName.WorkoutTab:
-        return MaterialPageRoute(builder: (_) => PlansTab());
+        return CupertinoPageRoute(builder: (_) => PlansTab());
       case RouteName.MealTab:
-        return MaterialPageRoute(builder: (_) => MealTab());
+        return CupertinoPageRoute(builder: (_) => MealTab());
       case RouteName.StatsTab:
-        return MaterialPageRoute(builder: (_) => StatsTab());
+        return CupertinoPageRoute(builder: (_) => const StatsTab());
       case RouteName.AiTrainerTab:
-        return MaterialPageRoute(builder: (_) => AiTrainerTab());
+        return CupertinoPageRoute(builder: (_) => AiTrainerTab());
+      case RouteName.SettingsTab:
+        return CupertinoPageRoute(builder: (_) => const SettingsTab());
 
       case RouteName.ProfileForm:
-        return MaterialPageRoute(builder: (_) => const ProfileForm());
+        return CupertinoPageRoute(builder: (_) => const ProfileForm());
       case RouteName.FitnessAnalyzerForm:
-        return MaterialPageRoute(builder: (_) => const FitnessAnalyzerForm());
+        return CupertinoPageRoute(builder: (_) => const FitnessAnalyzerForm());
       case RouteName.HealthStatusForm:
-        return MaterialPageRoute(builder: (_) => const HealthStatusForm());
+        return CupertinoPageRoute(builder: (_) => const HealthStatusForm());
 
 
-
-      case RouteName.PersonalDetails:
-        return MaterialPageRoute(builder: (_) => PersonalDetails());
-      case RouteName.FitnessDetails:
-        return MaterialPageRoute(builder: (_) => const FitnessDetails());
-      case RouteName.HealthDetails:
-        return MaterialPageRoute(builder: (_) => HealthDetails());
+      case RouteName.ProfileDetailsScreen:
+        return CupertinoPageRoute(builder: (_) => const ProfileDetailsScreen());
+      //   case RouteName.PersonalDetails:
+      //   return CupertinoPageRoute(builder: (_) => const PersonalDetails());
+      // case RouteName.FitnessDetails:
+      //   return CupertinoPageRoute(builder: (_) => const FitnessDetails());
+      // case RouteName.HealthDetails:
+      //   return CupertinoPageRoute(builder: (_) => const HealthDetails());
 
       default:
-        return MaterialPageRoute(builder: (_) {
+        return CupertinoPageRoute(builder: (_) {
           return Scaffold(
             body: Center(
               child: Text('No route defined for ${routs.name}'),

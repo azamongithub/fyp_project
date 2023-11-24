@@ -4,6 +4,7 @@ import 'package:CoachBot/view_model/signup/signup_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import '../../constants/assets_constants.dart';
 import '../../res/component/input_text_field.dart';
@@ -22,6 +23,9 @@ class SignupForm extends StatefulWidget {
 class _SignupFormState extends State<SignupForm> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  RegExp emailRegExp = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
+  RegExp passwordRegExp = RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$');
+
 
 
   final _formKey = GlobalKey<FormState>();
@@ -78,8 +82,19 @@ class _SignupFormState extends State<SignupForm> {
                                   keyBoardType: TextInputType.emailAddress,
                                   labelText: AppStrings.email,
                                   onValidator: (value) {
-                                    return value.isEmpty ? AppStrings.emptyEmail : null;
-                                  }),
+                                    if(value!.isEmpty){
+                                      return AppStrings.emptyEmail;
+                                    }
+                                    else if(!emailRegExp.hasMatch(value)){
+                                      return 'Invalid email format';
+                                    }
+                                    return null;
+
+
+                                   // return value.isEmpty ? AppStrings.emptyEmail : null;
+                                  }
+
+                                  ),
                               SizedBox(height: 30.h),
                               PasswordTextField(
                                 controller: passwordController,
@@ -88,6 +103,9 @@ class _SignupFormState extends State<SignupForm> {
                                   if (value!.isEmpty) {
                                     return AppStrings.emptyPassword;
                                   }
+                                  // else if(!passwordRegExp.hasMatch(value)){
+                                  //   return 'The password must be 8 characters and at least one number';
+                                  // }
                                   return null;
                                 },
                               ),

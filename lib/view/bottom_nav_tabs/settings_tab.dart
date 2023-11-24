@@ -1,5 +1,4 @@
 import 'package:CoachBot/res/component/reusable_list_tile.dart';
-import 'package:CoachBot/view/change_password/change_password_screen.dart';
 import 'package:CoachBot/view/login/login_screen.dart';
 import 'package:CoachBot/view/temp.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,10 +6,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../account_details/profile_details_screen12.dart';
+import '../../utils/routes/route_name.dart';
 
-class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+class SettingsTab extends StatelessWidget {
+  const SettingsTab({super.key});
   //final bool _isTapped = false;
   @override
   Widget build(BuildContext context) {
@@ -29,12 +28,12 @@ class SettingsScreen extends StatelessWidget {
                 title: "Profile",
                 iconData: FontAwesomeIcons.user,
                 onTap: () {
-                  // Navigator.pushNamed(context, RouteName.AccountDetailsScreen);
+                  Navigator.pushNamed(context, RouteName.ProfileDetailsScreen);
 
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ProfileDetailsScreen12()));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => const ProfileDetailsScreen()));
                 },
               ),
               ReusableListTile(
@@ -62,10 +61,11 @@ class SettingsScreen extends StatelessWidget {
                 title: 'Change Password',
                 iconData: Icons.lock_outline,
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ChangePasswordScreen()));
+                  Navigator.pushNamed(context, RouteName.ChangePasswordScreen);
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => ChangePasswordScreen()));
                 },
               ),
               ReusableListTile(

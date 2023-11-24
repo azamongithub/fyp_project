@@ -27,32 +27,32 @@ class _MealTabState extends State<MealTab> with TickerProviderStateMixin {
       appBar: AppBar(
         title: const Text('Nutrition'),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          TabBar(
-            controller: _tabController,
-            labelColor: Colors.white, // Set text color of selected tab
-            unselectedLabelColor: Colors.black, // Set text color of unselected tab
-            indicator: const BoxDecoration(
-              color: Colors.black, // Set background color of selected tab
-            ),
-            tabs: const [
-              Tab(text: 'Meal Plans'),
-              Tab(text: 'Recipes'),
-            ],
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                _buildMealPlansTab(),
-                _buildRecipesTab(),
-              ],
-            ),
-          ),
-        ],
-      ),
+      // body: Column(
+      //   crossAxisAlignment: CrossAxisAlignment.stretch,
+      //   children: [
+      //     TabBar(
+      //       controller: _tabController,
+      //       labelColor: Colors.white, // Set text color of selected tab
+      //       unselectedLabelColor: Colors.black, // Set text color of unselected tab
+      //       indicator: const BoxDecoration(
+      //         color: Colors.black, // Set background color of selected tab
+      //       ),
+      //       tabs: const [
+      //         Tab(text: 'Meal Plans'),
+      //         Tab(text: 'Recipes'),
+      //       ],
+      //     ),
+      //     Expanded(
+      //       child: TabBarView(
+      //         controller: _tabController,
+      //         children: [
+      //           _buildMealPlansTab(),
+      //           _buildRecipesTab(),
+      //         ],
+      //       ),
+      //     ),
+      //   ],
+      // ),
     );
   }
 

@@ -7,8 +7,9 @@ class RouteName {
   static const String ForgotPasswordScreen = 'forgotPasswordScreen';
   static const String ChangePasswordScreen = 'changePasswordScreen';
   static const String AccountDetailsScreen = 'accountDetailsScreen';
-  static const String SettingsScreen = 'settingsScreen';
+  static const String SettingsTab = 'settingsScreen';
 
+  static const String ProfileDetailsScreen = 'profileDetailsScreen';
   static const String ProfileForm = 'profileForm';
   static const String FitnessAnalyzerForm = 'fitnessAnalyzerForm';
   static const String HealthStatusForm = 'healthStatusForm';
@@ -22,8 +23,8 @@ class RouteName {
   static const String StatsTab = 'statsTab';
   static const String AiTrainerTab = 'aiTrainerTab';
 
-  static const String PersonalDetails = 'personalDetails';
-  static const String FitnessDetails = 'fitnessDetails';
-  static const String HealthDetails = 'healthDetails';
+  // static const String PersonalDetails = 'personalDetails';
+  // static const String FitnessDetails = 'fitnessDetails';
+  // static const String HealthDetails = 'healthDetails';
 
 }

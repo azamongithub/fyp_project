@@ -115,7 +115,7 @@ class _FitnessAnalyzerFormState extends State<FitnessAnalyzerForm> {
                         return 'Please enter your weight.';
                       }
                       double? weight = double.tryParse(value);
-                      if (weight == null || weight < 26 || weight > 500) {
+                      if (weight == null || weight < 26 || weight > 130) {
                         return 'Please enter a valid weight.';
                       }
                       return null;
@@ -182,15 +182,14 @@ class _FitnessAnalyzerFormState extends State<FitnessAnalyzerForm> {
                       }
                       double? calories = double.tryParse(value);
                       if (calories == null || calories < 1200 || calories > 4000) {
-                        return 'Please enter a valid height.';
+                        return 'Please enter a valid calories.';
                       }
                       return null;
                     }),
                 SizedBox(height: height * 0.02),
                 CustomTextField(
                     myController: _workoutController,
-                    keyBoardType:
-                    const TextInputType.numberWithOptions(decimal: true),
+                    keyBoardType: TextInputType.text,
                     labelText: 'Workout Name',
                     onValidator: (value) {
                       if (value!.isEmpty) {

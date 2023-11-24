@@ -31,6 +31,7 @@ class _ProfileFormState extends State<ProfileForm> {
   String? errorText;
   bool _isLoading = false;
   late DateTime _selectedDate;
+  RegExp nameRegExp = RegExp(r'^[a-zA-Z]{1,10}$');
 
   @override
   void dispose() {
@@ -236,6 +237,9 @@ class _ProfileFormState extends State<ProfileForm> {
                           if (value!.isEmpty) {
                             return 'Please enter your name.';
                           }
+                          else if(!nameRegExp.hasMatch(value)) {
+                            return 'Invalid name';
+                          }
                           return null;
                         },
                       ),
@@ -293,13 +297,11 @@ class _ProfileFormState extends State<ProfileForm> {
                         onTap: () {
                           if (_formKey.currentState!.validate()) {
                             if (_selectedGender != null) {
-                              // Gender is selected, proceed with saving profile details
                               setState(() {
                                 _isLoading = true;
                               });
                               _saveProfileDetails();
                             } else {
-                              // Gender is not selected, show toast message
                               Utils.positiveToastMessage("Please select your gender");
                             }
                           }

@@ -10,6 +10,7 @@ class SignUpController with ChangeNotifier {
   bool get loading => _loading;
   final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
 
+
   setLoading(bool value) {
     _loading = value;
     notifyListeners();
@@ -53,7 +54,7 @@ class SignUpController with ChangeNotifier {
       setLoading(false);
       Fluttertoast.showToast(
 
-          msg: "Some thing is wrong");
+          msg: "Some thing went wrong");
       print(e);
     }
   }

@@ -61,16 +61,14 @@ class PlansTab extends StatelessWidget {
                     title: 'Meal Plan',
                     description: 'Balanced eating made easy',
                     onPressed: () async {
-                      int totalCalories = retrievedCalories.toInt();
-                      String type = 'Low Caloric Diet';
-                      String disease = 'none';
+                      //int totalCalories = retrievedCalories.toInt();
+                      String name = 'Carb-Controlled Harmony';
+                      //String disease = 'none';
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => MealPlanDaysScreen(
-                              totalCalories: totalCalories,
-                              type: type,
-                              disease: disease),
+                              name: name),
                         ),
                       );
                     },

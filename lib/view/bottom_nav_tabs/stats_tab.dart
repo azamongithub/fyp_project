@@ -34,15 +34,14 @@ class _StatsTabState extends State<StatsTab> with TickerProviderStateMixin {
         children: [
           TabBar(
             controller: _tabController,
-            labelColor: Colors.white, // Set text color of selected tab
-            unselectedLabelColor: Colors.black, // Set text color of unselected tab
+            labelColor: Colors.white,
+            unselectedLabelColor: Colors.black,
             indicator: const BoxDecoration(
               color: Colors.black, // Set background color of selected tab
             ),
             tabs: const [
               Tab(text: 'Workouts'),
-              Tab(text: 'Measurements'),
-              Tab(text: 'Photos'),
+              Tab(text: 'Meals'),
             ],
           ),
           Expanded(
@@ -50,8 +49,7 @@ class _StatsTabState extends State<StatsTab> with TickerProviderStateMixin {
               controller: _tabController,
               children: [
                 _buildWorkoutsTab(),
-                _buildMeasurementsTab(),
-                _buildPhotosTab(),
+                _buildMealsTab(),
               ],
             ),
           ),
@@ -66,15 +64,9 @@ class _StatsTabState extends State<StatsTab> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildMeasurementsTab() {
+  Widget _buildMealsTab() {
     return const Center(
-      child: Text('Measurements Tab'),
-    );
-  }
-
-  Widget _buildPhotosTab() {
-    return const Center(
-      child: Text('Photos Tab'),
+      child: Text('Meals Tab'),
     );
   }
 }

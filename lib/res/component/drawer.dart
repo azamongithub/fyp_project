@@ -1,7 +1,7 @@
 // import 'package:CoachBot/res/component/reusable_list_tile.dart';
 // import 'package:CoachBot/view/Workouts/workout_screen.dart';
 // import 'package:CoachBot/view/login/login_screen.dart';
-// import 'package:CoachBot/view/settings/settings_screen.dart';
+// import 'package:CoachBot/view/settings/settings_tab.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:flutter/material.dart';
