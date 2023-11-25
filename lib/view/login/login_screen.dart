@@ -5,12 +5,14 @@ import 'package:CoachBot/theme/text_style_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import '../../res/component/input_text_field.dart';
 import '../../res/component/password_text_field.dart';
 import '../../res/component/custom_button.dart';
 import '../../utils/routes/route_name.dart';
 import '../../view_model/login/login_controller.dart';
+import '../signup/signup_screen.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -22,8 +24,8 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
   final _formKey = GlobalKey<FormState>();
+  final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
 
   @override
   void dispose() {
@@ -114,15 +116,14 @@ class _LoginFormState extends State<LoginForm> {
                       child: Consumer<LoginController>(
                           builder: (context, provider, child) {
                         return CustomButton(
-                          title: AppStrings.loginButton,
-                          loading: provider.loading,
-                          onTap: () {
-                            if (_formKey.currentState!.validate()) {
-                              provider.login(context, emailController.text,
-                                  passwordController.text);
-                            }
-                          },
-                        );
+                            title: AppStrings.loginButton,
+                            loading: provider.loading,
+                            onTap: () {
+                              if (_formKey.currentState!.validate()) {
+                                provider.login(context, emailController.text,
+                                    passwordController.text);
+                              }
+                            });
                       })),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -134,7 +135,11 @@ class _LoginFormState extends State<LoginForm> {
                         //   primary: const Color(0xff3140b0),
                         // ),
                         onPressed: () {
-                          Navigator.pushNamed(context, RouteName.SignupForm);
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            RouteName.SignupForm,
+                                (route) => false,
+                          );
                         },
                         child: const Text(
                           AppStrings.registerNow,

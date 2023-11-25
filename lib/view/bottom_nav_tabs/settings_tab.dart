@@ -29,34 +29,33 @@ class SettingsTab extends StatelessWidget {
                 iconData: FontAwesomeIcons.user,
                 onTap: () {
                   Navigator.pushNamed(context, RouteName.ProfileDetailsScreen);
-
                   // Navigator.push(
                   //     context,
                   //     MaterialPageRoute(
                   //         builder: (context) => const ProfileDetailsScreen()));
                 },
               ),
-              ReusableListTile(
-                title: 'Workouts',
-                iconData: FontAwesomeIcons.shieldHalved,
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => YoutubeVideoPlayerScreen()));
-                },
-              ),
-              ReusableListTile(
-                title: 'Get Premium',
-                iconData: FontAwesomeIcons.crown,
-                onTap: () {
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => SubscriptionScreen())
-                  // );
-                },
-              ),
+              // ReusableListTile(
+              //   title: 'Workouts',
+              //   iconData: FontAwesomeIcons.shieldHalved,
+              //   onTap: () {
+              //     Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //             builder: (context) => YoutubeVideoPlayerScreen()));
+              //   },
+              // ),
+              // ReusableListTile(
+              //   title: 'Get Premium',
+              //   iconData: FontAwesomeIcons.crown,
+              //   onTap: () {
+              //     // Navigator.push(
+              //     //     context,
+              //     //     MaterialPageRoute(
+              //     //         builder: (context) => SubscriptionScreen())
+              //     // );
+              //   },
+              // ),
               ReusableListTile(
                 title: 'Change Password',
                 iconData: Icons.lock_outline,

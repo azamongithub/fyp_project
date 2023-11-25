@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import '../../res/component/bottom_nav_bar.dart';
 import '../../utils/routes/route_name.dart';
 
 class LoginController with ChangeNotifier {
@@ -24,10 +23,14 @@ class LoginController with ChangeNotifier {
         password: password,
       );
       var authCredential = userCredential.user;
-      print(authCredential!.uid);
-      if (authCredential.uid.isNotEmpty) {
+      //authCredential!.uid;
+      if (authCredential!.uid.isNotEmpty) {
         setLoading(false);
-        Navigator.pushReplacementNamed(context, RouteName.BottomNavBar);
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          RouteName.BottomNavBar,
+              (route) => false,
+        );
       } else {
         setLoading(false);
         Fluttertoast.showToast(msg: "Something is wrong");
@@ -39,7 +42,8 @@ class LoginController with ChangeNotifier {
       } else if (e.code == 'wrong-password') {
         setLoading(false);
         Fluttertoast.showToast(msg: "Wrong password provided for that user.");
-      } else if (!emailRegex.hasMatch(email)) {
+      }
+      else if (!emailRegex.hasMatch(email)) {
         setLoading(false);
         Fluttertoast.showToast(msg: "Invalid email format");
       }

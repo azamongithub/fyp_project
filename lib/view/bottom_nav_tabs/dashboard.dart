@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../models/meal_plan_model.dart';
+import '../../utils/routes/route_name.dart';
 import '../nutrition_facts/find_nutrition_facts_screen.dart';
 import '../workout/find_workout_screen.dart';
 
@@ -396,11 +397,12 @@ class _DashboardState extends State<Dashboard> {
                       const SizedBox(height: 10),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => FindWorkoutsScreen()),
-                          );
+                          Navigator.pushNamed(context, RouteName.FindWorkoutsScreen);
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //       builder: (context) => FindWorkoutsScreen()),
+                          // );
                         },
                         child: const Text('View Workouts'),
                       ),
@@ -427,12 +429,13 @@ class _DashboardState extends State<Dashboard> {
                       const SizedBox(height: 10),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    FindNutritionFactsScreen()),
-                          );
+                          Navigator.pushNamed(context, RouteName.FindNutritionFactsScreen);
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //       builder: (context) =>
+                          //           FindNutritionFactsScreen()),
+                          // );
                         },
                         child: const Text('Nutrition Facts'),
                       ),

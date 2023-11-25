@@ -54,7 +54,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       'Forgot Password',
                       style: TextStyle(
                           fontSize: 25,
-                          fontFamily: 'Rubik-Medium',
                           color: Color(0xff203142)),
                     ),
                   ),
@@ -64,7 +63,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     'Enter your email for the verification process. we will send you the reset passsword link to your email',
                     style: TextStyle(
                         fontSize: 15,
-                        fontFamily: 'Rubik-Medium',
                         color: Color(0xff203142)),
                   )),
                   SizedBox(height: height * 0.04),
@@ -112,7 +110,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         "Back to Login",
                         style: TextStyle(
                             fontSize: 15,
-                            fontFamily: 'Rubik-Medium',
                             color: Color(0xff3140b0)),
                       )),
                 ],

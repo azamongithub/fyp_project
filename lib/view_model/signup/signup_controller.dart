@@ -11,6 +11,7 @@ class SignUpController with ChangeNotifier {
   final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
 
 
+
   setLoading(bool value) {
     _loading = value;
     notifyListeners();
@@ -28,7 +29,15 @@ class SignUpController with ChangeNotifier {
       if (authCredential.uid.isNotEmpty) {
         setLoading(false);
         Fluttertoast.showToast(msg: "Your Account Created Successfully");
-        Navigator.pushReplacementNamed(context, RouteName.ProfileForm);
+
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          RouteName.ProfileForm,
+              (route) => false,
+        );
+
+
+        // Navigator.pushReplacementNamed(context, RouteName.ProfileForm);
       } else {
         setLoading(false);
         Fluttertoast.showToast(msg: "Something is wrong");

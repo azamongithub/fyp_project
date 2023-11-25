@@ -132,7 +132,11 @@ class _SignupFormState extends State<SignupForm> {
                                 foregroundColor: ColorUtil.themeColor,
                               ),
                               onPressed: () {
-                                Navigator.pushNamed(context, RouteName.LoginForm);
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  RouteName.LoginForm,
+                                      (route) => false,
+                                );
                               },
                               child: const Text(AppStrings.loginNow,
                                 style: TextStyle(

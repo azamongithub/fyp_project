@@ -12,37 +12,30 @@ import '../../models/user_model.dart';
 import '../../res/component/custom_card.dart';
 import '../../utils/utils.dart';
 
-class HealthStatusForm extends StatefulWidget {
-  const HealthStatusForm({super.key});
+class FitnessGoalForm extends StatefulWidget {
+  const FitnessGoalForm({super.key});
 
   @override
-  _HealthStatusFormState createState() => _HealthStatusFormState();
+  _FitnessGoalFormState createState() => _FitnessGoalFormState();
 }
 
-class _HealthStatusFormState extends State<HealthStatusForm> {
+class _FitnessGoalFormState extends State<FitnessGoalForm> {
   bool _isLoading = false;
-  List<String> selectedHealthIssues = [];
-
-  // bool isDiabetesSelected = false;
-  // bool isHypercholesterolemiaSelected = false;
-  // bool isCeliacSelected = false;
-  // bool isGoutSelected = false;
-  // bool isNoneSelected = false;
-  String? _selectedDisease;
+  String? _selectedGoal;
   String? errorText;
 
-  Future<void> _saveHealthDetails() async {
+  Future<void> _saveFitnessGoalDetails() async {
     try {
       final user = FirebaseAuth.instance.currentUser;
-      final healthData = {
+      final FitnessGoalData = {
         'email': user!.email,
-        'disease': _selectedDisease,
+        'fitnessGoal': _selectedGoal,
       };
 
       await FirebaseFirestore.instance
-          .collection('UserHealthCollection/HealthData')
+          .collection('UserGoalCollection')
           .doc(user!.uid)
-          .set(healthData);
+          .set(FitnessGoalData);
     } catch (e) {
       print(e.toString());
     } finally {
@@ -68,54 +61,36 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
             SizedBox(height: 10.h),
             Center(
                 child: Text(
-                  'Select any one to find your health status',
+                  'Select your Fitness Goal',
                   style: MyTextStyle.textStyle22(
                     fontWeight: FontWeight.w600,
                   ),
                 )),
             SizedBox(height: 30.h),
             CustomCard(
-                title: 'Diabetes',
-                isSelected: _selectedDisease == 'Diabetes',
+                title: 'Muscle Building',
+                isSelected: _selectedGoal == 'Muscle Building',
                 onTap: () {
                   setState(() {
-                    _selectedDisease = 'Diabetes';
+                    _selectedGoal = 'Muscle Building';
                     errorText = null;
                   });
                 }),
             CustomCard(
-                title: 'Hypercholesterolemia',
-                isSelected: _selectedDisease == 'Hypercholesterolemia',
+                title: 'Weight Loss',
+                isSelected: _selectedGoal == 'Weight Loss',
                 onTap: () {
                   setState(() {
-                    _selectedDisease = 'Hypercholesterolemia';
+                    _selectedGoal = 'Weight Loss';
                     errorText = null;
                   });
                 }),
             CustomCard(
-                title: 'Celiac',
-                isSelected: _selectedDisease == 'Celiac',
+                title: 'Weight Gain',
+                isSelected: _selectedGoal == 'Weight Gain',
                 onTap: () {
                   setState(() {
-                    _selectedDisease = 'Celiac';
-                    errorText = null;
-                  });
-                }),
-            CustomCard(
-                title: 'Gout',
-                isSelected: _selectedDisease == 'Gout',
-                onTap: () {
-                  setState(() {
-                    _selectedDisease = 'Gout';
-                    errorText = null;
-                  });
-                }),
-            CustomCard(
-                title: 'None',
-                isSelected: _selectedDisease == 'None',
-                onTap: () {
-                  setState(() {
-                    _selectedDisease = 'None';
+                    _selectedGoal = 'Weight Gain';
                     errorText = null;
                   });
                 }),
@@ -124,23 +99,19 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
               title: 'Continue',
               loading: _isLoading,
               onTap: () {
-                if (_selectedDisease != null) {
+                if (_selectedGoal != null) {
                   setState(() {
                     _isLoading = true;
                   });
                   addUserDataToFirestore(
                     UserModel(
-                      disease: _selectedDisease,
+                      fitnessGoal: _selectedGoal,
                     ),
                   );
-                  _saveHealthDetails();
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    RouteName.BottomNavBar,
-                        (route) => false,
-                  );
+                  _saveFitnessGoalDetails();
+                  Navigator.pushNamed(context, RouteName.HealthStatusForm);
                 } else {
-                  Utils.positiveToastMessage("Please select any one of them");
+                  Utils.positiveToastMessage("Please select your Fitness Goal");
                 }
               },
             )

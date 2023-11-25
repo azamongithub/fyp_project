@@ -12,7 +12,7 @@ class CustomCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 10.h),
+      padding: EdgeInsets.symmetric(vertical: 10.h),
       child: GestureDetector(
         onTap: onTap,
         child: Card(
@@ -31,10 +31,10 @@ class CustomCard extends StatelessWidget {
               ),
             ),
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 15.h),
+              padding: EdgeInsets.symmetric(horizontal: 13.w, vertical: 15.h),
               child: Text(
                 title,
-                style: MyTextStyle.textStyle24(), // Update with your text style
+                style: MyTextStyle.textStyle22(), // Update with your text style
               ),
             ),
           ),

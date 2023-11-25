@@ -22,6 +22,12 @@ import 'package:CoachBot/view/splash/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../view/all_meal_plans/meal_plan_days_screen.dart';
+import '../../view/all_meal_plans/meal_plan_details_screen.dart';
+import '../../view/fitness_goal_form/fitness_goal_form.dart';
+import '../../view/nutrition_facts/find_nutrition_facts_screen.dart';
+import '../../view/workout/find_workout_screen.dart';
+
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings routs) {
     //final arguments = routs.arguments;
@@ -63,19 +69,40 @@ class Routes {
         return CupertinoPageRoute(builder: (_) => const ProfileForm());
       case RouteName.FitnessAnalyzerForm:
         return CupertinoPageRoute(builder: (_) => const FitnessAnalyzerForm());
+      case RouteName.FitnessGoalForm:
+        return CupertinoPageRoute(builder: (_) => const FitnessGoalForm());
       case RouteName.HealthStatusForm:
         return CupertinoPageRoute(builder: (_) => const HealthStatusForm());
 
 
       case RouteName.ProfileDetailsScreen:
         return CupertinoPageRoute(builder: (_) => const ProfileDetailsScreen());
-      //   case RouteName.PersonalDetails:
-      //   return CupertinoPageRoute(builder: (_) => const PersonalDetails());
-      // case RouteName.FitnessDetails:
-      //   return CupertinoPageRoute(builder: (_) => const FitnessDetails());
-      // case RouteName.HealthDetails:
-      //   return CupertinoPageRoute(builder: (_) => const HealthDetails());
 
+      case RouteName.MealPlanDetailsScreen:
+        final argsItem = routs.arguments as Map<String, dynamic>;
+        final String day = argsItem['day'];
+        final Map<String, dynamic> dayDetails = argsItem['dayDetails'];
+        return CupertinoPageRoute(
+          builder: (_) => MealPlanDetailsScreen(
+            day: day,
+            dayDetails: dayDetails,
+          ),
+        );
+
+      case RouteName.MealPlanDaysScreen:
+        final argsItem = routs.arguments as Map<String, dynamic>;
+        final String name = argsItem['name'];
+        return CupertinoPageRoute(
+          builder: (_) => MealPlanDaysScreen(
+            name: name,
+          ),
+        );
+
+      case RouteName.FindWorkoutsScreen:
+        return CupertinoPageRoute(builder: (_) => FindWorkoutsScreen());
+
+        case RouteName.FindNutritionFactsScreen:
+        return CupertinoPageRoute(builder: (_) => FindNutritionFactsScreen());
       default:
         return CupertinoPageRoute(builder: (_) {
           return Scaffold(

@@ -5,7 +5,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../helper_classes/firebase_helper.dart';
+import '../../models/user_model.dart';
 import '../../res/component/custom_button.dart';
+import '../../theme/text_style_util.dart';
 
 class FitnessAnalyzerForm extends StatefulWidget {
   const FitnessAnalyzerForm({super.key});
@@ -17,23 +21,23 @@ class FitnessAnalyzerForm extends StatefulWidget {
 class _FitnessAnalyzerFormState extends State<FitnessAnalyzerForm> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _weightController = TextEditingController();
-  final TextEditingController _heightController = TextEditingController();
-  final List<String> _fitnessGoal = ['Muscle Building', 'Weight Gain', 'Weight Loss'];
   final TextEditingController _caloriesController = TextEditingController();
   final TextEditingController _workoutController = TextEditingController();
 
-  String? _selectedFitnessGoal;
+  List<int> feetOptions = [3, 4, 5, 6, 7, 8];
+  List<int> inchesOptions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  int selectedFeet = 4;
+  int selectedInch = 9;
   double bmi = 0;
   bool _isLoading = false;
   String? bmiCategory;
 
-  void calculateBMI() {
+  void calculateBMI(double heightInCm) {
     double weight = double.tryParse(_weightController.text) ?? 0;
-    double height = double.tryParse(_heightController.text) ?? 0;
 
-    if (weight != 0 && height != 0) {
+    if (weight != 0 && heightInCm != 0) {
       setState(() {
-        bmi = weight / ((height / 100) * (height / 100));
+        bmi = weight / ((heightInCm / 100) * (heightInCm / 100));
         if (bmi < 18.5) {
           bmiCategory = 'Underweight';
         } else if (bmi >= 18.5 && bmi < 25) {
@@ -47,6 +51,7 @@ class _FitnessAnalyzerFormState extends State<FitnessAnalyzerForm> {
     } else {
       setState(() {
         bmi = 0;
+        bmiCategory = 'Not Found';
       });
     }
   }
@@ -54,22 +59,28 @@ class _FitnessAnalyzerFormState extends State<FitnessAnalyzerForm> {
   Future<void> _saveFitnessDetails() async {
     try {
       final user = FirebaseAuth.instance.currentUser;
+
+      int totalInches = selectedFeet * 12 + selectedInch;
+      double totalFeet = totalInches / 12;
+      double heightInCm = totalFeet * 30.48;
+
+
       final fitnessData = {
         'email': user!.email,
         'weight': _weightController.text,
-        'height': _heightController.text,
-        'fitnessGoal': _selectedFitnessGoal,
+        'height': totalFeet,
+        'heightInCm': heightInCm,
         'bmi': bmi,
         'bmiCategory': bmiCategory,
         'calories': _caloriesController.text,
         'workout': _workoutController.text,
       };
-      calculateBMI();
+      calculateBMI(heightInCm);
       await FirebaseFirestore.instance
           .collection('UserFitnessCollection')
           .doc(user!.uid)
           .set(fitnessData);
-      Navigator.pushNamed(context, RouteName.HealthStatusForm);
+      Navigator.pushNamed(context, RouteName.FitnessGoalForm);
     } catch (e) {
       if (kDebugMode) {
         Utils.negativeToastMessage('Error');
@@ -81,15 +92,9 @@ class _FitnessAnalyzerFormState extends State<FitnessAnalyzerForm> {
       });
     }
   }
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  // }
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height * 1;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Fitness Details'),
@@ -102,14 +107,25 @@ class _FitnessAnalyzerFormState extends State<FitnessAnalyzerForm> {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SizedBox(height: height * 0.01),
+                SizedBox(height: 10.h),
+                Center(
+                    child: Text(
+                      'Enter required inputs to find your fitness level',
+                      style: MyTextStyle.textStyle22(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    )),
+                SizedBox(height: 40.h),
                 CustomTextField(
                     myController: _weightController,
-                    keyBoardType:
-                        const TextInputType.numberWithOptions(decimal: true),
+                    keyBoardType: TextInputType.number,
                     labelText: 'Weight (kg)',
+                    onChange: (value) {
+                      calculateBMI(((selectedFeet * 12 + selectedInch) / 12 ) * 30.48);
+                    },
                     onValidator: (value) {
                       if (value!.isEmpty) {
                         return 'Please enter your weight.';
@@ -118,63 +134,174 @@ class _FitnessAnalyzerFormState extends State<FitnessAnalyzerForm> {
                       if (weight == null || weight < 26 || weight > 130) {
                         return 'Please enter a valid weight.';
                       }
+                      calculateBMI(((selectedFeet * 12 + selectedInch) / 12 ) * 30.48);
                       return null;
                     }),
-                SizedBox(height: height * 0.02),
-                CustomTextField(
-                    myController: _heightController,
-                    keyBoardType:
-                        const TextInputType.numberWithOptions(decimal: true),
-                    labelText: 'Height (cm)',
-                    onValidator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter your height.';
-                      }
-                      double? height = double.tryParse(value);
-                      if (height == null || height < 50 || height > 280) {
-                        return 'Please enter a valid height.';
-                      }
-                      return null;
-                    }),
+                SizedBox(height: 30.h),
+                Row(
+                  children: [
+                    Expanded(
+                      child:
+                      DropdownButtonFormField<int>(
+                        value: selectedFeet,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedFeet = value!;
+                          });
+                        },
+                        items: feetOptions.map((feet) {
+                          return DropdownMenuItem<int>(
+                            value: feet,
+                            child: Text('$feet\''),
+                          );
+                        }).toList(),
+                        decoration: const InputDecoration(
+                          labelText: 'Height (Feet)',
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                        // Expanded(
+                        //   child: DropdownButtonFormField<int>(
+                        //     value: null,
+                        //     onChanged: (value) {
+                        //       setState(() {
+                        //         selectedInch = value!;
+                        //       });
+                        //     },
+                        //     items: inchesOptions
+                        //         .map((inch) => DropdownMenuItem<int>(
+                        //       value: inch,
+                        //       child: Text('$inch"'),
+                        //     ))
+                        //         .toList(),
+                        //     decoration: InputDecoration(
+                        //       labelText: 'Height (Inches)',
+                        //     ),
+                        //   ),
+                        // ),
+                    Expanded(
+                      child:
+                      DropdownButtonFormField<int>(
+                        value: selectedInch,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedInch = value!;
+                          });
+                        },
+                        items: inchesOptions.map((inch) {
+                          return DropdownMenuItem<int>(
+                            value: inch,
+                            child: Text('$inch"'),
+                          );
+                        }).toList(),
+                        decoration: const InputDecoration(
+                          labelText: 'Height (Inches)',
+                        ),
+                      ),
 
-                SizedBox(height: height * 0.02),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey,
+
                     ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: DropdownButtonFormField<String>(
-                    decoration: const InputDecoration(
-                      labelText: 'Fitness Goal',
-                    ),
-                    value: _selectedFitnessGoal,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _selectedFitnessGoal = newValue;
-                      });
-                    },
-                    items: _fitnessGoal.map((fitnessGoal) {
-                      return DropdownMenuItem<String>(
-                        value: fitnessGoal,
-                        child: Text(fitnessGoal),
-                      );
-                    }).toList(),
-                    validator: (value) {
-                      if (value == null) {
-                        return 'Please select your fitness goal.';
-                      }
-                      return null;
-                    },
-                  ),
+                  ],
                 ),
-                SizedBox(height: height * 0.02),
+
+
+
+
+
+
+
+                // Row(
+                //   children: [
+                //     Expanded(
+                //       child: DropdownButtonFormField<int>(
+                //         value: selectedFeet,
+                //         onChanged: (value) {
+                //           setState(() {
+                //             selectedFeet = value!;
+                //           });
+                //         },
+                //         items: feetOptions.map((feet) {
+                //           return DropdownMenuItem<int>(
+                //             value: feet,
+                //             child: Text('$feet\''),
+                //           );
+                //         }).toList(),
+                //         decoration: InputDecoration(
+                //           labelText: 'Height (Feet)',
+                //         ),
+                //       ),
+                //     ),
+                //     SizedBox(width: 16),
+                //     Expanded(
+                //       child: DropdownButtonFormField<double>(
+                //         value: null, // Set value to null
+                //         onChanged: (value) {
+                //           setState(() {
+                //             selectedInchDecimal = value!;
+                //           });
+                //         },
+                //         items: inchesOptions
+                //             .map((inch) => DropdownMenuItem<double>(
+                //           value: inch.toDouble(),
+                //           child: Text('$inch"'),
+                //         ))
+                //             .toList(),
+                //         decoration: InputDecoration(
+                //           labelText: 'Height (Inches)',
+                //         ),
+                //       ),
+                //     ),
+                //
+                //
+                //
+                //
+                //
+                //
+                //   ],
+                // ),
+
+
+
+
+
+                SizedBox(height: 30.h),
+                // Container(
+                //   padding: const EdgeInsets.symmetric(horizontal: 8),
+                //   decoration: BoxDecoration(
+                //     border: Border.all(
+                //       color: Colors.grey,
+                //     ),
+                //     borderRadius: BorderRadius.circular(8.0),
+                //   ),
+                //   child: DropdownButtonFormField<String>(
+                //     decoration: const InputDecoration(
+                //       labelText: 'Fitness Goal',
+                //     ),
+                //     value: _selectedFitnessGoal,
+                //     onChanged: (newValue) {
+                //       setState(() {
+                //         _selectedFitnessGoal = newValue;
+                //       });
+                //     },
+                //     items: _fitnessGoal.map((fitnessGoal) {
+                //       return DropdownMenuItem<String>(
+                //         value: fitnessGoal,
+                //         child: Text(fitnessGoal),
+                //       );
+                //     }).toList(),
+                //     validator: (value) {
+                //       if (value == null) {
+                //         return 'Please select your fitness goal.';
+                //       }
+                //       return null;
+                //     },
+                //   ),
+                // ),
+                // SizedBox(height: 30.h),
                 CustomTextField(
                     myController: _caloriesController,
-                    keyBoardType:
-                    const TextInputType.numberWithOptions(decimal: true),
+                    keyBoardType: TextInputType.number,
                     labelText: 'Calories Required',
                     onValidator: (value) {
                       if (value!.isEmpty) {
@@ -186,7 +313,7 @@ class _FitnessAnalyzerFormState extends State<FitnessAnalyzerForm> {
                       }
                       return null;
                     }),
-                SizedBox(height: height * 0.02),
+                SizedBox(height: 30.h),
                 CustomTextField(
                     myController: _workoutController,
                     keyBoardType: TextInputType.text,
@@ -197,39 +324,7 @@ class _FitnessAnalyzerFormState extends State<FitnessAnalyzerForm> {
                       }
                       return null;
                     }),
-                // Container(
-                //   padding: const EdgeInsets.symmetric(horizontal: 8),
-                //   decoration: BoxDecoration(
-                //     border: Border.all(
-                //       color: Colors.grey,
-                //     ),
-                //     borderRadius: BorderRadius.circular(8.0),
-                //   ),
-                //   child: DropdownButtonFormField<String>(
-                //     decoration: const InputDecoration(
-                //       labelText: 'Food Preferences',
-                //     ),
-                //     value: _selectedFoodPreferences,
-                //     onChanged: (newValue) {
-                //       setState(() {
-                //         _selectedFoodPreferences = newValue;
-                //       });
-                //     },
-                //     items: _foodPreferences.map((foodPreference) {
-                //       return DropdownMenuItem<String>(
-                //         value: foodPreference,
-                //         child: Text(foodPreference),
-                //       );
-                //     }).toList(),
-                //     validator: (value) {
-                //       if (value == null) {
-                //         return 'Please select your food preference.';
-                //       }
-                //       return null;
-                //     },
-                //   ),
-                // ),
-                const SizedBox(height: 16.0),
+                SizedBox(height: 60.h),
                 CustomButton(
                   title: 'Continue',
                   loading: _isLoading,
@@ -238,27 +333,18 @@ class _FitnessAnalyzerFormState extends State<FitnessAnalyzerForm> {
                       setState(() {
                         _isLoading = true;
                       });
+                      addUserDataToFirestore(
+                        UserModel(
+                          weight: _weightController.text,
+                          calories: _caloriesController.text,
+                          workoutName: _workoutController.text,
+                        ),
+                      );
+
                       _saveFitnessDetails();
                     }
                   },
                 ),
-                // ChangeNotifierProvider(
-                //     create: (_) => FitnessController(),
-                //     child: Consumer<FitnessController>(
-                //         builder: (context, provider, child) {
-                //       return RoundButton(
-                //         title: 'Continue',
-                //         loading: _isLoading,
-                //         onTap: () {
-                //           if (_formKey.currentState!.validate()) {
-                //             setState(() {
-                //               _isLoading = true;
-                //             });
-                //             _saveFitnessDetails();
-                //           }
-                //         },
-                //       );
-                //     }))
               ],
             ),
           ),

@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../../../res/component/input_text_field.dart';
+import '../../helper_classes/firebase_helper.dart';
+import '../../models/user_model.dart';
 import '../../res/component/calender_text_field.dart';
 
 class ProfileForm extends StatefulWidget {
@@ -32,6 +34,8 @@ class _ProfileFormState extends State<ProfileForm> {
   bool _isLoading = false;
   late DateTime _selectedDate;
   RegExp nameRegExp = RegExp(r'^[a-zA-Z]{1,10}$');
+
+  final user = FirebaseAuth.instance.currentUser;
 
   @override
   void dispose() {
@@ -96,7 +100,6 @@ class _ProfileFormState extends State<ProfileForm> {
           .collection('UserProfileCollection')
           .doc(user.uid)
           .set(profileData);
-
       Navigator.pushNamed(context, RouteName.FitnessAnalyzerForm);
     } catch (e) {
       if (kDebugMode) {
@@ -111,7 +114,6 @@ class _ProfileFormState extends State<ProfileForm> {
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height * 1;
     return ChangeNotifierProvider(
       create: (_) => ProfileController(),
       child: Consumer<ProfileController>(
@@ -228,7 +230,7 @@ class _ProfileFormState extends State<ProfileForm> {
                           ),
                         ],
                       ),
-                      SizedBox(height: height * 0.05),
+                      SizedBox(height: 30.h),
                       CustomTextField(
                         myController: nameController,
                         keyBoardType: TextInputType.name,
@@ -243,7 +245,7 @@ class _ProfileFormState extends State<ProfileForm> {
                           return null;
                         },
                       ),
-                      SizedBox(height: height * 0.05),
+                      SizedBox(height: 30.h),
                       CalendarTextField(
                         calenderController: dateOfBirthController,
                         labelText: 'Date of birth',
@@ -256,41 +258,7 @@ class _ProfileFormState extends State<ProfileForm> {
                         },
                         onDateSelected: _onDateSelected,
                       ),
-                      // ),
-                      SizedBox(height: height * 0.02),
-                      // Container(
-                      //   padding: const EdgeInsets.symmetric(horizontal: 8),
-                      //   decoration: BoxDecoration(
-                      //     border: Border.all(
-                      //       color: Colors.grey,
-                      //     ),
-                      //     borderRadius: BorderRadius.circular(8.0),
-                      //   ),
-                      //   child: DropdownButtonFormField<String>(
-                      //     decoration: const InputDecoration(
-                      //       labelText: 'Gender',
-                      //     ),
-                      //     value: _selectedGender,
-                      //     onChanged: (newValue) {
-                      //       setState(() {
-                      //         _selectedGender = newValue;
-                      //       });
-                      //     },
-                      //     items: _genders.map((gender) {
-                      //       return DropdownMenuItem<String>(
-                      //         value: gender,
-                      //         child: Text(gender),
-                      //       );
-                      //     }).toList(),
-                      //     validator: (value) {
-                      //       if (value == null) {
-                      //         return 'Please select your gender.';
-                      //       }
-                      //       return null;
-                      //     },
-                      //   ),
-                      // ),
-                      SizedBox(height: height * 0.04),
+                      SizedBox(height: 70.h),
                       CustomButton(
                         title: 'Continue',
                         loading: _isLoading,
@@ -300,14 +268,20 @@ class _ProfileFormState extends State<ProfileForm> {
                               setState(() {
                                 _isLoading = true;
                               });
+                              addUserDataToFirestore(
+                                UserModel(
+                                  id: user!.uid,
+                                  email: user!.email,
+                                  name: nameController.text,
+                                ),
+                              );
                               _saveProfileDetails();
                             } else {
                               Utils.positiveToastMessage("Please select your gender");
                             }
                           }
                         },
-                      )
-
+                      ),
                     ],
                   ),
                 ),
@@ -319,135 +293,3 @@ class _ProfileFormState extends State<ProfileForm> {
     );
   }
 }
-
-//
-//
-// import 'package:CoachBot/res/component/custom_button.dart';
-// import 'package:CoachBot/utils/routes/route_name.dart';
-// import 'package:CoachBot/view_model/profile/profile_controller.dart';
-// import 'package:CoachBot/view_model/profile/profile_form_controller.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter/foundation.dart';
-// import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
-// import '../../../res/component/input_text_field.dart';
-// import '../../res/component/calender_text_field.dart';
-//
-// class ProfileForm extends StatefulWidget {
-//   const ProfileForm({Key? key}) : super(key: key);
-//
-//   @override
-//   _ProfileFormState createState() => _ProfileFormState();
-// }
-//
-// class _ProfileFormState extends State<ProfileForm> {
-//   final _formKey = GlobalKey<FormState>();
-//   final List<String> _genders = ['Male', 'Female'];
-//   bool _isLoading = false;
-//   String? newSelectedGender;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final height = MediaQuery.of(context).size.height * 1;
-//     return Consumer2<ProfileController, ProfileFormController>(
-//       builder: (context, profileController, profileFormController, _) {
-//         return Scaffold(
-//           appBar: AppBar(
-//             title: const Text('Your Personal Details'),
-//             backgroundColor: const Color(0xff3140b0),
-//             automaticallyImplyLeading: false,
-//           ),
-//           body: SingleChildScrollView(
-//             child: Form(
-//               key: _formKey,
-//               child: Padding(
-//                 padding: const EdgeInsets.all(16.0),
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: <Widget>[
-//                     SizedBox(height: height * 0.01),
-//                     InputTextField(
-//                       myController: profileFormController.nameController,
-//                       keyBoardType: TextInputType.name,
-//                       labelText: 'Name',
-//                       onValidator: (value) {
-//                         if (value!.isEmpty) {
-//                           return 'Please enter your name.';
-//                         }
-//                         return null;
-//                       },
-//                     ),
-//                     SizedBox(height: height * 0.02),
-//                     CalendarTextField(
-//                       calenderController: profileFormController.dateOfBirthController,
-//                       labelText: 'Date of birth',
-//                       //calenderField: 'Date of birth',
-//                       calenderValidationText:
-//                       "Please select your date of birth",
-//                       onDateSelected: profileFormController.selectedDate,
-//                     ),
-//                     // ),
-//                     SizedBox(height: height * 0.02),
-//                     Container(
-//                       padding: const EdgeInsets.symmetric(horizontal: 8),
-//                       decoration: BoxDecoration(
-//                         border: Border.all(
-//                           color: Colors.grey,
-//                         ),
-//                         borderRadius: BorderRadius.circular(8.0),
-//                       ),
-//                       child: DropdownButtonFormField<String>(
-//                         decoration: const InputDecoration(
-//                           labelText: 'Gender',
-//                         ),
-//                         value: profileFormController.selectedGender,
-//                         onChanged: (newValue) {
-//                           //setState(() {
-//                           newSelectedGender = newValue;
-//                           // profileFormController.selectedGender = newValue;
-//                           // });
-//                         },
-//                         items: _genders.map((gender) {
-//                           return DropdownMenuItem<String>(
-//                             value: gender,
-//                             child: Text(gender),
-//                           );
-//                         }).toList(),
-//                         validator: (value) {
-//                           if (value == null) {
-//                             return 'Please select your gender.';
-//                           }
-//                           return null;
-//                         },
-//                       ),
-//                     ),
-//                     SizedBox(height: height * 0.04),
-//                     CustomButton(
-//                       title: 'Continue',
-//                       loading: _isLoading,
-//                       onTap: () {
-//                         if (_formKey.currentState!.validate()) {
-//                           setState(() {
-//                             _isLoading = true;
-//                           });
-//                           profileFormController.saveProfileDetails();
-//                           Navigator.pushNamed(context, RouteName.FitnessAnalyzerForm);
-//                           // int age = calculateAge(date);
-//                           // ageController.text = age.toString();
-//                           //
-//                           // // Update the age group
-//                           // findAgeGroup(age);
-//                         }
-//                       },
-//                     )
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }

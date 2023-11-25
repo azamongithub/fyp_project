@@ -1,3 +1,4 @@
+import 'package:CoachBot/utils/routes/route_name.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -63,15 +64,24 @@ class MealPlanDaysScreen extends StatelessWidget {
                   calories: mealPlans.first.totalCalories.toString(),
                   name: mealPlans.first.name.toString(),
                   onPressed: () {
-                    Navigator.push(
+
+                    Navigator.pushNamed(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => MealPlanDetailsScreen(
-                          day: dayEntry.key,
-                          dayDetails: dayEntry.value,
-                        ),
-                      ),
+                      RouteName.MealPlanDetailsScreen,
+                      arguments: {
+                        'day': dayEntry.key,
+                        'dayDetails': dayEntry.value,
+                      },
                     );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => MealPlanDetailsScreen(
+                    //       day: dayEntry.key,
+                    //       dayDetails: dayEntry.value,
+                    //     ),
+                    //   ),
+                    // );
                   },
                 ),
             ],

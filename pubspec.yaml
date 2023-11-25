@@ -108,10 +108,18 @@ flutter:
       fonts:
         - asset: assets/fonts/ConcertOne-Regular.ttf
 
+    - family: 'Poppins-Regular'
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins-Regular.ttf
+          weight: 700
+          style: italic
+
     - family: 'Roboto-Black'
       fonts:
-#        - asset: assets/fonts/Roboto-Black.ttf
-#        - asset: assets/fonts/Roboto-Medium.ttf
         - asset: assets/fonts/Roboto-Regular.ttf
 
 

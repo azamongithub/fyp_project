@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import '../../utils/routes/route_name.dart';
 import '../all_meal_plans/meal_plan_days_screen.dart';
 class PlansTab extends StatelessWidget {
   late double retrievedCalories;
@@ -64,13 +65,20 @@ class PlansTab extends StatelessWidget {
                       //int totalCalories = retrievedCalories.toInt();
                       String name = 'Carb-Controlled Harmony';
                       //String disease = 'none';
-                      Navigator.push(
+                      Navigator.pushNamed(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => MealPlanDaysScreen(
-                              name: name),
-                        ),
+                        RouteName.MealPlanDaysScreen,
+                        arguments: {
+                          'name': name,
+                        },
                       );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => MealPlanDaysScreen(
+                      //         name: name),
+                      //   ),
+                      // );
                     },
                   ),
                   // Add more workout cards as needed

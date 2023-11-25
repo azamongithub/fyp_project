@@ -12,7 +12,6 @@ class ProfileDetailsScreen extends StatefulWidget {
 
 class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> with TickerProviderStateMixin {
   late TabController _tabController;
-
   @override
   void initState() {
     super.initState();

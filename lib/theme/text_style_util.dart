@@ -30,6 +30,7 @@ class MyTextStyle {
       color: ColorUtil.titleColor,
       fontSize: 32.sp,
       fontWeight: FontWeight.bold,
+
     );
   }
 
