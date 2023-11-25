@@ -81,7 +81,7 @@ class _ProfileFormState extends State<ProfileForm> {
     });
   }
 
-  Future<void> _saveProfileDetails() async {
+  Future<void> saveProfileDetails() async {
     try {
       final user = FirebaseAuth.instance.currentUser;
       int age = calculateAge(_selectedDate);
@@ -268,14 +268,7 @@ class _ProfileFormState extends State<ProfileForm> {
                               setState(() {
                                 _isLoading = true;
                               });
-                              addUserDataToFirestore(
-                                UserModel(
-                                  id: user!.uid,
-                                  email: user!.email,
-                                  name: nameController.text,
-                                ),
-                              );
-                              _saveProfileDetails();
+                              saveProfileDetails();
                             } else {
                               Utils.positiveToastMessage("Please select your gender");
                             }

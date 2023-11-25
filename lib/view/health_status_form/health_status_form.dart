@@ -31,7 +31,7 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
   String? _selectedDisease;
   String? errorText;
 
-  Future<void> _saveHealthDetails() async {
+  Future<void> saveHealthDetails() async {
     try {
       final user = FirebaseAuth.instance.currentUser;
       final healthData = {
@@ -128,12 +128,7 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                   setState(() {
                     _isLoading = true;
                   });
-                  addUserDataToFirestore(
-                    UserModel(
-                      disease: _selectedDisease,
-                    ),
-                  );
-                  _saveHealthDetails();
+                  saveHealthDetails();
                   Navigator.pushNamedAndRemoveUntil(
                     context,
                     RouteName.BottomNavBar,

@@ -49,8 +49,10 @@ class _SignupFormState extends State<SignupForm> {
         title: const Center(child: Text(AppStrings.title)),
       ),
       body: SafeArea(
-        child: Padding(padding: EdgeInsets.all(4),
-        child: ChangeNotifierProvider(create: (_) => SignUpController(),
+        child: Padding(
+            padding: EdgeInsets.all(4),
+        child: ChangeNotifierProvider(
+          create: (_) => SignUpController(),
           child: Consumer<SignUpController>(
             builder: (context , provider, child){
               return SingleChildScrollView(

@@ -1,9 +1,5 @@
 import 'package:CoachBot/res/component/bottom_nav_bar.dart';
 import 'package:CoachBot/utils/routes/route_name.dart';
-import 'package:CoachBot/view/account_details/account_details_screen.dart';
-import 'package:CoachBot/view/account_details/profile_details_tabs/fitness_details.dart';
-import 'package:CoachBot/view/account_details/profile_details_tabs/health_details.dart';
-import 'package:CoachBot/view/account_details/profile_details_tabs/profile_details.dart';
 import 'package:CoachBot/view/account_details/profile_details_tabs/profile_details_screen.dart';
 import 'package:CoachBot/view/bottom_nav_tabs/ai_trainer_tab.dart';
 import 'package:CoachBot/view/bottom_nav_tabs/meal_tab.dart';
@@ -21,10 +17,8 @@ import 'package:CoachBot/view/signup/signup_screen.dart';
 import 'package:CoachBot/view/splash/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../view/all_meal_plans/meal_plan_days_screen.dart';
 import '../../view/all_meal_plans/meal_plan_details_screen.dart';
-import '../../view/fitness_goal_form/fitness_goal_form.dart';
 import '../../view/nutrition_facts/find_nutrition_facts_screen.dart';
 import '../../view/workout/find_workout_screen.dart';
 
@@ -69,8 +63,6 @@ class Routes {
         return CupertinoPageRoute(builder: (_) => const ProfileForm());
       case RouteName.FitnessAnalyzerForm:
         return CupertinoPageRoute(builder: (_) => const FitnessAnalyzerForm());
-      case RouteName.FitnessGoalForm:
-        return CupertinoPageRoute(builder: (_) => const FitnessGoalForm());
       case RouteName.HealthStatusForm:
         return CupertinoPageRoute(builder: (_) => const HealthStatusForm());
 

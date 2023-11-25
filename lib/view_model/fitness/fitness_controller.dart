@@ -1,6 +1,7 @@
 import 'package:CoachBot/res/component/input_text_field.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/utils.dart';
@@ -9,6 +10,24 @@ class FitnessController with ChangeNotifier {
   final TextEditingController heightController = TextEditingController();
   final TextEditingController weightController = TextEditingController();
   String? _selectedValue;
+
+
+
+  final TextEditingController _weightController = TextEditingController();
+  final TextEditingController _caloriesController = TextEditingController();
+  final TextEditingController _workoutController = TextEditingController();
+  final List<String> _fitnessGoal = ['Muscle Building', 'Weight Gain', 'Weight Loss'];
+  String? _selectedFitnessGoal;
+
+  List<int> feetOptions = [3, 4, 5, 6, 7, 8];
+  List<int> inchesOptions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  int selectedFeet = 4;
+  int selectedInch = 9;
+  double bmi = 0;
+  bool _isLoading = false;
+  String? bmiCategory;
+
+
 
   final user = FirebaseAuth.instance.currentUser;
 

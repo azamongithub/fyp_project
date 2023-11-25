@@ -19,7 +19,6 @@ class RouteName {
   static const String ProfileDetailsScreen = 'profileDetailsScreen';
   static const String ProfileForm = 'profileForm';
   static const String FitnessAnalyzerForm = 'fitnessAnalyzerForm';
-  static const String FitnessGoalForm = 'fitnessGoalForm';
   static const String HealthStatusForm = 'healthStatusForm';
 
 
