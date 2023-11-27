@@ -1,5 +1,7 @@
 // import 'package:CoachBot/res/component/reusable_list_tile.dart';
 // import 'package:CoachBot/utils/routes/route_name.dart';
+// import 'package:CoachBot/view/account_details/profile_details_tabs/fitness_details.dart';
+// import 'package:CoachBot/view/account_details/profile_details_tabs/profile_details.dart';
 // import 'package:flutter/material.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 //

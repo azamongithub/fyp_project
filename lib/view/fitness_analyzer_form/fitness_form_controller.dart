@@ -1,3 +1,4 @@
+import 'package:CoachBot/constants/app_string_constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,7 +17,11 @@ class FitnessFormController extends ChangeNotifier {
   int selectedFeet = 4;
   int selectedInch = 9;
   String? selectedFitnessGoal;
-  List<String> fitnessGoal = ['Muscle Building', 'Weight Gain', 'Weight Loss'];
+  List<String> fitnessGoal = [
+    AppStrings.muscleBuilding,
+    AppStrings.weightGain,
+    AppStrings.weightLoss
+  ];
   double bmi = 0;
   String? bmiCategory;
   bool isLoading = false;
@@ -53,18 +58,18 @@ class FitnessFormController extends ChangeNotifier {
     if (weight != 0 && heightInCm != 0) {
       bmi = weight / ((heightInCm / 100) * (heightInCm / 100));
       if (bmi < 18.5) {
-        bmiCategory = 'Underweight';
+        bmiCategory = AppStrings.underweight;
       } else if (bmi >= 18.5 && bmi < 25) {
-        bmiCategory = 'Normal weight';
+        bmiCategory = AppStrings.normalWeight;
       } else if (bmi >= 25 && bmi < 30) {
-        bmiCategory = 'Overweight';
+        bmiCategory = AppStrings.overweight;
       } else if (bmi >= 30) {
-        bmiCategory = 'Obesity';
+        bmiCategory = AppStrings.obesity;
       }
       notifyListeners();
     } else {
       bmi = 0;
-      bmiCategory = 'Not Found';
+      bmiCategory = AppStrings.fitnessCategoryNotDefined;
       notifyListeners();
     }
   }

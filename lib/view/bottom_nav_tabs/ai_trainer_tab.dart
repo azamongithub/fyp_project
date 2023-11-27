@@ -1,4 +1,3 @@
-import 'package:CoachBot/res/component/drawer.dart';
 import 'package:flutter/material.dart';
 
 class AiTrainerTab extends StatelessWidget {
@@ -73,30 +72,3 @@ class AiTrainerTab extends StatelessWidget {
     );
   }
 }
-
-
-
-
-// import 'package:flutter/material.dart';
-//
-// import '../../res/component/drawer.dart';
-//
-// class AiTrainerTab extends StatefulWidget {
-//   @override
-//   _AiTrainerTabState createState() => _AiTrainerTabState();
-// }
-//
-// class _AiTrainerTabState extends State<AiTrainerTab> {
-//
-//
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('AI Trainer'),
-//       ),
-//       drawer: AppDrawer(),
-//     );
-//   }
-// }

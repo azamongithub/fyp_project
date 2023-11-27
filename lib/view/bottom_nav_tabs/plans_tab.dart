@@ -1,13 +1,16 @@
+import 'package:CoachBot/constants/app_string_constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../utils/routes/route_name.dart';
-import '../all_meal_plans/meal_plan_days_screen.dart';
-class PlansTab extends StatelessWidget {
-  late double retrievedCalories;
 
- PlansTab({super.key});
+class PlansTab extends StatelessWidget {
+  late final double retrievedCalories;
+
+  PlansTab({super.key}) {
+    // throw UnimplementedError();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +19,9 @@ class PlansTab extends StatelessWidget {
     Future<void> fetchCalories() async {
       try {
         CollectionReference userFitnessCollection =
-        FirebaseFirestore.instance.collection('UserFitnessCollection');
+            FirebaseFirestore.instance.collection('UserFitnessCollection');
         DocumentSnapshot userSnapshot =
-        await userFitnessCollection.doc(user!.uid).get();
+            await userFitnessCollection.doc(user!.uid).get();
         retrievedCalories = double.parse(userSnapshot['calories']);
         if (kDebugMode) {
           print('Calories: $retrievedCalories');
@@ -29,10 +32,11 @@ class PlansTab extends StatelessWidget {
         }
       }
     }
+
     fetchCalories();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Plans'),
+        title: const Text(AppStrings.myPlans),
         automaticallyImplyLeading: false,
       ),
       body: Padding(
@@ -41,7 +45,7 @@ class PlansTab extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const Text(
-              'Your Customized Plans',
+              AppStrings.customizedPlans,
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -52,15 +56,15 @@ class PlansTab extends StatelessWidget {
               child: ListView(
                 children: [
                   myPlansCard(
-                    title: 'Workout Plan',
-                    description: 'High-intensity cardio workout',
+                    title: AppStrings.workoutPlan,
+                    description: AppStrings.checkWorkoutPlan,
                     onPressed: () {
                       // Action when Cardio Blast workout is selected
                     },
                   ),
                   myPlansCard(
-                    title: 'Meal Plan',
-                    description: 'Balanced eating made easy',
+                    title: AppStrings.mealPlan,
+                    description: AppStrings.checkMealPlan,
                     onPressed: () async {
                       //int totalCalories = retrievedCalories.toInt();
                       String name = 'Carb-Controlled Harmony';
@@ -92,20 +96,17 @@ class PlansTab extends StatelessWidget {
   }
 }
 
-
-
-  Widget myPlansCard({
-    required String title,
-    required String description,
-    required VoidCallback onPressed,
-  }) {
-    return Card(
-      child: ListTile(
-        title: Text(title),
-        subtitle: Text(description),
-        trailing: const Icon(Icons.arrow_forward),
-        onTap: onPressed,
-      ),
-    );
-  }
-
+Widget myPlansCard({
+  required String title,
+  required String description,
+  required VoidCallback onPressed,
+}) {
+  return Card(
+    child: ListTile(
+      title: Text(title),
+      subtitle: Text(description),
+      trailing: const Icon(Icons.arrow_forward),
+      onTap: onPressed,
+    ),
+  );
+}

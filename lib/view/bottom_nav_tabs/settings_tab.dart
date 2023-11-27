@@ -1,6 +1,5 @@
 import 'package:CoachBot/res/component/reusable_list_tile.dart';
 import 'package:CoachBot/view/login/login_screen.dart';
-import 'package:CoachBot/view/temp.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

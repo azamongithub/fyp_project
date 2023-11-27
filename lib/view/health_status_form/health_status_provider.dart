@@ -7,11 +7,7 @@ import '../../view_model/services/shared_preferences_helper.dart';
 class HealthFormController extends ChangeNotifier {
   bool isLoading = false;
   String? selectedDisease;
-
   bool _isHealthCompleted = false;
-
-  // Other health-related state or methods
-
   bool get isHealthCompleted => _isHealthCompleted;
 
   void setHealthCompleted() {
@@ -41,9 +37,7 @@ class HealthFormController extends ChangeNotifier {
           .collection('UserHealthCollection')
           .doc(user!.uid)
           .set(healthData);
-      // setHealthCompleted();
       await SharedPreferencesHelper.setHealthCompleted(true);
-
     } catch (e) {
       print(e.toString());
     } finally {

@@ -43,27 +43,7 @@ class FindNutritionFactsScreen extends StatelessWidget {
                       if (value == null) {}
                     },
                   ),
-                  SizedBox(height: 20.h),
-                  // CustomButton(
-                  //     title: 'Search',
-                  //     loading: nutritionProvider.loading,
-                  //     onTap: () {
-                  //       String query = _itemController.text;
-                  //       if (query.isNotEmpty) {
-                  //         Provider.of<NutritionDataProvider>(context,
-                  //                 listen: false)
-                  //             .fetchNutritionFactsData(query);
-                  //       }
-                  //     }),
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     isLoading = true;
-                  //
-                  //   },
-                  //   child: const Text('Search'),
-                  // ),
-
-                  SizedBox(height: 50.h),
+                  SizedBox(height: 70.h),
                   hasError
                       ? const Center(
                           child: Text('searching...'),

@@ -41,7 +41,7 @@ class _LoginFormState extends State<LoginForm> {
         appBar: AppBar(
           backgroundColor: ColorUtil.themeColor,
           automaticallyImplyLeading: false,
-          title: const Center(child: Text(AppStrings.title)),
+          title: const Center(child: Text(AppStrings.appName)),
         ),
         body: SafeArea(
           child: SingleChildScrollView(

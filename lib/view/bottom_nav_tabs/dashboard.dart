@@ -139,8 +139,6 @@ class _DashboardState extends State<Dashboard> {
                mergeUserDataByType();
                mergeUserData();
 
-
-
                 MealPlanModel mealPlan = MealPlanModel(
                   id: 'carb-controlled-harmony-diabetes',
                   name: 'Carb-Controlled Harmony',
@@ -536,49 +534,3 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 }
-
-// import 'package:firebase_project/res/component/drawer.dart';
-// import 'package:flutter/material.dart';
-//
-// class MyPlanTab extends StatefulWidget {
-//   static const String id = 'home_screen';
-//   static const String id2 = 'schedule';
-//   const MyPlanTab({Key? key}) : super(key: key);
-//
-//   @override
-//   State<MyPlanTab> createState() => _MyPlanTabState();
-// }
-//
-// class _MyPlanTabState extends State<MyPlanTab> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//        title: const Text('Home'),
-//       ),
-//       drawer: const AppDrawer(),
-//       body: Column(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         //crossAxisAlignment: CrossAxisAlignment.center,
-//         children: [
-//
-//           const Center(
-//             child: Text('This is a Home Screen'),
-//           ),
-//
-//           Center(
-//             child: TextButton(
-//               onPressed: (){
-//                 Navigator.pushNamed(context,MyPlanTab.id2);
-//               },
-//               child: const Text('Go to Schedule'),
-//
-//             ),
-//
-//           )
-//         ],
-//       ),
-//
-//     );
-//   }
-// }

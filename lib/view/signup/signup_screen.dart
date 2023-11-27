@@ -4,7 +4,6 @@ import 'package:CoachBot/view_model/signup/signup_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import '../../constants/assets_constants.dart';
 import '../../res/component/input_text_field.dart';
@@ -46,7 +45,7 @@ class _SignupFormState extends State<SignupForm> {
       appBar: AppBar(
         backgroundColor: ColorUtil.themeColor,
         automaticallyImplyLeading: false,
-        title: const Center(child: Text(AppStrings.title)),
+        title: const Center(child: Text(AppStrings.appName)),
       ),
       body: SafeArea(
         child: Padding(
