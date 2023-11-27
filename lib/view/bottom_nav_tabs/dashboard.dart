@@ -2,12 +2,11 @@ import 'package:CoachBot/constants/app_string_constants.dart';
 import 'package:CoachBot/notifications_services/notifications_services.dart';
 import 'package:CoachBot/theme/text_style_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../models/meal_plan_model.dart';
 import '../../utils/routes/route_name.dart';
-import '../nutrition_facts/find_nutrition_facts_screen.dart';
-import '../workout/find_workout_screen.dart';
 
 class Dashboard extends StatefulWidget {
   Dashboard({super.key});
@@ -22,7 +21,7 @@ class _DashboardState extends State<Dashboard> {
     // TODO: implement initState
     super.initState();
     notificationServices.requestNotificationPermission();
-    notificationServices.getDeviceToken().then((value) {
+    notificationServices.getDeviceToken().then((value) async {
       notificationServices.firebaseInit(context);
       notificationServices.setupInteractMessage(context);
       if (kDebugMode) {
@@ -55,6 +54,93 @@ class _DashboardState extends State<Dashboard> {
         actions: [
           ElevatedButton.icon(
               onPressed: () async {
+
+               Future<void> mergeUserDataByType() async {
+
+                  try {
+                    final user = FirebaseAuth.instance.currentUser;
+
+                    final profileData = await FirebaseFirestore.instance
+                        .collection('UserProfileCollection')
+                        .doc(user!.uid)
+                        .get();
+
+                    final fitnessData = await FirebaseFirestore.instance
+                        .collection('UserFitnessCollection')
+                        .doc(user.uid)
+                        .get();
+
+                    final healthData = await FirebaseFirestore.instance
+                        .collection('UserHealthCollection')
+                        .doc(user.uid)
+                        .get();
+
+                    final mergedData = {
+                      'profile': profileData.data(),
+                      'fitness': fitnessData.data(),
+                      'health': healthData.data(),
+                    };
+
+                    await FirebaseFirestore.instance
+                        .collection('UserCollection')
+                        .doc(user.uid)
+                        .set(mergedData);
+                    print('Merge successful!');
+                  } catch (e) {
+                    print(e.toString());
+                  }
+                }
+               Future<void> mergeUserData() async {
+
+                 try {
+                   final user = FirebaseAuth.instance.currentUser;
+
+                   final profileData = await FirebaseFirestore.instance
+                       .collection('UserProfileCollection')
+                       .doc(user!.uid)
+                       .get();
+
+                   final fitnessData = await FirebaseFirestore.instance
+                       .collection('UserFitnessCollection')
+                       .doc(user.uid)
+                       .get();
+
+                   final healthData = await FirebaseFirestore.instance
+                       .collection('UserHealthCollection')
+                       .doc(user.uid)
+                       .get();
+
+                   final userData = {
+                     'id': user.uid,
+                     'name': profileData['name'],
+                     'age': profileData['age'],
+                     'gender': profileData['gender'],
+                     'dateOfBirth': profileData['dateOfBirth'],
+                     'ageGroup': profileData['ageGroup'],
+                     'email': profileData['email'],
+                     'weight': fitnessData['weight'],
+                     'heightInCm': fitnessData['heightInCm'],
+                     'heightInFeet': fitnessData['heightInFeet'],
+                     'bmi': fitnessData['bmi'],
+                     'fitnessGoal': fitnessData['fitnessGoal'],
+                     'calories': fitnessData['calories'],
+                     'workout': fitnessData['workout'],
+                     'disease': healthData['disease'],
+                   };
+                   await FirebaseFirestore.instance
+                       .collection('AllUserCollection')
+                       .doc(user.uid)
+                       .set(userData);
+                   print('Merge successful!');
+                 } catch (e) {
+                   print(e.toString());
+                 }
+               }
+               mergeUserDataByType();
+               mergeUserData();
+
+
+
                 MealPlanModel mealPlan = MealPlanModel(
                   id: 'carb-controlled-harmony-diabetes',
                   name: 'Carb-Controlled Harmony',

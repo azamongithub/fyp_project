@@ -67,8 +67,8 @@ class Routes {
         return CupertinoPageRoute(builder: (_) => const HealthStatusForm());
 
 
-      case RouteName.ProfileDetailsScreen:
-        return CupertinoPageRoute(builder: (_) => const ProfileDetailsScreen());
+      // case RouteName.ProfileDetailsScreen:
+      //   return CupertinoPageRoute(builder: (_) => const ProfileDetailsScreen());
 
       case RouteName.MealPlanDetailsScreen:
         final argsItem = routs.arguments as Map<String, dynamic>;
