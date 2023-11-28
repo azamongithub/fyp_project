@@ -85,7 +85,7 @@ class _DashboardState extends State<Dashboard> {
                         .collection('UserCollection')
                         .doc(user.uid)
                         .set(mergedData);
-                    print('Merge successful!');
+                    print('UserCollection Merge successful!');
                   } catch (e) {
                     print(e.toString());
                   }
@@ -122,6 +122,7 @@ class _DashboardState extends State<Dashboard> {
                      'heightInCm': fitnessData['heightInCm'],
                      'heightInFeet': fitnessData['heightInFeet'],
                      'bmi': fitnessData['bmi'],
+                     'fitnessLevel': fitnessData['fitnessLevel'],
                      'fitnessGoal': fitnessData['fitnessGoal'],
                      'calories': fitnessData['calories'],
                      'workout': fitnessData['workout'],
@@ -131,7 +132,7 @@ class _DashboardState extends State<Dashboard> {
                        .collection('AllUserCollection')
                        .doc(user.uid)
                        .set(userData);
-                   print('Merge successful!');
+                   print('AllUserCollection Merge successful!');
                  } catch (e) {
                    print(e.toString());
                  }
@@ -481,7 +482,7 @@ class _DashboardState extends State<Dashboard> {
                       const SizedBox(height: 10),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, RouteName.FindWorkoutsScreen);
+                          Navigator.pushNamed(context, RouteName.findWorkoutsScreen);
                           // Navigator.push(
                           //   context,
                           //   MaterialPageRoute(
@@ -513,7 +514,7 @@ class _DashboardState extends State<Dashboard> {
                       const SizedBox(height: 10),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, RouteName.FindNutritionFactsScreen);
+                          Navigator.pushNamed(context, RouteName.findNutritionFactsScreen);
                           // Navigator.push(
                           //   context,
                           //   MaterialPageRoute(

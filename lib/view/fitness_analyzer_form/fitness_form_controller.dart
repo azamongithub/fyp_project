@@ -23,7 +23,7 @@ class FitnessFormController extends ChangeNotifier {
     AppStrings.weightLoss
   ];
   double bmi = 0;
-  String? bmiCategory;
+  String? fitnessLevel;
   bool isLoading = false;
 
   bool _isFitnessCompleted = false;
@@ -58,18 +58,18 @@ class FitnessFormController extends ChangeNotifier {
     if (weight != 0 && heightInCm != 0) {
       bmi = weight / ((heightInCm / 100) * (heightInCm / 100));
       if (bmi < 18.5) {
-        bmiCategory = AppStrings.underweight;
+        fitnessLevel = AppStrings.underWeight;
       } else if (bmi >= 18.5 && bmi < 25) {
-        bmiCategory = AppStrings.normalWeight;
+        fitnessLevel = AppStrings.normalWeight;
       } else if (bmi >= 25 && bmi < 30) {
-        bmiCategory = AppStrings.overweight;
+        fitnessLevel = AppStrings.overWeight;
       } else if (bmi >= 30) {
-        bmiCategory = AppStrings.obesity;
+        fitnessLevel = AppStrings.obesity;
       }
       notifyListeners();
     } else {
       bmi = 0;
-      bmiCategory = AppStrings.fitnessCategoryNotDefined;
+      fitnessLevel = AppStrings.fitnessCategoryNotDefined;
       notifyListeners();
     }
   }
@@ -88,7 +88,7 @@ class FitnessFormController extends ChangeNotifier {
         'heightInFeet': totalFeet.toString(),
         'heightInCm': heightInCm.toString(),
         'bmi': bmi,
-        'bmiCategory': bmiCategory,
+        'fitnessLevel': fitnessLevel,
         'fitnessGoal': selectedFitnessGoal,
         'calories': caloriesController.text,
         'workout': workoutController.text,
@@ -101,7 +101,7 @@ class FitnessFormController extends ChangeNotifier {
       //setFitnessCompleted();
 
       await SharedPreferencesHelper.setFitnessCompleted(true);
-      Navigator.pushNamed(context, RouteName.HealthStatusForm);
+      Navigator.pushNamed(context, RouteName.healthStatusForm);
     } catch (e) {
       Utils.negativeToastMessage('Error');
       if (kDebugMode) {

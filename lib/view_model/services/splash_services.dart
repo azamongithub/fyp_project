@@ -15,24 +15,24 @@ class SplashServices {
       SessionController().userId = user.uid.toString();
 
       if (!await SharedPreferencesHelper.isProfileCompleted()) {
-        Navigator.pushReplacementNamed(context, RouteName.ProfileForm);
+        Navigator.pushReplacementNamed(context, RouteName.profileForm);
         return;
       }
 
       if (!await SharedPreferencesHelper.isFitnessCompleted()) {
-        Navigator.pushReplacementNamed(context, RouteName.FitnessAnalyzerForm);
+        Navigator.pushReplacementNamed(context, RouteName.fitnessAnalyzerForm);
         return;
       }
 
       if (!await SharedPreferencesHelper.isHealthCompleted()) {
-        Navigator.pushReplacementNamed(context, RouteName.HealthStatusForm);
+        Navigator.pushReplacementNamed(context, RouteName.healthStatusForm);
         return;
       }
 
-      Navigator.pushReplacementNamed(context, RouteName.BottomNavBar);
+      Navigator.pushReplacementNamed(context, RouteName.bottomNavBar);
     } else {
       Timer(const Duration(seconds: 2),
-              () => Navigator.pushReplacementNamed(context, RouteName.LoginForm));
+              () => Navigator.pushReplacementNamed(context, RouteName.loginForm));
     }
   }
 }

@@ -28,7 +28,7 @@ class LoginController with ChangeNotifier {
         setLoading(false);
         Navigator.pushNamedAndRemoveUntil(
           context,
-          RouteName.BottomNavBar,
+          RouteName.bottomNavBar,
               (route) => false,
         );
       } else {

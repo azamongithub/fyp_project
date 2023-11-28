@@ -104,7 +104,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   SizedBox(height: height * 0.02),
                   InkWell(
                       onTap: () {
-                        Navigator.pushNamed(context, RouteName.LoginForm);
+                        Navigator.pushNamed(context, RouteName.loginForm);
                       },
                       child: const Text(
                         "Back to Login",

@@ -135,7 +135,7 @@ class _SignupFormState extends State<SignupForm> {
                               onPressed: () {
                                 Navigator.pushNamedAndRemoveUntil(
                                   context,
-                                  RouteName.LoginForm,
+                                  RouteName.loginForm,
                                       (route) => false,
                                 );
                               },

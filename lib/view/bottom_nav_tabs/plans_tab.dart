@@ -71,7 +71,7 @@ class PlansTab extends StatelessWidget {
                       //String disease = 'none';
                       Navigator.pushNamed(
                         context,
-                        RouteName.MealPlanDaysScreen,
+                        RouteName.mealPlanDaysScreen,
                         arguments: {
                           'name': name,
                         },

@@ -96,7 +96,7 @@ class _LoginFormState extends State<LoginForm> {
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(
-                              context, RouteName.ForgotPasswordScreen);
+                              context, RouteName.forgotPasswordScreen);
                         },
                         child: Text(
                           AppStrings.forgotPassword,
@@ -137,7 +137,7 @@ class _LoginFormState extends State<LoginForm> {
                         onPressed: () {
                           Navigator.pushNamedAndRemoveUntil(
                             context,
-                            RouteName.SignupForm,
+                            RouteName.signupForm,
                                 (route) => false,
                           );
                         },

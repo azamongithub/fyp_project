@@ -60,8 +60,13 @@ class MyApp extends StatelessWidget {
                 title: AppStrings.appName,
                         theme: ThemeData(
                           primarySwatch: Colors.indigo,
+                          textTheme: const TextTheme(
+                            bodyMedium: TextStyle(
+                              fontFamily: 'Poppins',
+                            ),
+                          ),
                         ),
-                        initialRoute: RouteName.SplashScreen,
+                        initialRoute: RouteName.splashScreen,
                         onGenerateRoute: Routes.generateRoute,
               ),
             );

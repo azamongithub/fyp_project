@@ -89,7 +89,7 @@ class ProfileFormController extends ChangeNotifier {
           .set(profileData);
 
       await SharedPreferencesHelper.setProfileCompleted(true);
-      Navigator.pushNamed(context, RouteName.FitnessAnalyzerForm);
+      Navigator.pushNamed(context, RouteName.fitnessAnalyzerForm);
 
     } finally {
       isLoading = false;

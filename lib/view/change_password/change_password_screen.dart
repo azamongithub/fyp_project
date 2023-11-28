@@ -1,3 +1,4 @@
+import 'package:CoachBot/constants/app_string_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:CoachBot/res/component/custom_button.dart';
@@ -72,10 +73,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 const SizedBox(height: 16.0),
                 PasswordTextField(
                   controller: _currentPasswordController,
-                  labelText: 'Current Password',
+                  labelText: AppStrings.currentPassLabel,
                   validator: (value) {
                     if (value?.isEmpty ?? false) {
-                      return 'Please enter your current password.';
+                      return AppStrings.enterCurrentPass;
                     }
                     return null;
                   },
@@ -83,14 +84,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 const SizedBox(height: 25.0),
                 PasswordTextField(
                   controller: _newPasswordController,
-                  labelText: 'New Password',
+                  labelText: AppStrings.newPassLabel,
                   validator: (value) {
                     if (value?.isEmpty ?? false) {
-                      return 'Please enter your new password.';
+                      return AppStrings.enterNewPass;
                     } else if (_currentPasswordController.text == _newPasswordController.text) {
-                      return 'New password should not be the same as the current password';
+                      return AppStrings.newPassNotEqualCurrentPass;
                     } else if (value!.length < 6) {
-                      return 'Password must be at least 6 characters';
+                      return AppStrings.passValidation;
                     }
                     return null;
                   },
@@ -98,20 +99,20 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 const SizedBox(height: 25.0),
                 PasswordTextField(
                   controller: _confirmPasswordController,
-                  labelText: 'Confirm Password',
+                  labelText: AppStrings.confirmPassLabel,
                   validator: (value) {
                     if (value?.isEmpty ?? false) {
-                      return 'Please confirm your new password.';
+                      return AppStrings.confirmNewPass;
                     }
                     if (value != _newPasswordController.text) {
-                      return 'Passwords do not match.';
+                      return AppStrings.passNotMatch;
                     }
                     return null;
                   },
                 ),
                 const SizedBox(height: 25.0),
                 CustomButton(
-                  title: 'Change Password',
+                  title: AppStrings.changePassBtn,
                   onTap: () {
                     if (_formKey.currentState?.validate() ?? false) {
                       _changePassword(context);

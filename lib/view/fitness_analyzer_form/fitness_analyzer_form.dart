@@ -51,11 +51,11 @@ class FitnessAnalyzerForm extends StatelessWidget {
                       },
                       onValidator: (value) {
                         if (value!.isEmpty) {
-                          return AppStrings.weightValidation;
+                          return AppStrings.enterWeight;
                         }
                         double? weight = double.tryParse(value);
                         if (weight == null || weight < 26 || weight > 130) {
-                          return AppStrings.validWeightValidation;
+                          return AppStrings.enterValidWeight;
                         }
                         provider.calculateBMI(((provider.selectedFeet * 12 +
                                     provider.selectedInch) /
@@ -129,7 +129,7 @@ class FitnessAnalyzerForm extends StatelessWidget {
                         }).toList(),
                         validator: (value) {
                           if (value == null) {
-                            return AppStrings.fitnessGoalValidation;
+                            return AppStrings.selectGoal;
                           }
                           return null;
                         },

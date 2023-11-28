@@ -1,3 +1,4 @@
+import 'package:CoachBot/constants/app_string_constants.dart';
 import 'package:CoachBot/res/component/trailing_list_tile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,7 +12,7 @@ class FitnessDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String bmiCategory = '';
+    String fitnessLevel = '';
     final user = FirebaseAuth.instance.currentUser;
     final userFitnessStream = FirebaseFirestore.instance
         .collection('UserFitnessCollection')
@@ -42,20 +43,20 @@ class FitnessDetails extends StatelessWidget {
               ? weight / ((height / 100) * (height / 100))
               : 0;
           if (bmi < 18.5) {
-            bmiCategory = 'Underweight';
+            fitnessLevel = AppStrings.underWeight;
           } else if (bmi >= 18.5 && bmi < 25) {
-            bmiCategory = 'Normal weight';
+            fitnessLevel = AppStrings.normalWeight;
           } else if (bmi >= 25 && bmi < 30) {
-            bmiCategory = 'Overweight';
+            fitnessLevel = AppStrings.overWeight;
           } else if (bmi >= 30) {
-            bmiCategory = 'Obesity';
+            fitnessLevel = AppStrings.obesity;
           }
           FirebaseFirestore.instance
               .collection('UserFitnessCollection')
               .doc(user!.uid)
               .update({
             'bmi': bmi,
-            'bmiCategory': bmiCategory,
+            'fitnessLevel': fitnessLevel,
           });
         }
 
@@ -114,7 +115,7 @@ class FitnessDetails extends StatelessWidget {
                             // },
                             child: TrailingListTile(
                               title: 'Category',
-                              trailing: Text(userData!['bmiCategory'] ?? ''),
+                              trailing: Text(userData!['fitnessLevel'] ?? ''),
                               iconData: FontAwesomeIcons.chartLine,
                             ),
                           ),

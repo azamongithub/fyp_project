@@ -67,7 +67,7 @@ class MealPlanDaysScreen extends StatelessWidget {
 
                     Navigator.pushNamed(
                       context,
-                      RouteName.MealPlanDetailsScreen,
+                      RouteName.mealPlanDetailsScreen,
                       arguments: {
                         'day': dayEntry.key,
                         'dayDetails': dayEntry.value,

@@ -86,11 +86,11 @@ class HealthStatusForm extends StatelessWidget {
                       // );
                       Navigator.pushNamedAndRemoveUntil(
                         context,
-                        RouteName.BottomNavBar,
+                        RouteName.bottomNavBar,
                             (route) => false,
                       );
                     } else {
-                      Utils.positiveToastMessage(AppStrings.inputDisease);
+                      Utils.positiveToastMessage(AppStrings.selectDisease);
                     }
                   },
                 ),

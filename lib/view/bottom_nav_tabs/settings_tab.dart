@@ -27,7 +27,7 @@ class SettingsTab extends StatelessWidget {
                 title: "Profile",
                 iconData: FontAwesomeIcons.user,
                 onTap: () {
-                  Navigator.pushNamed(context, RouteName.ProfileDetailsScreen);
+                  Navigator.pushNamed(context, RouteName.profileDetailsScreen);
                   // Navigator.push(
                   //     context,
                   //     MaterialPageRoute(
@@ -59,7 +59,7 @@ class SettingsTab extends StatelessWidget {
                 title: 'Change Password',
                 iconData: Icons.lock_outline,
                 onTap: () {
-                  Navigator.pushNamed(context, RouteName.ChangePasswordScreen);
+                  Navigator.pushNamed(context, RouteName.changePasswordScreen);
                   // Navigator.push(
                   //     context,
                   //     MaterialPageRoute(

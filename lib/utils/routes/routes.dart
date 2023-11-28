@@ -26,48 +26,48 @@ class Routes {
     //final arguments = routs.arguments;
     switch (routs.name) {
 
-      case RouteName.SplashScreen:
+      case RouteName.splashScreen:
         return CupertinoPageRoute(builder: (_) => const SplashScreen());
-      case RouteName.SignupForm:
+      case RouteName.signupForm:
         return CupertinoPageRoute(builder: (_) => const SignupForm());
-      case RouteName.LoginForm:
+      case RouteName.loginForm:
         return CupertinoPageRoute(builder: (_) => const LoginForm());
 
-      case RouteName.ForgotPasswordScreen:
+      case RouteName.forgotPasswordScreen:
         return CupertinoPageRoute(builder: (_) => const ForgotPasswordScreen());
-      case RouteName.ChangePasswordScreen:
+      case RouteName.changePasswordScreen:
         return CupertinoPageRoute(builder: (_) => ChangePasswordScreen());
       // case RouteName.AccountDetailsScreen:
       //   return CupertinoPageRoute(builder: (_) => const AccountDetailsScreen());
 
 
 
-      case RouteName.BottomNavBar:
+      case RouteName.bottomNavBar:
         return CupertinoPageRoute(builder: (_) => const BottomNavBar());
 
-      case RouteName.MyPlanTab:
+      case RouteName.myPlanTab:
         return CupertinoPageRoute(builder: (_) => Dashboard());
-      case RouteName.WorkoutTab:
+      case RouteName.workoutTab:
         return CupertinoPageRoute(builder: (_) => PlansTab());
-      case RouteName.StatsTab:
+      case RouteName.statsTab:
         return CupertinoPageRoute(builder: (_) => const StatsTab());
-      case RouteName.AiTrainerTab:
+      case RouteName.aiTrainerTab:
         return CupertinoPageRoute(builder: (_) => AiTrainerTab());
-      case RouteName.SettingsTab:
+      case RouteName.settingsTab:
         return CupertinoPageRoute(builder: (_) => const SettingsTab());
 
-      case RouteName.ProfileForm:
+      case RouteName.profileForm:
         return CupertinoPageRoute(builder: (_) => const ProfileForm());
-      case RouteName.FitnessAnalyzerForm:
+      case RouteName.fitnessAnalyzerForm:
         return CupertinoPageRoute(builder: (_) => const FitnessAnalyzerForm());
-      case RouteName.HealthStatusForm:
+      case RouteName.healthStatusForm:
         return CupertinoPageRoute(builder: (_) => const HealthStatusForm());
 
 
-      case RouteName.ProfileDetailsScreen:
+      case RouteName.profileDetailsScreen:
         return CupertinoPageRoute(builder: (_) => const ProfileDetailsScreen());
 
-      case RouteName.MealPlanDetailsScreen:
+      case RouteName.mealPlanDetailsScreen:
         final argsItem = routs.arguments as Map<String, dynamic>;
         final String day = argsItem['day'];
         final Map<String, dynamic> dayDetails = argsItem['dayDetails'];
@@ -78,7 +78,7 @@ class Routes {
           ),
         );
 
-      case RouteName.MealPlanDaysScreen:
+      case RouteName.mealPlanDaysScreen:
         final argsItem = routs.arguments as Map<String, dynamic>;
         final String name = argsItem['name'];
         return CupertinoPageRoute(
@@ -87,10 +87,10 @@ class Routes {
           ),
         );
 
-      case RouteName.FindWorkoutsScreen:
+      case RouteName.findWorkoutsScreen:
         return CupertinoPageRoute(builder: (_) => FindWorkoutsScreen());
 
-        case RouteName.FindNutritionFactsScreen:
+        case RouteName.findNutritionFactsScreen:
         return CupertinoPageRoute(builder: (_) => FindNutritionFactsScreen());
       default:
         return CupertinoPageRoute(builder: (_) {

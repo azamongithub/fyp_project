@@ -40,7 +40,7 @@ class ProfileForm extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                provider.setSelectedGender('Male');
+                                provider.setSelectedGender('M');
                               },
                               child: CircleAvatar(
                                 backgroundColor: Colors.transparent,
@@ -58,11 +58,11 @@ class ProfileForm extends StatelessWidget {
                                           shape: BoxShape.circle,
                                           border: Border.all(
                                             color: provider.selectedGender ==
-                                                    'Male'
+                                                    'M'
                                                 ? Colors.green
                                                 : Colors.grey,
                                             width: provider.selectedGender ==
-                                                    'Male'
+                                                    'M'
                                                 ? 4
                                                 : 1,
                                           ),
@@ -85,7 +85,7 @@ class ProfileForm extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                provider.setSelectedGender('Female');
+                                provider.setSelectedGender('F');
                               },
                               child: CircleAvatar(
                                 backgroundColor: Colors.transparent,
@@ -103,11 +103,11 @@ class ProfileForm extends StatelessWidget {
                                           shape: BoxShape.circle,
                                           border: Border.all(
                                             color: provider.selectedGender ==
-                                                    'Female'
+                                                    'F'
                                                 ? Colors.green
                                                 : Colors.grey,
                                             width: provider.selectedGender ==
-                                                    'Female'
+                                                    'F'
                                                 ? 4
                                                 : 1,
                                           ),
@@ -134,9 +134,9 @@ class ProfileForm extends StatelessWidget {
                       labelText: AppStrings.nameLabel,
                       onValidator: (value) {
                         if (value!.isEmpty) {
-                          return AppStrings.nameValidation;
+                          return AppStrings.enterName;
                         } else if (!provider.nameRegExp.hasMatch(value)) {
-                          return AppStrings.validNameValidation;
+                          return AppStrings.enterValidName;
                         }
                         return null;
                       },
@@ -147,7 +147,7 @@ class ProfileForm extends StatelessWidget {
                       labelText: AppStrings.dateOfBirthLabel,
                       onValidator: (value) {
                         if (value!.isEmpty) {
-                          return AppStrings.dateOfBirthValidation;
+                          return AppStrings.selectDob;
                         }
                         return null;
                       },
@@ -163,7 +163,7 @@ class ProfileForm extends StatelessWidget {
                             provider.saveProfileDetails(context);
                           } else {
                             Utils.positiveToastMessage(
-                                AppStrings.genderValidation);
+                                AppStrings.selectGender);
                           }
                         }
                       },

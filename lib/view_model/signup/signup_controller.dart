@@ -32,7 +32,7 @@ class SignUpController with ChangeNotifier {
 
         Navigator.pushNamedAndRemoveUntil(
           context,
-          RouteName.ProfileForm,
+          RouteName.profileForm,
               (route) => false,
         );
 
