@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:CoachBot/theme/text_style_util.dart';
+import '../../constants/AppColors.dart';
 
 class MealPlanDetailsScreen extends StatelessWidget {
   final String day;
@@ -26,10 +27,12 @@ class MealPlanDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white),
         title: Text(
             day,
         style: MyTextStyle.appBarStyle(),
         ),
+        backgroundColor: const Color(0xff3140b0),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

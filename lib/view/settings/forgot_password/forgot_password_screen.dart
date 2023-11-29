@@ -1,9 +1,12 @@
+import 'package:CoachBot/res/color.dart';
 import 'package:CoachBot/res/component/input_text_field.dart';
 import 'package:CoachBot/res/component/custom_button.dart';
 import 'package:CoachBot/utils/routes/route_name.dart';
 import 'package:CoachBot/view_model/forgot_password/forgot_password_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../../theme/text_style_util.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -31,8 +34,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          iconTheme: const IconThemeData(color: AppColors.whiteColor),
+          title: Text('Coachbot ', style: MyTextStyle.appBarStyle()),
           backgroundColor: const Color(0xff3140b0),
-          title: const Center(child: Text('CoachBot')),
+
         ),
         body: SafeArea(
           child: SingleChildScrollView(

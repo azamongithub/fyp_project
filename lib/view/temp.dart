@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+// import 'package:flutter/material.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
 // class YoutubeVideoPlayerScreen extends StatefulWidget {
 //   const YoutubeVideoPlayerScreen({super.key});
@@ -175,116 +174,116 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 
 
-
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-
-class YoutubeVideoPlayerScreen extends StatefulWidget {
-  @override
-  _YoutubeVideoPlayerScreenState createState() =>
-      _YoutubeVideoPlayerScreenState();
-}
-
-class _YoutubeVideoPlayerScreenState extends State<YoutubeVideoPlayerScreen> {
-  late YoutubePlayerController _controller;
-  bool _isLoading = true;
-  String _videoTitle = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchWorkoutData();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  Future<void> _fetchWorkoutData() async {
-    try {
-      final DocumentSnapshot snapshot = await FirebaseFirestore.instance
-          .collection('workouts')
-          .doc('ch01')
-          .get();
-
-      final dynamic data = snapshot.data();
-
-      if (data is Map<String, dynamic>) {
-        final String videoUrl = data['video1'] ?? '';
-        _videoTitle = data['title'] ?? '';
-
-        final String? videoId = YoutubePlayer.convertUrlToId(videoUrl);
-
-        if (videoId != null) {
-          _controller = YoutubePlayerController(
-            initialVideoId: videoId,
-            flags: YoutubePlayerFlags(
-              autoPlay: true,
-              mute: false,
-              hideControls: true,
-              disableDragSeek: true,
-              loop: true,
-              isLive: false,
-            ),
-          );
-
-          setState(() {
-            _isLoading = false;
-          });
-        } else {
-          setState(() {
-            _isLoading = false;
-          });
-          // Handle invalid YouTube video URL
-        }
-      } else {
-        setState(() {
-          _isLoading = false;
-        });
-        // Handle document data not found or invalid
-      }
-    } catch (error) {
-      setState(() {
-        _isLoading = false;
-      });
-      // Handle error fetching Firestore data
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('YouTube Video Player'),
-      ),
-      body: _isLoading
-          ? const Center(
-        child: CircularProgressIndicator(),
-      )
-          : Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(height: 20),
-          Text(
-            _videoTitle,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 20),
-          _controller != null
-              ? YoutubePlayer(
-            controller: _controller,
-            showVideoProgressIndicator: true,
-            progressIndicatorColor: Colors.blueAccent,
-            onReady: () {
-              _controller.play();
-            },
-          )
-              : const Text('Failed to load video'),
-        ],
-      ),
-    );
-  }
-}
+//
+// import 'package:flutter/material.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+//
+// class YoutubeVideoPlayerScreen extends StatefulWidget {
+//   @override
+//   _YoutubeVideoPlayerScreenState createState() =>
+//       _YoutubeVideoPlayerScreenState();
+// }
+//
+// class _YoutubeVideoPlayerScreenState extends State<YoutubeVideoPlayerScreen> {
+//   late YoutubePlayerController _controller;
+//   bool _isLoading = true;
+//   String _videoTitle = '';
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     _fetchWorkoutData();
+//   }
+//
+//   @override
+//   void dispose() {
+//     _controller.dispose();
+//     super.dispose();
+//   }
+//
+//   Future<void> _fetchWorkoutData() async {
+//     try {
+//       final DocumentSnapshot snapshot = await FirebaseFirestore.instance
+//           .collection('workouts')
+//           .doc('ch01')
+//           .get();
+//
+//       final dynamic data = snapshot.data();
+//
+//       if (data is Map<String, dynamic>) {
+//         final String videoUrl = data['video1'] ?? '';
+//         _videoTitle = data['title'] ?? '';
+//
+//         final String? videoId = YoutubePlayer.convertUrlToId(videoUrl);
+//
+//         if (videoId != null) {
+//           _controller = YoutubePlayerController(
+//             initialVideoId: videoId,
+//             flags: YoutubePlayerFlags(
+//               autoPlay: true,
+//               mute: false,
+//               hideControls: true,
+//               disableDragSeek: true,
+//               loop: true,
+//               isLive: false,
+//             ),
+//           );
+//
+//           setState(() {
+//             _isLoading = false;
+//           });
+//         } else {
+//           setState(() {
+//             _isLoading = false;
+//           });
+//           // Handle invalid YouTube video URL
+//         }
+//       } else {
+//         setState(() {
+//           _isLoading = false;
+//         });
+//         // Handle document data not found or invalid
+//       }
+//     } catch (error) {
+//       setState(() {
+//         _isLoading = false;
+//       });
+//       // Handle error fetching Firestore data
+//     }
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('YouTube Video Player'),
+//       ),
+//       body: _isLoading
+//           ? const Center(
+//         child: CircularProgressIndicator(),
+//       )
+//           : Column(
+//         crossAxisAlignment: CrossAxisAlignment.center,
+//         children: [
+//           SizedBox(height: 20),
+//           Text(
+//             _videoTitle,
+//             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+//           ),
+//           SizedBox(height: 20),
+//           _controller != null
+//               ? YoutubePlayer(
+//             controller: _controller,
+//             showVideoProgressIndicator: true,
+//             progressIndicatorColor: Colors.blueAccent,
+//             onReady: () {
+//               _controller.play();
+//             },
+//           )
+//               : const Text('Failed to load video'),
+//         ],
+//       ),
+//     );
+//   }
+// }

@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../models/meal_plan_model.dart';
+import '../../theme/color_util.dart';
 import '../../utils/routes/route_name.dart';
 
 class Dashboard extends StatefulWidget {
@@ -46,6 +47,7 @@ class _DashboardState extends State<Dashboard> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xff3140b0),
         title: Text(
           AppStrings.dashboard,
           style: MyTextStyle.appBarStyle(),

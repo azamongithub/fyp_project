@@ -27,15 +27,15 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        return true;
-      },
+    return PopScope(
+      // onWillPop: () async {
+      //   return true;
+      // },
       child: Scaffold(
         body: screens[index],
         bottomNavigationBar: NavigationBarTheme(
           data: NavigationBarThemeData(
-              indicatorColor: Colors.blue.shade100,
+              indicatorColor: Colors.blue.shade200,
               labelTextStyle: MaterialStateProperty.all(
                   const TextStyle(fontSize: 14, fontWeight: FontWeight.w500))),
           child: NavigationBar(

@@ -7,6 +7,7 @@ import 'package:CoachBot/view/profile_form/profile_form_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import '../../theme/text_style_util.dart';
 import '../../utils/utils.dart';
 
 class ProfileForm extends StatelessWidget {
@@ -19,9 +20,10 @@ class ProfileForm extends StatelessWidget {
       builder: (context, provider, child) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text(AppStrings.yourPersonalDetails),
+            title: Text(AppStrings.yourPersonalDetails, style: MyTextStyle.appBarStyle()),
             backgroundColor: const Color(0xff3140b0),
             automaticallyImplyLeading: false,
+            centerTitle: true,
           ),
           body: SingleChildScrollView(
             child: Padding(

@@ -79,6 +79,21 @@ class PersonalDetails extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
+                            // provider.userGenderDialogAlert(
+                            //   context,
+                            //   userData?['gender'],
+                            //   gender: 'Gender',
+                            // );
+                          },
+                          child:
+                          TrailingListTile(
+                            title: 'Gender',
+                            trailing: Text(userData?['gender'] == 'M' ? 'Male': userData?['gender'] == 'F' ? 'Female' : 'Not Found'),
+                            iconData: FontAwesomeIcons.venusMars,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
                             // provider.userDateOfBirthDialogAlert(
                             //     context, userData?['dateOfBirth']);
                           },
@@ -113,20 +128,6 @@ class PersonalDetails extends StatelessWidget {
                             title: 'Age Group',
                             trailing: Text(userData?['ageGroup'] ?? ''),
                             iconData: FontAwesomeIcons.children,
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            // provider.userGenderDialogAlert(
-                            //   context,
-                            //   userData?['gender'],
-                            //   gender: 'Gender',
-                            // );
-                          },
-                          child: TrailingListTile(
-                            title: 'Gender',
-                            trailing: Text(userData?['gender'] ?? ''),
-                            iconData: FontAwesomeIcons.venusMars,
                           ),
                         ),
                       ],

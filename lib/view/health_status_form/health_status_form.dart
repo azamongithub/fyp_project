@@ -18,8 +18,10 @@ class HealthStatusForm extends StatelessWidget {
       builder: (context, provider, child) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text(AppStrings.yourMedicalCondition),
+            title: Text(AppStrings.yourMedicalCondition, style: MyTextStyle.appBarStyle()),
+            backgroundColor: const Color(0xff3140b0),
             automaticallyImplyLeading: false,
+            centerTitle: true,
           ),
           body: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),

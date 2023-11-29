@@ -28,40 +28,44 @@ class FitnessDetails extends StatelessWidget {
         if (!snapshot.hasData) {
           return Center(child: Text('No data available'));
         }
-        void updateBMI() {
-          final userData = snapshot.data!.data() as Map<String, dynamic>?;
-          final user = FirebaseAuth.instance.currentUser;
-          final double? weight = userData?['weight'] != null
-              ? double.tryParse(userData?['weight'])
-              : null;
-          final double? height = userData?['height'] != null
-              ? double.tryParse(userData?['height'])
-              : null;
-
-          final double bmi =
-          (weight != null && height != null && weight != 0 && height != 0)
-              ? weight / ((height / 100) * (height / 100))
-              : 0;
-          if (bmi < 18.5) {
-            fitnessLevel = AppStrings.underWeight;
-          } else if (bmi >= 18.5 && bmi < 25) {
-            fitnessLevel = AppStrings.normalWeight;
-          } else if (bmi >= 25 && bmi < 30) {
-            fitnessLevel = AppStrings.overWeight;
-          } else if (bmi >= 30) {
-            fitnessLevel = AppStrings.obesity;
-          }
-          FirebaseFirestore.instance
-              .collection('UserFitnessCollection')
-              .doc(user!.uid)
-              .update({
-            'bmi': bmi,
-            'fitnessLevel': fitnessLevel,
-          });
-        }
+        // void updateBMI() {
+        //   final userData = snapshot.data!.data() as Map<String, dynamic>?;
+        //   final user = FirebaseAuth.instance.currentUser;
+        //   final double? weight = userData?['weight'] != null
+        //       ? double.tryParse(userData?['weight'])
+        //       : null;
+        //   final double? height = userData?['height'] != null
+        //       ? double.tryParse(userData?['height'])
+        //       : null;
+        //
+        //   double bmi =
+        //   (weight != null && height != null && weight != 0 && height != 0)
+        //       ? weight / ((height / 100) * (height / 100))
+        //       : 0;
+        //   if (bmi>=1 && bmi < 18.5) {
+        //     fitnessLevel = AppStrings.underWeight;
+        //   } else if (bmi >= 18.5 && bmi < 25) {
+        //     fitnessLevel = AppStrings.normalWeight;
+        //   } else if (bmi >= 25 && bmi < 30) {
+        //     fitnessLevel = AppStrings.overWeight;
+        //   } else if (bmi >= 30) {
+        //     fitnessLevel = AppStrings.obesity;
+        //   }
+        //   else {
+        //     bmi = 0; // or any default value you want to set when BMI is not calculable
+        //     fitnessLevel = AppStrings.fitnessCategoryNotDefined;
+        //   }
+        //   FirebaseFirestore.instance
+        //       .collection('UserFitnessCollection')
+        //       .doc(user!.uid)
+        //       .update({
+        //     'bmi': bmi,
+        //     'fitnessLevel': fitnessLevel,
+        //   });
+        // }
 
         final userData = snapshot.data!.data() as Map<String, dynamic>?;
-        updateBMI();
+        //updateBMI();
         return Scaffold(
             // appBar: AppBar(
             //   title: Text('Fitness Details'),
@@ -95,7 +99,7 @@ class FitnessDetails extends StatelessWidget {
                             },
                             child: TrailingListTile(
                               title: 'Weight',
-                              trailing: Text('${userData!['weight']} kg'),
+                              trailing: Text('${userData!['weight'].toString()} kg'),
                               iconData: FontAwesomeIcons.gaugeHigh,
                             ),
                           ),
@@ -105,7 +109,7 @@ class FitnessDetails extends StatelessWidget {
                             // },
                             child: TrailingListTile(
                               title: 'BMI',
-                              trailing: Text(userData!['bmi'].toStringAsFixed(2) ?? ''),
+                              trailing: Text(userData!['bmi'].toString() ?? ''),
                               iconData: FontAwesomeIcons.calculator,
                             ),
                           ),
@@ -114,7 +118,7 @@ class FitnessDetails extends StatelessWidget {
                             //   Utils.positiveToastMessage('You can change your weight or height to update the BMI Category');
                             // },
                             child: TrailingListTile(
-                              title: 'Category',
+                              title: 'Fitness Level',
                               trailing: Text(userData!['fitnessLevel'] ?? ''),
                               iconData: FontAwesomeIcons.chartLine,
                             ),

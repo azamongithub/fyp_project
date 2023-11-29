@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../../theme/text_style_util.dart';
+
 class AiTrainerTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return
       Scaffold(
       appBar: AppBar(
-        title: Text('AI Trainer'),
+        title: Text('AI Trainer ', style: MyTextStyle.appBarStyle()),
+        backgroundColor: const Color(0xff3140b0),
         automaticallyImplyLeading: false,
       ),
       // body: Padding(

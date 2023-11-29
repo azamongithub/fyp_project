@@ -43,9 +43,11 @@ class _SignupFormState extends State<SignupForm> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: ColorUtil.themeColor,
+        title: Text(AppStrings.appName, style: MyTextStyle.appBarStyle()),
+        backgroundColor: const Color(0xff3140b0),
         automaticallyImplyLeading: false,
-        title: const Center(child: Text(AppStrings.appName)),
+        centerTitle: true,
+
       ),
       body: SafeArea(
         child: Padding(

@@ -1,10 +1,12 @@
+import 'package:CoachBot/res/color.dart';
 import 'package:CoachBot/utils/routes/route_name.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../constants/AppColors.dart';
 import '../../models/meal_plan_model.dart';
 import '../../theme/text_style_util.dart';
-import 'meal_plan_details_screen.dart';
+import '../../../theme/text_style_util.dart';
 
 class MealPlanDaysScreen extends StatelessWidget {
   late double cal;
@@ -25,7 +27,9 @@ class MealPlanDaysScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white),
         title: Text('Meal Plan ', style: MyTextStyle.appBarStyle()),
+        backgroundColor: const Color(0xff3140b0),
       ),
       body: FutureBuilder<List<MealPlanModel>>(
         future: fetchMealPlansByCalories(name),

@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import '../../theme/text_style_util.dart';
 import '../../utils/routes/route_name.dart';
 
 class PlansTab extends StatelessWidget {
@@ -36,7 +37,8 @@ class PlansTab extends StatelessWidget {
     fetchCalories();
     return Scaffold(
       appBar: AppBar(
-        title: const Text(AppStrings.myPlans),
+        title: Text(AppStrings.myPlans, style: MyTextStyle.appBarStyle()),
+        backgroundColor: const Color(0xff3140b0),
         automaticallyImplyLeading: false,
       ),
       body: Padding(

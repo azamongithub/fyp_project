@@ -25,8 +25,8 @@ abstract class AppStrings {
 
   //Profile Form
   static const String yourPersonalDetails = 'Your Personal Details';
-  static const String maleLabel = 'M';
-  static const String femaleLabel = 'F';
+  static const String maleLabel = 'Male';
+  static const String femaleLabel = 'Female';
   static const String nameLabel = 'Name';
   static const String dateOfBirthLabel = 'Date of birth';
   //Profile Form Validations
@@ -50,9 +50,9 @@ abstract class AppStrings {
   static const String heightInchLabel = 'Height (Inches)';
   static const String fitnessGoalLabel = 'Fitness Goal';
   //Fitness Goal List
-  static const String muscleBuilding = 'muscle building';
-  static const String weightGain = 'weight gain';
-  static const String weightLoss = 'weight loss';
+  static const String muscleBuilding = 'Muscle Building';
+  static const String weightGain = 'Weight Gain';
+  static const String weightLoss = 'Weight Loss';
 
   //Fitness Form Validations
   static const String enterWeight = 'Please enter your weight';
@@ -61,10 +61,10 @@ abstract class AppStrings {
 
   //Fitness Details
   static const String underWeight = 'Underweight';
-  static const String normalWeight = 'Normal weight';
+  static const String normalWeight = 'Normal Weight';
   static const String overWeight = 'Overweight';
   static const String obesity = 'Obesity';
-  static const String fitnessCategoryNotDefined = 'Fitness Category Not Defined';
+  static const String fitnessLevelNotDefined = 'Fitness Level Not Defined';
 
     //Health Status Form
   static const String yourMedicalCondition = 'Your Medical Condition';

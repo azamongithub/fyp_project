@@ -1,3 +1,4 @@
+import 'package:CoachBot/theme/color_util.dart';
 import 'package:CoachBot/utils/routes/route_name.dart';
 import 'package:CoachBot/utils/routes/routes.dart';
 import 'package:CoachBot/view/fitness_analyzer_form/fitness_form_controller.dart';
@@ -60,6 +61,8 @@ class MyApp extends StatelessWidget {
                 title: AppStrings.appName,
                         theme: ThemeData(
                           primarySwatch: Colors.indigo,
+                          colorScheme: ColorScheme.fromSeed(seedColor: ColorUtil.themeColor),
+                          useMaterial3: true,
                           textTheme: const TextTheme(
                             bodyMedium: TextStyle(
                               fontFamily: 'Poppins',

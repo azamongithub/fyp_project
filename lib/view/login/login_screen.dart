@@ -41,7 +41,11 @@ class _LoginFormState extends State<LoginForm> {
         appBar: AppBar(
           backgroundColor: ColorUtil.themeColor,
           automaticallyImplyLeading: false,
-          title: const Center(child: Text(AppStrings.appName)),
+          title: Center(
+              child: Text(
+            AppStrings.appName,
+            style: MyTextStyle.appBarStyle(),
+          )),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
@@ -138,7 +142,7 @@ class _LoginFormState extends State<LoginForm> {
                           Navigator.pushNamedAndRemoveUntil(
                             context,
                             RouteName.signupForm,
-                                (route) => false,
+                            (route) => false,
                           );
                         },
                         child: const Text(

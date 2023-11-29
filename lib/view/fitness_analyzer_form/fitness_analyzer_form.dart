@@ -16,19 +16,20 @@ class FitnessAnalyzerForm extends StatelessWidget {
       builder: (context, provider, child) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text(AppStrings.yourFitnessDetails),
+            title: Text(AppStrings.yourFitnessDetails, style: MyTextStyle.appBarStyle()),
             backgroundColor: const Color(0xff3140b0),
             automaticallyImplyLeading: false,
+            centerTitle: true,
           ),
           body: SingleChildScrollView(
             child: Form(
               key: provider.formKey,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
+                  children: [
                     SizedBox(height: 10.h),
                     Center(
                       child: Text(
@@ -43,12 +44,12 @@ class FitnessAnalyzerForm extends StatelessWidget {
                       myController: provider.weightController,
                       keyBoardType: TextInputType.number,
                       labelText: AppStrings.weightLabel,
-                      onChange: (value) {
-                        provider.calculateBMI(((provider.selectedFeet * 12 +
-                                    provider.selectedInch) /
-                                12) *
-                            30.48);
-                      },
+                      // onChange: (value) {
+                      //   provider.calculateBMI(((provider.selectedFeet * 12 +
+                      //               provider.selectedInch) /
+                      //           12) *
+                      //       30.48);
+                      // },
                       onValidator: (value) {
                         if (value!.isEmpty) {
                           return AppStrings.enterWeight;
@@ -57,10 +58,10 @@ class FitnessAnalyzerForm extends StatelessWidget {
                         if (weight == null || weight < 26 || weight > 130) {
                           return AppStrings.enterValidWeight;
                         }
-                        provider.calculateBMI(((provider.selectedFeet * 12 +
-                                    provider.selectedInch) /
-                                12) *
-                            30.48);
+                        // provider.calculateBMI(((provider.selectedFeet * 12 +
+                        //             provider.selectedInch) /
+                        //         12) *
+                        //     30.48);
                         return null;
                       },
                     ),
@@ -76,7 +77,11 @@ class FitnessAnalyzerForm extends StatelessWidget {
                             items: provider.feetOptions.map((feet) {
                               return DropdownMenuItem<int>(
                                 value: feet,
-                                child: Text('$feet\''),
+                                child: Text('$feet\'',
+                                style: MyTextStyle.textStyle18(
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                ),
                               );
                             }).toList(),
                             decoration: const InputDecoration(
@@ -94,7 +99,11 @@ class FitnessAnalyzerForm extends StatelessWidget {
                             items: provider.inchesOptions.map((inch) {
                               return DropdownMenuItem<int>(
                                 value: inch,
-                                child: Text('$inch"'),
+                                child: Text('$inch"',
+                                  style: MyTextStyle.textStyle18(
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
                               );
                             }).toList(),
                             decoration: const InputDecoration(
@@ -124,7 +133,11 @@ class FitnessAnalyzerForm extends StatelessWidget {
                         items: provider.fitnessGoal.map((fitnessGoal) {
                           return DropdownMenuItem<String>(
                             value: fitnessGoal,
-                            child: Text(fitnessGoal),
+                            child: Text(fitnessGoal,
+                              style: MyTextStyle.textStyle18(
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
                           );
                         }).toList(),
                         validator: (value) {
@@ -135,7 +148,7 @@ class FitnessAnalyzerForm extends StatelessWidget {
                         },
                       ),
                     ),
-                    SizedBox(height: 30.h),
+                    SizedBox(height: 40.h),
                     CustomTextField(
                       myController: provider.caloriesController,
                       keyBoardType: TextInputType.number,
@@ -163,7 +176,7 @@ class FitnessAnalyzerForm extends StatelessWidget {
                         return null;
                       },
                     ),
-                    SizedBox(height: 60.h),
+                    SizedBox(height: 50.h),
                     CustomButton(
                       title: AppStrings.continueButton,
                       loading: provider.isLoading,

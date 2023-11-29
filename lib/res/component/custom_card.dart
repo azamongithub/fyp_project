@@ -1,3 +1,4 @@
+import 'package:CoachBot/res/color.dart';
 import 'package:CoachBot/theme/text_style_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,6 +25,7 @@ class CustomCard extends StatelessWidget {
             width: 500,
             height: 60,
             decoration: BoxDecoration(
+              color: AppColors.whiteColor,
               borderRadius: BorderRadius.circular(15),
               border: Border.all(
                 color: isSelected ? Colors.green : Colors.grey,

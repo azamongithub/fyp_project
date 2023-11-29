@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../theme/text_style_util.dart';
+
 class StatsTab extends StatefulWidget {
   const StatsTab({super.key});
 
@@ -26,7 +28,8 @@ class _StatsTabState extends State<StatsTab> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Progress Tracking'),
+        title: Text('Progress Tracking ', style: MyTextStyle.appBarStyle()),
+        backgroundColor: const Color(0xff3140b0),
         automaticallyImplyLeading: false,
       ),
       body: Column(

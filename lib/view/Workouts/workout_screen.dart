@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../theme/text_style_util.dart';
+
 class WorkoutVideosList extends StatefulWidget {
   const WorkoutVideosList({Key? key}) : super(key: key);
 
@@ -50,7 +52,8 @@ Instructions:
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Practice Exercises'),
+        title: Text('Practice Exercises', style: MyTextStyle.appBarStyle()),
+        backgroundColor: const Color(0xff3140b0),
       ),
       resizeToAvoidBottomInset: false,
       body: Column(

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:CoachBot/res/component/custom_button.dart';
 import 'package:CoachBot/utils/utils.dart';
 import '../../res/component/password_text_field.dart';
+import '../../theme/text_style_util.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({Key? key}) : super(key: key);
@@ -60,7 +61,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Change Password'),
+        title: Text(AppStrings.changePassBtn, style: MyTextStyle.appBarStyle()),
+        backgroundColor: const Color(0xff3140b0),
       ),
       body: SingleChildScrollView(
         child: Padding(

@@ -1,3 +1,4 @@
+import 'package:CoachBot/constants/app_string_constants.dart';
 import 'package:CoachBot/res/component/reusable_list_tile.dart';
 import 'package:CoachBot/view/login/login_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../../theme/text_style_util.dart';
 import '../../utils/routes/route_name.dart';
 
 class SettingsTab extends StatelessWidget {
@@ -14,7 +16,8 @@ class SettingsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: Text(AppStrings.settings, style: MyTextStyle.appBarStyle()),
+        backgroundColor: const Color(0xff3140b0),
         automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
