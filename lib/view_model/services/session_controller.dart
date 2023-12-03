@@ -1,5 +1,3 @@
-
-
 class SessionController  {
   static final SessionController _session = SessionController._internal();
 
@@ -9,7 +7,5 @@ class SessionController  {
     return _session;
   }
   SessionController._internal(){
-
   }
-
 }

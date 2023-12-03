@@ -1,5 +1,5 @@
 import 'package:CoachBot/res/color.dart';
-import 'package:CoachBot/res/component/input_text_field.dart';
+import 'package:CoachBot/res/component/custom_text_field.dart';
 import 'package:CoachBot/res/component/custom_button.dart';
 import 'package:CoachBot/utils/routes/route_name.dart';
 import 'package:CoachBot/view_model/forgot_password/forgot_password_controller.dart';

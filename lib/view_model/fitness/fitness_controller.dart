@@ -1,4 +1,4 @@
-// import 'package:CoachBot/res/component/input_text_field.dart';
+// import 'package:CoachBot/res/component/custom_text_field.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:flutter/foundation.dart';

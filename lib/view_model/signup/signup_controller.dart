@@ -59,6 +59,10 @@ class SignUpController with ChangeNotifier {
         Fluttertoast.showToast(
             msg: "Invalid email format");
     }
+      else {
+        Fluttertoast.showToast(
+            msg: "An error occurred: ${e.message}");
+      }
     } catch (e) {
       setLoading(false);
       Fluttertoast.showToast(

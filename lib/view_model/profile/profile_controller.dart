@@ -2,7 +2,7 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:flutter/material.dart';
 // import 'package:intl/intl.dart';
-// import '../../res/component/input_text_field.dart';
+// import '../../res/component/custom_text_field.dart';
 // import '../../utils/utils.dart';
 //
 // class ProfileController with ChangeNotifier {

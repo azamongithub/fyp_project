@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import '../../res/component/input_text_field.dart';
+import '../../res/component/custom_text_field.dart';
 import '../../res/component/password_text_field.dart';
 import '../../res/component/custom_button.dart';
 import '../../utils/routes/route_name.dart';

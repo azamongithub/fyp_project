@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../../constants/app_string_constants.dart';
 import '../../res/component/custom_button.dart';
-import '../../res/component/input_text_field.dart';
+import '../../res/component/custom_text_field.dart';
 import '../../theme/text_style_util.dart';
 
 class FitnessAnalyzerForm extends StatelessWidget {

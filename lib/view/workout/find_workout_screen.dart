@@ -54,7 +54,7 @@ import 'package:CoachBot/view_model/search_exercise/search_exercise_provider.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import '../../res/component/input_text_field.dart';
+import '../../res/component/custom_text_field.dart';
 
 class FindWorkoutsScreen extends StatelessWidget {
   final TextEditingController _muscleController = TextEditingController();

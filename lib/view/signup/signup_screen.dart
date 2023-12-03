@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../../constants/assets_constants.dart';
-import '../../res/component/input_text_field.dart';
+import '../../res/component/custom_text_field.dart';
 import '../../res/component/password_text_field.dart';
 import '../../res/component/custom_button.dart';
 import '../../theme/text_style_util.dart';
@@ -24,9 +24,6 @@ class _SignupFormState extends State<SignupForm> {
   TextEditingController passwordController = TextEditingController();
   RegExp emailRegExp = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
   RegExp passwordRegExp = RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$');
-
-
-
   final _formKey = GlobalKey<FormState>();
   //bool loading = false;
 

@@ -1,7 +1,7 @@
 import 'package:CoachBot/constants/app_string_constants.dart';
 import 'package:CoachBot/constants/assets_constants.dart';
 import 'package:CoachBot/res/component/custom_button.dart';
-import 'package:CoachBot/res/component/input_text_field.dart';
+import 'package:CoachBot/res/component/custom_text_field.dart';
 import 'package:CoachBot/res/component/calender_text_field.dart';
 import 'package:CoachBot/view/profile_form/profile_form_controller.dart';
 import 'package:flutter/material.dart';

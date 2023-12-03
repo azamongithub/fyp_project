@@ -2,7 +2,7 @@ import 'package:CoachBot/res/component/list_tile1.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import '../../res/component/input_text_field.dart';
+import '../../res/component/custom_text_field.dart';
 import '../../view_model/nutrition_facts/nutrition_facts_provider.dart';
 
 class FindNutritionFactsScreen extends StatelessWidget {

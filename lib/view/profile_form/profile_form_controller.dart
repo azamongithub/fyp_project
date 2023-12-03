@@ -3,10 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
-import '../../res/component/input_text_field.dart';
 import '../../utils/routes/route_name.dart';
-import '../../utils/utils.dart';
 import '../../view_model/services/shared_preferences_helper.dart';
 
 class ProfileFormController extends ChangeNotifier {
