@@ -1,7 +1,7 @@
 import 'package:CoachBot/res/component/bottom_nav_bar.dart';
 import 'package:CoachBot/utils/routes/route_name.dart';
 import 'package:CoachBot/view/bottom_nav_tabs/ai_trainer_tab.dart';
-import 'package:CoachBot/view/bottom_nav_tabs/dashboard.dart';
+import 'package:CoachBot/view/bottom_nav_tabs/dashboard/dashboard_screen.dart';
 import 'package:CoachBot/view/bottom_nav_tabs/stats_tab.dart';
 import 'package:CoachBot/view/bottom_nav_tabs/plans_tab.dart';
 import 'package:CoachBot/view/change_password/change_password_screen.dart';

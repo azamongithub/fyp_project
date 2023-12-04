@@ -1,13 +1,13 @@
-import 'package:CoachBot/view/predict_all/predict_all_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../bottom_nav_tabs/dashboard/dashboard_controller.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final apiController = Provider.of<ApiController>(context);
+    final apiController = Provider.of<DashboardController>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -40,7 +40,7 @@ class HomeScreen extends StatelessWidget {
 class ApiDataWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final apiController = Provider.of<ApiController>(context);
+    final apiController = Provider.of<DashboardController>(context);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,

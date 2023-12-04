@@ -1,18 +1,18 @@
 // api_data_model.dart
 
-class ApiData {
+class PredictionModel {
   final String mealPlan;
   final double calories;
   final String workoutPlan;
 
-  ApiData({
+  PredictionModel({
     required this.mealPlan,
     required this.calories,
     required this.workoutPlan,
   });
 
-  factory ApiData.fromJson(Map<String, dynamic> json) {
-    return ApiData(
+  factory PredictionModel.fromJson(Map<String, dynamic> json) {
+    return PredictionModel(
       mealPlan: json['meal_plan'],
       calories: json['calories'],
       workoutPlan: json['workout_plan'],

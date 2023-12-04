@@ -1,7 +1,7 @@
 import 'package:CoachBot/constants/app_string_constants.dart';
 import 'package:CoachBot/theme/color_util.dart';
 import 'package:CoachBot/view/bottom_nav_tabs/ai_trainer_tab.dart';
-import 'package:CoachBot/view/bottom_nav_tabs/dashboard.dart';
+import 'package:CoachBot/view/bottom_nav_tabs/dashboard/dashboard_screen.dart';
 import 'package:CoachBot/view/bottom_nav_tabs/plans_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

@@ -1,6 +1,7 @@
 import 'package:CoachBot/theme/color_util.dart';
 import 'package:CoachBot/utils/routes/route_name.dart';
 import 'package:CoachBot/utils/routes/routes.dart';
+import 'package:CoachBot/view/bottom_nav_tabs/dashboard/dashboard_controller.dart';
 import 'package:CoachBot/view/fitness_analyzer_form/fitness_form_controller.dart';
 import 'package:CoachBot/view/health_status_form/health_status_provider.dart';
 import 'package:CoachBot/view/profile_form/profile_form_controller.dart';
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ProfileFormController()),
         ChangeNotifierProvider(create: (_) => FitnessFormController()),
         ChangeNotifierProvider(create: (_) => HealthFormController()),
+        ChangeNotifierProvider(create: (_) => DashboardController()),
       ],
       child: Builder(builder: (context) {
         return ScreenUtilInit(
