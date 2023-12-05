@@ -9,7 +9,6 @@ import 'package:CoachBot/view/fitness_analyzer_form/fitness_analyzer_form.dart';
 import 'package:CoachBot/view/health_status_form/health_status_form.dart';
 import 'package:CoachBot/view/login/login_screen.dart';
 import 'package:CoachBot/view/profile_form/profile_form.dart';
-import 'package:CoachBot/view/settings/forgot_password/forgot_password_screen.dart';
 import 'package:CoachBot/view/bottom_nav_tabs/settings_tab.dart';
 import 'package:CoachBot/view/signup/signup_screen.dart';
 import 'package:CoachBot/view/splash/splash_screen.dart';
@@ -18,6 +17,7 @@ import 'package:flutter/material.dart';
 import '../../view/account_details/profile_details_tabs/profile_details_screen.dart';
 import '../../view/all_meal_plans/meal_plan_days_screen.dart';
 import '../../view/all_meal_plans/meal_plan_details_screen.dart';
+import '../../view/forgot_password/forgot_password_screen.dart';
 import '../../view/nutrition_facts/find_nutrition_facts_screen.dart';
 import '../../view/workout/find_workout_screen.dart';
 
@@ -81,9 +81,11 @@ class Routes {
       case RouteName.mealPlanDaysScreen:
         final argsItem = routs.arguments as Map<String, dynamic>;
         final String name = argsItem['name'];
+        //final int calories = argsItem['calories'];
         return CupertinoPageRoute(
           builder: (_) => MealPlanDaysScreen(
             name: name,
+           // totalCalories: calories,
           ),
         );
 

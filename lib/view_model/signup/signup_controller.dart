@@ -10,8 +10,6 @@ class SignUpController with ChangeNotifier {
   bool get loading => _loading;
   final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
 
-
-
   setLoading(bool value) {
     _loading = value;
     notifyListeners();

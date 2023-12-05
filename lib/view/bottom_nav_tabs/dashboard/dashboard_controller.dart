@@ -1,15 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
 import '../../../models/all_plan_model.dart';
 import '../../../models/meal_plan_model.dart';
 import '../../../services/api_repository.dart';
+import '../../../services/firestore_service.dart';
+import '../../predict_all/predict_all_controller.dart';
 
 class DashboardController extends ChangeNotifier {
-  final ApiService _apiService = ApiService();
+  final ApiRepository _apiRepository = ApiRepository();
   late PredictionModel _apiData;
-
   PredictionModel get apiData => _apiData;
+  final FirestoreService _firestoreService = FirestoreService();
+  Map<String, dynamic> _responseData = {};
+  Map<String, dynamic> get responseData => _responseData;
 
   Future<void> mergeUserDataByType() async {
     try {
@@ -47,72 +52,113 @@ class DashboardController extends ChangeNotifier {
   }
 
 
-  Future<void> mergeUserData() async {
-    try {
-      final user = FirebaseAuth.instance.currentUser;
 
-      final profileData = await FirebaseFirestore.instance
-          .collection('UserProfileCollection')
-          .doc(user!.uid)
-          .get();
+  void fetchData() async {
+    final user = FirebaseAuth.instance.currentUser;
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance
+        .collection('UserDataCollection')
+        .doc(user!.uid)
+        .get();
 
-      final fitnessData = await FirebaseFirestore.instance
-          .collection('UserFitnessCollection')
-          .doc(user.uid)
-          .get();
-
-      final healthData = await FirebaseFirestore.instance
-          .collection('UserHealthCollection')
-          .doc(user.uid)
-          .get();
-
-      final userData = {
-        'id': user.uid,
-        'name': profileData['name'],
-        'age': profileData['age'],
-        'gender': profileData['gender'],
-        'dateOfBirth': profileData['dateOfBirth'],
-        'ageGroup': profileData['ageGroup'],
-        'email': profileData['email'],
-        'weight': fitnessData['weight'],
-        'heightInCm': fitnessData['heightInCm'],
-        'heightInFeet': fitnessData['heightInFeet'],
-        'bmi': fitnessData['bmi'],
-        'fitnessLevel': fitnessData['fitnessLevel'],
-        'fitnessGoal': fitnessData['fitnessGoal'],
-        'calories': fitnessData['calories'],
-        'workout': fitnessData['workout'],
-        'disease': healthData['disease'],
-      };
-      await FirebaseFirestore.instance
-          .collection('AllUserCollection')
-          .doc(user.uid)
-          .set(userData);
-      print('AllUserCollection Merge successful!');
-
-      //Fetch API data Body
-      fetchApiData({
-        "Age": profileData['age'],
-        'Gender': profileData['gender'],
-        'Height': fitnessData['heightInFeet'],
-        'Weight': fitnessData['weight'],
-        'Fitness_Level': fitnessData['fitnessLevel'],
-        'Fitness_Goal': fitnessData['fitnessGoal'],
-        'Medical History': healthData['disease'],
-      });
-    } catch (e) {
-      print(e.toString());
+    if (snapshot.exists) {
+      final userData = snapshot.data() as Map<String, dynamic>?;
+      if (userData != null) {
+        fetchDataAndStore({
+          "Age": userData['age'],
+          "Gender": userData['gender'],
+          "Height": userData['heightInFeet'],
+          "Weight": userData['weight'],
+          "Fitness_Level": userData['fitnessLevel'],
+          "Fitness_Goal": userData['fitnessGoal'],
+          "Medical_History": userData['disease'],
+        });
+      }
+    } else {
+      // Document doesn't exist
+      print('Document does not exist');
     }
   }
 
+  // Future<void> mergeUserData() async {
+  //   try {
+  //     final user = FirebaseAuth.instance.currentUser;
+  //
+  //     // final profileData = await FirebaseFirestore.instance
+  //     //     .collection('UserProfileCollection')
+  //     //     .doc(user!.uid)
+  //     //     .get();
+  //
+  //     // final fitnessData = await FirebaseFirestore.instance
+  //     //     .collection('UserFitnessCollection')
+  //     //     .doc(user.uid)
+  //     //     .get();
+  //
+  //     // final healthData = await FirebaseFirestore.instance
+  //     //     .collection('UserHealthCollection')
+  //     //     .doc(user.uid)
+  //     //     .get();
+  //
+  //
+  //     // final userData = {
+  //     //   'id': user.uid,
+  //     //   'name': profileData['name'],
+  //     //   'age': profileData['age'],
+  //     //   'gender': profileData['gender'],
+  //     //   'dateOfBirth': profileData['dateOfBirth'],
+  //     //   'ageGroup': profileData['ageGroup'],
+  //     //   'email': profileData['email'],
+  //     //   'weight': fitnessData['weight'],
+  //     //   'heightInCm': fitnessData['heightInCm'],
+  //     //   'heightInFeet': fitnessData['heightInFeet'],
+  //     //   'bmi': fitnessData['bmi'],
+  //     //   'fitnessLevel': fitnessData['fitnessLevel'],
+  //     //   'fitnessGoal': fitnessData['fitnessGoal'],
+  //     //   'calories': fitnessData['calories'],
+  //     //   'workout': fitnessData['workout'],
+  //     //   'disease': healthData['disease'],
+  //     // };
+  //
+  //      FirebaseFirestore.instance
+  //         .collection('AllUserCollection')
+  //         .doc(user!.uid)
+  //         .snapshots();
+  //     final userData = snapshot.data!.data() as Map<String, dynamic>?;
+  //
+  //     //Fetch API data Body
+  //     fetchDataAndStore(
+  //         {
+  //           "Age": profileData['age'],
+  //           "Gender": profileData['gender'],
+  //           "Height": fitnessData['heightInFeet'],
+  //           "Weight": fitnessData['weight'],
+  //           "Fitness_Level": fitnessData['fitnessLevel'],
+  //           "Fitness_Goal": fitnessData['fitnessGoal'],
+  //           "Medical_History": healthData['disease'],
+  //         }
+  //     );
+  //     //fetchDataAndStore(requestData);
+  //   } catch (e) {
+  //     print("The Error is: ${e.toString()}");
+  //   }
+  // }
 
-  Future<void> fetchApiData(Map<String, dynamic> body) async {
+  // Future<void> fetchApiData(Map<String, dynamic> body) async {
+  //   try {
+  //     final Map<String, dynamic> responseData = await _apiRepository.fetchData(body);
+  //     _apiData = PredictionModel.fromJson(responseData);
+  //     notifyListeners();
+  //   } catch (error) {
+  //     print('Error: $error');
+  //   }
+  // }
+
+  Future<void> fetchDataAndStore(Map<String, dynamic> requestData) async {
     try {
-      final Map<String, dynamic> responseData = await _apiService.postApiData(body);
-      _apiData = PredictionModel.fromJson(responseData);
-      notifyListeners();
-    } catch (error) {
-      print('Error: $error');
+      _responseData = await _apiRepository.fetchData(requestData);
+      await _firestoreService.storeUserData(_responseData);
+      notifyListeners(); // Notify listeners about the change in state
+    } catch (e) {
+      print('Error: $e');
     }
   }
 
@@ -125,11 +171,12 @@ class DashboardController extends ChangeNotifier {
   }
 
   MealPlanModel mealPlan = MealPlanModel(
-    id: 'high_protein_diet-none',
-    name: 'High Protein Diet',
-    disease: 'none',
+    id: 'heartwise-trim-thrive',
+    name: 'Heartwise Trim & Thrive',
+    //totalCalories: 2000,
+    disease: 'Hypercholesterolaemia',
     description:
-        'Balanced with controlled carbs; include whole grains, lean proteins, healthy fats, and veggies.',
+        'Heart-healthy, low in saturated/trans fats; omega-3-rich foods; high-fiber fruits, veggies, and whole grains.',
     days: {
       'Monday': Day(
         breakfast: Meal(

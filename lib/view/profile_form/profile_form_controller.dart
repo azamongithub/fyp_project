@@ -80,10 +80,12 @@ class ProfileFormController extends ChangeNotifier {
       isLoading = true;
       notifyListeners();
 
-      await FirebaseFirestore.instance
-          .collection('UserProfileCollection')
-          .doc(user.uid)
-          .set(profileData);
+      await FirebaseFirestore.instance.collection('UserDataCollection').doc(user.uid).set(profileData, SetOptions(merge: true));
+
+      // await FirebaseFirestore.instance
+      //     .collection('UserProfileCollection')
+      //     .doc(user.uid)
+      //     .set(profileData);
 
       await SharedPreferencesHelper.setProfileCompleted(true);
       Navigator.pushNamed(context, RouteName.fitnessAnalyzerForm);

@@ -1,15 +1,12 @@
-import 'package:CoachBot/res/color.dart';
 import 'package:CoachBot/utils/routes/route_name.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../constants/AppColors.dart';
 import '../../models/meal_plan_model.dart';
 import '../../theme/text_style_util.dart';
-import '../../../theme/text_style_util.dart';
 
 class MealPlanDaysScreen extends StatelessWidget {
-  late double cal;
+  //late double cal;
   final int? totalCalories;
   final String name;
   final String? disease;
@@ -17,6 +14,7 @@ class MealPlanDaysScreen extends StatelessWidget {
 
   MealPlanDaysScreen({
     super.key,
+    //required this.totalCalories,
     this.totalCalories,
     required this.name,
     this.disease,
@@ -32,6 +30,7 @@ class MealPlanDaysScreen extends StatelessWidget {
         backgroundColor: const Color(0xff3140b0),
       ),
       body: FutureBuilder<List<MealPlanModel>>(
+        //future: fetchMealPlansByCalories(name, totalCalories),
         future: fetchMealPlansByCalories(name),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -111,10 +110,10 @@ Widget daysCard({
             day,
             style: MyTextStyle.titleStyle20(),
           ),
-          leading: Text(
-              calories!,
-            style: MyTextStyle.subTitleStyle14(),
-          ),
+          // leading: Text(
+          //     calories!,
+          //   style: MyTextStyle.subTitleStyle14(),
+          // ),
           subtitle: Text(
               name!,
             style: MyTextStyle.subTitleStyle14(),
@@ -133,7 +132,6 @@ Future<List<MealPlanModel>> fetchMealPlansByCalories(
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection('meal_plans')
         .where('name', isEqualTo: name)
-    //.where('disease', isEqualTo: disease)
         .get();
 
     List<MealPlanModel> mealPlans = querySnapshot.docs.map((doc) {
@@ -141,16 +139,6 @@ Future<List<MealPlanModel>> fetchMealPlansByCalories(
       return MealPlanModel.fromJson(doc.id, data);
     }).toList();
     return [mealPlans.first];
-
-    // if (mealPlans.isNotEmpty) {
-    //   mealPlans
-    //       .sort((a, b) => (a.totalCalories - totalCalories).abs().compareTo(
-    //             (b.totalCalories - totalCalories).abs(),
-    //           ));
-    //   return [mealPlans.first];
-    // } else {
-    //   return [];
-    // }
   } catch (e) {
     print('Error fetching meal plans: $e');
     return [];
@@ -158,29 +146,30 @@ Future<List<MealPlanModel>> fetchMealPlansByCalories(
 }
 
 // Future<List<MealPlanModel>> fetchMealPlansByCalories(
-//     int totalCalories, String name, String disease) async {
+//     String name, int totalCalories) async {
 //   try {
 //     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
 //         .collection('meal_plans')
-//         .where('name', isEqualTo: type)
-//         //.where('disease', isEqualTo: disease)
+//         .where('name', isEqualTo: name)
+//         .where('totalCalories', isEqualTo: totalCalories)
 //         .get();
 //
 //     List<MealPlanModel> mealPlans = querySnapshot.docs.map((doc) {
 //       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 //       return MealPlanModel.fromJson(doc.id, data);
 //     }).toList();
-//     return [mealPlans.first];
+//     print("meal plan is: ${mealPlans.first}");
+// //    return [mealPlans.first];
 //
-//     // if (mealPlans.isNotEmpty) {
-//     //   mealPlans
-//     //       .sort((a, b) => (a.totalCalories - totalCalories).abs().compareTo(
-//     //             (b.totalCalories - totalCalories).abs(),
-//     //           ));
-//     //   return [mealPlans.first];
-//     // } else {
-//     //   return [];
-//     // }
+//     if (mealPlans.isNotEmpty) {
+//       mealPlans
+//           .sort((a, b) => (a.totalCalories - totalCalories).abs().compareTo(
+//                 (b.totalCalories - totalCalories).abs(),
+//               ));
+//       return [mealPlans.first];
+//     } else {
+//       return [];
+//     }
 //   } catch (e) {
 //     print('Error fetching meal plans: $e');
 //     return [];

@@ -14,7 +14,7 @@ class PersonalDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
     final userProfileStream = FirebaseFirestore.instance
-        .collection('UserProfileCollection')
+        .collection('UserDataCollection')
         .doc(user!.uid)
         .snapshots();
 

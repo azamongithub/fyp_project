@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/meal_plan_model.dart';
 import '../../../utils/routes/route_name.dart';
+import '../../predict_all/predict_all_controller.dart';
 import 'dashboard_controller.dart';
 
 class Dashboard extends StatefulWidget {
@@ -21,8 +22,10 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    //DashboardController provider = Provider.of<DashboardController>(context);
+    //provider.fetchData();
+
     notificationServices.requestNotificationPermission();
     notificationServices.getDeviceToken().then((value) async {
       notificationServices.firebaseInit(context);
@@ -53,8 +56,9 @@ class _DashboardState extends State<Dashboard> {
               builder: (context, provider, child) {
             return ElevatedButton.icon(
                 onPressed: () async {
-                  provider.mergeUserDataByType();
-                  provider.mergeUserData();
+                  //provider.mergeUserDataByType();
+                  //provider.mergeUserData();
+                  provider.fetchData();
                   provider
                       .addMealPlan(provider.mealPlan);
                 },

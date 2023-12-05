@@ -12,10 +12,10 @@ class FitnessDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String fitnessLevel = '';
+    //String fitnessLevel = '';
     final user = FirebaseAuth.instance.currentUser;
     final userFitnessStream = FirebaseFirestore.instance
-        .collection('UserFitnessCollection')
+        .collection('UserDataCollection')
         .doc(user!.uid)
         .snapshots();
 
@@ -141,7 +141,7 @@ class FitnessDetails extends StatelessWidget {
                             },
                             child: TrailingListTile(
                               title: 'Calories',
-                              trailing: Text(userData!['calories'] ?? ''),
+                              trailing: Text(userData!['calories'].toString() ?? ''),
                               iconData: FontAwesomeIcons.rulerVertical,
                             ),
                           ),

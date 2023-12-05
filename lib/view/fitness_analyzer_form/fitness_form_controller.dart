@@ -18,9 +18,9 @@ class FitnessFormController extends ChangeNotifier {
   int selectedInch = 9;
   String? selectedFitnessGoal;
   List<String> fitnessGoal = [
-    AppStrings.muscleBuilding,
-    AppStrings.weightGain,
-    AppStrings.weightLoss
+    AppStrings.muscleBuildingValue,
+    AppStrings.weightGainValue,
+    AppStrings.weightLossValue,
   ];
   double _calculatedBmi = 0.0;
   String? _fitnessLevel;
@@ -97,10 +97,13 @@ class FitnessFormController extends ChangeNotifier {
         'workout': workoutController.text,
       };
 
-      await FirebaseFirestore.instance
-          .collection('UserFitnessCollection')
-          .doc(user!.uid)
-          .set(fitnessData);
+      await FirebaseFirestore.instance.collection('UserDataCollection').doc(user!.uid).set(fitnessData, SetOptions(merge: true));
+
+
+      // await FirebaseFirestore.instance
+      //     .collection('UserFitnessCollection')
+      //     .doc(user!.uid)
+      //     .set(fitnessData);
 
       await SharedPreferencesHelper.setFitnessCompleted(true);
       Navigator.pushNamed(context, RouteName.healthStatusForm);

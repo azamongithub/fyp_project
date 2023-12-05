@@ -8,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../theme/text_style_util.dart';
 import '../../utils/routes/route_name.dart';
+import '../predict_all/predict_all_screen.dart';
 
 class SettingsTab extends StatelessWidget {
   const SettingsTab({super.key});
@@ -37,27 +38,17 @@ class SettingsTab extends StatelessWidget {
                   //         builder: (context) => const ProfileDetailsScreen()));
                 },
               ),
-              // ReusableListTile(
-              //   title: 'Workouts',
-              //   iconData: FontAwesomeIcons.shieldHalved,
-              //   onTap: () {
-              //     Navigator.push(
-              //         context,
-              //         MaterialPageRoute(
-              //             builder: (context) => YoutubeVideoPlayerScreen()));
-              //   },
-              // ),
-              // ReusableListTile(
-              //   title: 'Get Premium',
-              //   iconData: FontAwesomeIcons.crown,
-              //   onTap: () {
-              //     // Navigator.push(
-              //     //     context,
-              //     //     MaterialPageRoute(
-              //     //         builder: (context) => SubscriptionScreen())
-              //     // );
-              //   },
-              // ),
+              ReusableListTile(
+                title: "Profile",
+                iconData: FontAwesomeIcons.a,
+                onTap: () {
+                  //Navigator.pushNamed(context, RouteName.profileDetailsScreen);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PredictAllPlansScreen()));
+                },
+              ),
               ReusableListTile(
                 title: 'Change Password',
                 iconData: Icons.lock_outline,

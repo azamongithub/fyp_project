@@ -40,38 +40,38 @@ class HealthStatusForm extends StatelessWidget {
                 ),
                 SizedBox(height: 30.h),
                 CustomCard(
-                  title: AppStrings.diabetes,
+                  title: AppStrings.diabetesLabel,
                   isSelected: provider.selectedDisease == 'Diabetes',
                   onTap: () {
                     provider.setSelectedDisease('Diabetes');
                   },
                 ),
                 CustomCard(
-                  title: AppStrings.hypercholesterolemia,
-                  isSelected: provider.selectedDisease == 'Hypercholesterolemia',
+                  title: AppStrings.hypercholesterolemiaLabel,
+                  isSelected: provider.selectedDisease == 'Hypercholesterolaemia',
                   onTap: () {
-                    provider.setSelectedDisease('Hypercholesterolemia');
+                    provider.setSelectedDisease('Hypercholesterolaemia');
                   },
                 ),
                 CustomCard(
-                  title: AppStrings.celiac,
+                  title: AppStrings.celiacLabel,
                   isSelected: provider.selectedDisease == 'Celiac',
                   onTap: () {
                     provider.setSelectedDisease('Celiac');
                   },
                 ),
                 CustomCard(
-                  title: AppStrings.gout,
+                  title: AppStrings.goutLabel,
                   isSelected: provider.selectedDisease == 'Gout',
                   onTap: () {
                     provider.setSelectedDisease('Gout');
                   },
                 ),
                 CustomCard(
-                  title: AppStrings.none,
-                  isSelected: provider.selectedDisease == 'None',
+                  title: AppStrings.noneLabel,
+                  isSelected: provider.selectedDisease == 'none',
                   onTap: () {
-                    provider.setSelectedDisease('None');
+                    provider.setSelectedDisease('none');
                   },
                 ),
                 SizedBox(height: 30.h),

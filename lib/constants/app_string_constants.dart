@@ -50,9 +50,13 @@ abstract class AppStrings {
   static const String heightInchLabel = 'Height (Inches)';
   static const String fitnessGoalLabel = 'Fitness Goal';
   //Fitness Goal List
-  static const String muscleBuilding = 'Muscle Building';
-  static const String weightGain = 'Weight Gain';
-  static const String weightLoss = 'Weight Loss';
+  static const String muscleBuildingLabel = 'Muscle Building';
+  static const String weightGainLabel = 'Weight Gain';
+  static const String weightLossLabel = 'Weight Loss';
+  //Fitness Goal Value
+  static const String muscleBuildingValue = 'muscle building';
+  static const String weightGainValue = 'weight gain';
+  static const String weightLossValue = 'weight loss';
 
   //Fitness Form Validations
   static const String enterWeight = 'Please enter your weight';
@@ -61,7 +65,7 @@ abstract class AppStrings {
 
   //Fitness Details
   static const String underWeight = 'Underweight';
-  static const String normalWeight = 'Normal Weight';
+  static const String normalWeight = 'Normal weight';
   static const String overWeight = 'Overweight';
   static const String obesity = 'Obesity';
   static const String fitnessLevelNotDefined = 'Fitness Level Not Defined';
@@ -70,11 +74,12 @@ abstract class AppStrings {
   static const String yourMedicalCondition = 'Your Medical Condition';
   static const String medicalConditionMessage =
       'Share medical conditions or history for a personalized meal and workout plan';
-  static const String diabetes = 'Diabetes';
-  static const String hypercholesterolemia = 'Hypercholesterolemia';
-  static const String celiac = 'Celiac';
-  static const String gout = 'Gout';
-  static const String none = 'None';
+  static const String diabetesLabel = 'Diabetes';
+  static const String hypercholesterolemiaLabel = 'Hypercholesterolaemia';
+  static const String celiacLabel = 'Celiac';
+  static const String goutLabel = 'Gout';
+  static const String noneLabel = 'None';
+  static const String noneValue = 'none';
 
   //Health Status Form Validation
   static const String selectDisease = 'Please select any one of them';

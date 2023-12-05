@@ -12,7 +12,7 @@ class HealthDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
     final userHealthStream = FirebaseFirestore.instance
-        .collection('UserHealthCollection')
+        .collection('UserDataCollection')
         .doc(user!.uid)
         .snapshots();
 

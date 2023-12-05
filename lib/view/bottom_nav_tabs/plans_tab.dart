@@ -8,6 +8,7 @@ import '../../utils/routes/route_name.dart';
 
 class PlansTab extends StatelessWidget {
   late final double retrievedCalories;
+  late final String mealPlan;
 
   PlansTab({super.key}) {
     // throw UnimplementedError();
@@ -20,10 +21,11 @@ class PlansTab extends StatelessWidget {
     Future<void> fetchCalories() async {
       try {
         CollectionReference userFitnessCollection =
-            FirebaseFirestore.instance.collection('UserFitnessCollection');
+            FirebaseFirestore.instance.collection('UserDataCollection');
         DocumentSnapshot userSnapshot =
             await userFitnessCollection.doc(user!.uid).get();
-        retrievedCalories = double.parse(userSnapshot['calories']);
+        retrievedCalories = userSnapshot['calories'];
+        mealPlan = userSnapshot['meal_plan'];
         if (kDebugMode) {
           print('Calories: $retrievedCalories');
         }
@@ -69,8 +71,9 @@ class PlansTab extends StatelessWidget {
                     description: AppStrings.checkMealPlan,
                     onPressed: () async {
                       //int totalCalories = retrievedCalories.toInt();
-                      String name = 'Carb-Controlled Harmony';
+                      String name = mealPlan;
                       //String disease = 'none';
+                      print('Meal Plan is: $mealPlan');
                       Navigator.pushNamed(
                         context,
                         RouteName.mealPlanDaysScreen,

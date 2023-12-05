@@ -35,7 +35,7 @@ class MealPlanModel {
       'name': name,
       'disease': disease,
       'description': description,
-      'totalCalories': totalCalories,
+      //'totalCalories': totalCalories,
       'days': days,
       // 'totalCarbs': totalCarbs,
       // 'totalProtein': totalProtein,

@@ -149,34 +149,34 @@ class FitnessAnalyzerForm extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 40.h),
-                    CustomTextField(
-                      myController: provider.caloriesController,
-                      keyBoardType: TextInputType.number,
-                      labelText: 'Calories Required',
-                      onValidator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter calories.';
-                        }
-                        // double? calories = double.tryParse(value);
-                        // if (calories == null || calories < 1200 || calories > 4000) {
-                        //   return 'Please enter a valid calories.';
-                        // }
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: 30.h),
-                    CustomTextField(
-                      myController: provider.workoutController,
-                      keyBoardType: TextInputType.text,
-                      labelText: 'Workout Name',
-                      onValidator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter your workout name.';
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: 50.h),
+                    // CustomTextField(
+                    //   myController: provider.caloriesController,
+                    //   keyBoardType: TextInputType.number,
+                    //   labelText: 'Calories Required',
+                    //   onValidator: (value) {
+                    //     if (value!.isEmpty) {
+                    //       return 'Please enter calories.';
+                    //     }
+                    //     // double? calories = double.tryParse(value);
+                    //     // if (calories == null || calories < 1200 || calories > 4000) {
+                    //     //   return 'Please enter a valid calories.';
+                    //     // }
+                    //     return null;
+                    //   },
+                    // ),
+                    // SizedBox(height: 30.h),
+                    // CustomTextField(
+                    //   myController: provider.workoutController,
+                    //   keyBoardType: TextInputType.text,
+                    //   labelText: 'Workout Name',
+                    //   onValidator: (value) {
+                    //     if (value!.isEmpty) {
+                    //       return 'Please enter your workout name.';
+                    //     }
+                    //     return null;
+                    //   },
+                    // ),
+                    // SizedBox(height: 50.h),
                     CustomButton(
                       title: AppStrings.continueButton,
                       loading: provider.isLoading,
