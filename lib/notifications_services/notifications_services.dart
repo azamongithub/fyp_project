@@ -1,10 +1,11 @@
 import 'dart:math';
-import 'package:CoachBot/view/bottom_nav_tabs/plans_tab.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+import '../modules/my_plans/view/plans_tab.dart';
 
 class NotificationServices {
   FirebaseMessaging messaging = FirebaseMessaging.instance;

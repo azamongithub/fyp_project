@@ -34,6 +34,7 @@ import 'package:http/http.dart' as http;
 
 class ApiRepository {
   static const String apiUrl = 'http://10.0.2.2:8000/predict_all';
+  //static const String apiUrl = 'http://127.0.0.1:8000/predict_all';
 
   Future<Map<String, dynamic>> fetchData(Map<String, dynamic> requestData) async {
     try {

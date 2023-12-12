@@ -1,14 +1,15 @@
 import 'package:CoachBot/theme/color_util.dart';
-import 'package:CoachBot/utils/routes/route_name.dart';
-import 'package:CoachBot/utils/routes/routes.dart';
-import 'package:CoachBot/view/bottom_nav_tabs/dashboard/dashboard_controller.dart';
-import 'package:CoachBot/view/fitness_analyzer_form/fitness_form_controller.dart';
-import 'package:CoachBot/view/health_status_form/health_status_provider.dart';
-import 'package:CoachBot/view/profile_form/profile_form_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'constants/app_string_constants.dart';
+import 'modules/dashboard/controller/dashboard_controller.dart';
+import 'modules/fitness_analyzer/controller/fitness_form_controller.dart';
+import 'modules/health_status/controller/health_status_controller.dart';
+import 'modules/profile/controller/profile_form_controller.dart';
+import 'modules/select_fitness_goal/controller/fitness_goal_controller.dart';
+import 'routes/route_name.dart';
+import 'routes/routes.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -47,7 +48,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => ProfileFormController()),
         ChangeNotifierProvider(create: (_) => FitnessFormController()),
-        ChangeNotifierProvider(create: (_) => HealthFormController()),
+        ChangeNotifierProvider(create: (_) => FitnessGoalController()),
+        ChangeNotifierProvider(create: (_) => HealthStatusController()),
         ChangeNotifierProvider(create: (_) => DashboardController()),
       ],
       child: Builder(builder: (context) {
@@ -62,6 +64,7 @@ class MyApp extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 title: AppStrings.appName,
                         theme: ThemeData(
+                          scaffoldBackgroundColor: Colors.white,
                           primarySwatch: Colors.indigo,
                           colorScheme: ColorScheme.fromSeed(seedColor: ColorUtil.themeColor),
                           useMaterial3: true,

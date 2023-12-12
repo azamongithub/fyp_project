@@ -19,8 +19,9 @@ abstract class AppStrings {
   static const String registerNow = 'Register now';
   static const String loginNow = 'Login now';
 
-  //Continue Button text
+  //Continue and Send Button text
   static const String continueButton = 'Continue';
+  static const String sendButton = 'Send';
 
 
   //Profile Form
@@ -50,6 +51,8 @@ abstract class AppStrings {
   static const String heightInchLabel = 'Height (Inches)';
   static const String fitnessGoalLabel = 'Fitness Goal';
   //Fitness Goal List
+  static const String yourFitnessGoal = 'Your Fitness Goal';
+  static const String fitnessGoalMessage = 'Select your Fitness Goal';
   static const String muscleBuildingLabel = 'Muscle Building';
   static const String weightGainLabel = 'Weight Gain';
   static const String weightLossLabel = 'Weight Loss';
@@ -117,6 +120,10 @@ abstract class AppStrings {
 
   //Change Password Button Text
   static const String changePassBtn = 'Change Password';
+  //Send Feedback
+  static const String feedback = 'Feedback';
+  static const String sendFeedbackLabel = 'Enter what you want to share with us';
+  static const String enterFeedback = 'This Field is required';
 
 
 }

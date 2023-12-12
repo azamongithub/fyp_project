@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'color_util.dart';
 
-class MyTextStyle {
+class CustomTextStyle {
 
   //For AppBar
   static TextStyle appBarStyle({
@@ -102,7 +102,7 @@ class MyTextStyle {
     double? fontSize,
   }) {
     return TextStyle(
-      color: ColorUtil.titleColor,
+      color: color,
       fontSize: 20.sp,
       fontWeight: fontWeight,
     );
@@ -114,9 +114,10 @@ class MyTextStyle {
     FontWeight? fontWeight,
     String? fontFamily,
     double? fontSize,
+
   }) {
     return TextStyle(
-      color: ColorUtil.titleColor,
+      color: color,
       fontSize: 22.sp,
       fontWeight: fontWeight,
     );
@@ -131,7 +132,7 @@ class MyTextStyle {
     double? fontSize,
   }) {
     return TextStyle(
-      color: ColorUtil.titleColor,
+      color: color,
       fontSize: 24.sp,
       fontWeight: fontWeight,
     );
