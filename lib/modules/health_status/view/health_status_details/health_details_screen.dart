@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../routes/route_name.dart';
+import '../../../../theme/color_util.dart';
 import '../../controller/health_status_controller.dart';
 
 class HealthDetails extends StatelessWidget {
@@ -32,6 +34,29 @@ class HealthDetails extends StatelessWidget {
           );
         }
         final userData = snapshot.data!.data() as Map<String, dynamic>?;
+        if (userData!['disease'] == null) {
+          return Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: Container(
+              padding: EdgeInsets.all(40.sp),
+              color: ColorUtil.whiteColor,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('It looks like you have not provided information about your health status'),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, RouteName.healthStatusForm);
+                    },
+                    child: Text('Select your health status', style: CustomTextStyle.textStyle18(color: ColorUtil.themeColor)),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+
         return Scaffold(
           body: ChangeNotifierProvider(
               create: (_) => HealthStatusController(),
@@ -53,7 +78,7 @@ class HealthDetails extends StatelessWidget {
                         ),
                         SizedBox(height: 10.h),
                         Text(
-                          '🔵 ${userData?['disease']?? ''}',
+                          '🔵 ${userData?['disease']}',
                           style: CustomTextStyle.textStyle20(),
                         ),
                         SizedBox(height: 20.h),

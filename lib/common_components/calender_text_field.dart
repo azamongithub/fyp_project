@@ -4,9 +4,9 @@ import 'package:intl/intl.dart';
 class CalendarTextField extends StatelessWidget {
   final TextEditingController calenderController;
   final String labelText;
+  final String? initialValue;
   final String? calenderValidationText;
   final FormFieldValidator? onValidator;
-
   final Function(DateTime?) onDateSelected;
 
   const CalendarTextField({
@@ -15,7 +15,7 @@ class CalendarTextField extends StatelessWidget {
     required this.labelText,
     required this.onDateSelected,
     this.calenderValidationText,
-    this.onValidator,
+    this.onValidator, this.initialValue,
   }) : super(key: key);
 
   Future<void> _selectDate(BuildContext context) async {

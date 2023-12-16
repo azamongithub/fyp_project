@@ -1,3 +1,4 @@
+import 'package:CoachBot/theme/color_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,7 +28,7 @@ class MealPlanDaysScreen extends StatelessWidget {
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         title: Text('Meal Plan ', style: CustomTextStyle.appBarStyle()),
-        backgroundColor: const Color(0xff3140b0),
+        backgroundColor: ColorUtil.themeColor,
       ),
       body: FutureBuilder<List<MealPlanModel>>(
         //future: fetchMealPlansByCalories(name, totalCalories),
@@ -138,11 +139,22 @@ Future<List<MealPlanModel>> fetchMealPlansByCalories(
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
       return MealPlanModel.fromJson(doc.id, data);
     }).toList();
-    return [mealPlans.first];
+
+    if (mealPlans.isNotEmpty) {
+      return [mealPlans.first];
+    } else {
+      return Future.error('No data found for meal plan: $name');
+    }
   } catch (e) {
     print('Error fetching meal plans: $e');
-    return [];
+    return Future.error('Error fetching meal plans: $e');
   }
+
+  //   return [mealPlans.first];
+  // } catch (e) {
+  //   print('Error fetching meal plans: $e');
+  //   return [];
+  // }
 }
 
 // Future<List<MealPlanModel>> fetchMealPlansByCalories(

@@ -1,7 +1,11 @@
+import 'package:CoachBot/routes/route_name.dart';
+import 'package:CoachBot/theme/color_util.dart';
+import 'package:CoachBot/theme/text_style_util.dart';
 import 'package:CoachBot/utils/toast_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -26,22 +30,29 @@ class PersonalDetails extends StatelessWidget {
             body: Center(child: CircularProgressIndicator()),
           );
         }
-
-        if (!snapshot.hasData) {
-          return const Scaffold(
-            body: Center(child: Text('No data available')),
-          );
-        }
-
-        final ageData = snapshot.data?.data() as Map<String, dynamic>;
-        if (ageData.isEmpty) {
-          return const Center(
-            child: Text('No data available'),
-          );
-        }
-
         final userData = snapshot.data!.data() as Map<String, dynamic>?;
-
+        if (userData?['name'] == null) {
+          return Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: Container(
+              padding: EdgeInsets.all(40.sp),
+              color: ColorUtil.whiteColor,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('It looks like you have not provided your Personal details'),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, RouteName.profileForm);
+                    },
+                    child: Text('Complete your Profile Detials', style: CustomTextStyle.textStyle18(color: ColorUtil.themeColor)),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
         return Scaffold(
             resizeToAvoidBottomInset: false,
             body: ChangeNotifierProvider(
@@ -75,6 +86,9 @@ class PersonalDetails extends StatelessWidget {
                             title: 'Name',
                             trailing: Text(userData?['name'] ?? ''),
                             iconData: FontAwesomeIcons.userLarge,
+                            onTap: (){
+                              Navigator.pushNamed(context, RouteName.profileForm);
+                            },
                           ),
                         ),
                         GestureDetector(

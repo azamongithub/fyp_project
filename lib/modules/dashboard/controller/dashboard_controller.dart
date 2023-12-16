@@ -1,12 +1,15 @@
+import 'package:CoachBot/models/workout_plan_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import '../../../models/all_plan_model.dart';
 import '../../../models/meal_plan_model.dart';
+import '../../../notifications_services/notifications_services.dart';
 import '../../../services/api_repository.dart';
 import '../../../services/firestore_service.dart';
 
 class DashboardController extends ChangeNotifier {
+  NotificationServices notificationServices = NotificationServices();
   final ApiRepository _apiRepository = ApiRepository();
   late PredictionModel _apiData;
   PredictionModel get apiData => _apiData;
@@ -15,9 +18,7 @@ class DashboardController extends ChangeNotifier {
   Map<String, dynamic> get responseData => _responseData;
 
 
-
   Future<void> fetchData() async {
-    // await Future.delayed(Duration(seconds: 3));
     final user = FirebaseAuth.instance.currentUser;
     DocumentSnapshot snapshot = await FirebaseFirestore.instance
         .collection('UserDataCollection')
@@ -34,7 +35,7 @@ class DashboardController extends ChangeNotifier {
           "Weight": userData['weight'],
           "Fitness_Level": userData['fitnessLevel'],
           "Fitness_Goal": userData['fitnessGoal'],
-          "Medical_History": userData['disease'],
+          "Medical_History": userData['disease'] == 'other' ? userData['disease'] = 'none' : userData['disease'],
         });
       }
     } else {
@@ -52,6 +53,7 @@ class DashboardController extends ChangeNotifier {
     }
   }
 
+
   Future<void> addMealPlan(MealPlanModel mealPlan) async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     await firestore
@@ -60,13 +62,20 @@ class DashboardController extends ChangeNotifier {
         .set(mealPlan.toJson());
   }
 
+  Future<void> addWorkoutPlan(WorkoutPlanModel workoutPlan) async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    await firestore
+        .collection('workout_plans')
+        .doc(workoutPlan.id)
+        .set(workoutPlan.toJson());
+  }
+
   MealPlanModel mealPlan = MealPlanModel(
-    id: 'heartwise-trim-thrive',
-    name: 'Heartwise Trim & Thrive',
-    //totalCalories: 2000,
-    disease: 'Hypercholesterolaemia',
+    id: 'PurineCare&TrimHarmony-Gout',
+    name: 'Purine Care & Trim Harmony',
+    disease: 'Gout',
     description:
-        'Heart-healthy, low in saturated/trans fats; omega-3-rich foods; high-fiber fruits, veggies, and whole grains.',
+    "Manage purine-rich foods, stay hydrated, focus on a balanced diet with calorie moderation for weight loss.",
     days: {
       'Monday': Day(
         breakfast: Meal(
@@ -245,7 +254,7 @@ class DashboardController extends ChangeNotifier {
           title2: '1 cup cooked quinoa (whole grain)',
           title3: '1/2 cup tofu cubes',
           title4:
-              '1 cup mixed vegetables (e.g., broccoli, bell peppers, carrots)',
+          '1 cup mixed vegetables (e.g., broccoli, bell peppers, carrots)',
           title5: '2 tablespoons soy sauce',
           title6: '1 tablespoon olive oil',
         ),
@@ -275,7 +284,7 @@ class DashboardController extends ChangeNotifier {
         afternoonSnack: Meal(
           title1: 'Vegetable Sticks with Hummus',
           title2:
-              '1 cup mixed vegetable sticks (e.g., carrots, cucumber, bell peppers)',
+          '1 cup mixed vegetable sticks (e.g., carrots, cucumber, bell peppers)',
           title3: '1/4 cup hummus',
         ),
         dinner: Meal(
@@ -329,6 +338,113 @@ class DashboardController extends ChangeNotifier {
       ).toJson(),
     },
   );
+
+  WorkoutPlanModel workoutPlan = WorkoutPlanModel(
+    id: '150-WeekStrength&StaminaProgram-Diabetes',
+    name: '150/Week Strength & Stamina Program',
+    disease: 'Diabetes',
+    description: '150 minutes/week of moderate-intensity aerobic and strength training.',
+    days: {
+      'Monday': WorkoutDay(
+        exercises: [
+          Exercise(
+            name: 'Warm-up',
+            description1: '5-10 minutes of light cardio (jogging, jumping jacks, etc.)',
+            description2: 'Dynamic stretches (arm circles, leg swings)',
+          ),
+          Exercise(
+            name: 'Strength Training',
+            description1: 'Squats: 3 sets of 10-12 reps',
+            description2: 'Push-ups: 3 sets of 10-15 reps',
+            description3: 'Bent-over Rows: 3 sets of 12 reps (using dumbbells)',
+            description4: 'Lunges: 3 sets of 12 reps per leg',
+            description5: 'Plank: 3 sets, hold for 30-60 seconds',
+          ),
+          Exercise(
+            name: 'Cardio Finisher',
+            description1: '15-20 minutes of moderate-intensity cardio (running, cycling, or elliptical)',
+          ),
+        ],
+      ),
+      'Tuesday': WorkoutDay(
+        exercises: [
+          Exercise(
+            name: 'Warm-up',
+            description1: '5-10 minutes of light cardio',
+            description2: 'Core activation exercises (plank variations, Russian twists)',
+          ),
+          Exercise(
+            name: 'Cardio',
+            description1: 'Interval training: 30 seconds high intensity (sprinting or fast-paced jogging) followed by 30 seconds of rest. Repeat for 20-30 minutes',
+          ),
+          Exercise(
+            name: 'Core Work',
+            description1: 'Bicycle Crunches: 3 sets of 15 reps per side',
+            description2: 'Leg Raises: 3 sets of 12 reps',
+            description3: 'Oblique Twists: 3 sets of 15 reps per side',
+          ),
+        ],
+      ),
+      'Wednesday': WorkoutDay(
+        exercises: [
+          Exercise(
+            name: 'Active Recovery or Rest',
+            description1: 'Light activities like walking, yoga, or stretching to aid recovery.',
+          ),
+        ],
+      ),
+      'Thursday': WorkoutDay(
+        exercises: [
+          Exercise(
+            name: 'Warm-up',
+            description1: '5-10 minutes of light cardio (jogging, jumping jacks, etc.)',
+            description2: 'Dynamic stretches',
+          ),
+          Exercise(
+            name: 'HIIT Workout',
+            description1: 'Jump Squats: 4 sets of 20 seconds on, 10 seconds off',
+            description2: 'Burpees: 4 sets of 20 seconds on, 10 seconds off',
+            description3: 'Mountain Climbers: 4 sets of 20 seconds on, 10 seconds off',
+            description4: 'Rest: 2 minutes between sets',
+          ),
+        ],
+      ),
+      'Friday': WorkoutDay(
+        exercises: [
+          Exercise(
+            name: 'Warm-up',
+            description1: '10 minutes of light cardio',
+            description2: 'Joint mobility exercises (arm circles, leg swings)',
+          ),
+          Exercise(
+            name: 'Flexibility Training',
+            description1: 'Static stretches for major muscle groups (hamstrings, quadriceps, shoulders, etc.) for 20-30 seconds each',
+          ),
+          Exercise(
+            name: 'Yoga or Pilates',
+            description1: 'Follow a 30-minute session focusing on flexibility and core strength.',
+          ),
+        ],
+      ),
+      'Saturday': WorkoutDay(
+        exercises: [
+          Exercise(
+            name: 'Active Recreation',
+            description1: 'Engage in a recreational activity you enjoy, such as hiking, biking, or playing a sport.',
+          ),
+        ],
+      ),
+      'Sunday': WorkoutDay(
+        exercises: [
+          Exercise(
+            name: 'Rest',
+            description1: 'Allow your body to recover completely.',
+          ),
+        ],
+      ),
+    },
+  );
+
 
 
 

@@ -76,13 +76,14 @@ abstract class AppStrings {
     //Health Status Form
   static const String yourMedicalCondition = 'Your Medical Condition';
   static const String medicalConditionMessage =
-      'Share medical conditions or history for a personalized meal and workout plan';
+      'Share medical conditions or history with us';
   static const String diabetesLabel = 'Diabetes';
   static const String hypercholesterolemiaLabel = 'Hypercholesterolaemia';
   static const String celiacLabel = 'Celiac';
   static const String goutLabel = 'Gout';
   static const String noneLabel = 'None';
   static const String noneValue = 'none';
+  static const String otherLabel = 'Other';
 
   //Health Status Form Validation
   static const String selectDisease = 'Please select any one of them';

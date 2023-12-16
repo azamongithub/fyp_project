@@ -1,9 +1,14 @@
+import 'package:CoachBot/utils/toast_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../../../../common_components/custom_list_tile.dart';
+import '../../../../routes/route_name.dart';
+import '../../../../theme/color_util.dart';
+import '../../../../theme/text_style_util.dart';
 import '../../controller/fitness_form_controller.dart';
 
 class FitnessDetails extends StatelessWidget {
@@ -20,12 +25,11 @@ class FitnessDetails extends StatelessWidget {
 
     return StreamBuilder<DocumentSnapshot>(
       stream: userFitnessStream,
-      builder: (context, snapshot) {
+      builder: (ctx, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        }
-        if (!snapshot.hasData) {
-          return Center(child: Text('No data available'));
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
         }
         // void updateBMI() {
         //   final userData = snapshot.data!.data() as Map<String, dynamic>?;
@@ -64,6 +68,31 @@ class FitnessDetails extends StatelessWidget {
         // }
 
         final userData = snapshot.data!.data() as Map<String, dynamic>?;
+        if (userData!['weight'] == null) {
+          return Scaffold(
+            body: Container(
+              padding: EdgeInsets.all(40.sp),
+              color: ColorUtil.whiteColor,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('It looks like you have not provided your Fitness details'),
+                  TextButton(
+                    onPressed: () {
+                      print('Weight is: ${userData?['weight']}');
+                      userData!['weight'] == null ?
+                      Navigator.pushNamed(context, RouteName.fitnessAnalyzerForm):
+                      userData!['fitnessGoal'] == null ?
+                      Navigator.pushNamed(context, RouteName.fitnessGoalForm) : null;
+                    },
+                    child: Text('Complete your Fitness Details', style: CustomTextStyle.textStyle18(color: ColorUtil.themeColor)),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
         //updateBMI();
         return Scaffold(
             // appBar: AppBar(
@@ -80,69 +109,49 @@ class FitnessDetails extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              // provider.userHeightDialogAlert(
-                              //     context, userData!['height']);
+                          CustomListTile(
+                            title: 'Height',
+                            trailing: Text('${userData!['heightInFeet']} ft'),
+                            iconData: FontAwesomeIcons.rulerVertical,
+                            onTap: (){
+                              Navigator.pushNamed(context, RouteName.fitnessAnalyzerForm);
                             },
-                            child: CustomListTile(
-                              title: 'Height',
-                              trailing: Text('${userData!['heightInFeet']} ft'),
-                              iconData: FontAwesomeIcons.rulerVertical,
-                            ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              // provider.userWeightDialogAlert(
-                              //     context, userData!['weight']);
+                          CustomListTile(
+                            title: 'Weight',
+                            trailing: Text('${userData?['weight']} kg'),
+                            iconData: FontAwesomeIcons.gaugeHigh,
+                            onTap: (){
+                              Navigator.pushNamed(context, RouteName.fitnessAnalyzerForm);
                             },
-                            child: CustomListTile(
-                              title: 'Weight',
-                              trailing: Text('${userData!['weight'].toString()} kg'),
-                              iconData: FontAwesomeIcons.gaugeHigh,
-                            ),
                           ),
-                          InkWell(
-                            // onTap: () {
-                            //   Utils.positiveToastMessage('You can change your weight or height to update the BMI');
-                            // },
-                            child: CustomListTile(
-                              title: 'BMI',
-                              trailing: Text(userData!['bmi'].toString() ?? ''),
-                              iconData: FontAwesomeIcons.calculator,
-                            ),
+                          CustomListTile(
+                            title: 'BMI',
+                            trailing: Text(userData?['bmi'].toString() ?? 'Not Calculated'),
+                            iconData: FontAwesomeIcons.calculator,
                           ),
-                          InkWell(
-                            // onTap: () {
-                            //   Utils.positiveToastMessage('You can change your weight or height to update the BMI Category');
-                            // },
-                            child: CustomListTile(
-                              title: 'Fitness Level',
-                              trailing: Text(userData!['fitnessLevel'] ?? ''),
-                              iconData: FontAwesomeIcons.chartLine,
-                            ),
-                          ),
-                          GestureDetector(
+                          CustomListTile(
+                            title: 'Fitness Level',
+                            trailing: Text(userData!['fitnessLevel'] ?? 'Not Calculated'),
+                            iconData: FontAwesomeIcons.chartLine,
                             onTap: () {
-                              // provider.userFitnessGoalDialogAlert(
-                              //     context, userData!['fitnessGoal'] ?? '');
+                              ToastUtils.positiveToastMessage('You can change your weight or height to update the BMI Category');
                             },
-                            child: CustomListTile(
-                              title: 'Fitness Goal',
-                              trailing: Text(userData!['fitnessGoal'] ?? ''),
-                              iconData: FontAwesomeIcons.manatSign,
-                            ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              // provider.userHeightDialogAlert(
-                              //     context, userData!['calories']);
+                          CustomListTile(
+                            title: 'Fitness Goal',
+                            trailing: Text(userData!['fitnessGoal'] ?? 'Not Selected'),
+                            iconData: FontAwesomeIcons.manatSign,
+                            onTap: (){
+                              Navigator.pushNamed(context, RouteName.fitnessGoalForm);
+                              // userData!['fitnessGoal'] == null ?
+                              // Navigator.pushNamed(context, RouteName.fitnessGoalForm): null;
                             },
-                            child: CustomListTile(
-                              title: 'Required Calories',
-                              trailing: Text(userData!['calories'].toString() ?? ''),
-                              iconData: FontAwesomeIcons.rulerVertical,
-                            ),
+                          ),
+                          CustomListTile(
+                            title: 'Required Calories',
+                            trailing: Text(userData!['calories'].toString()),
+                            iconData: FontAwesomeIcons.rulerVertical,
                           ),
                         ],
                       ),

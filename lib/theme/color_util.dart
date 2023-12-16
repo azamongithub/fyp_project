@@ -4,6 +4,15 @@ import 'package:flutter/material.dart';
 
 abstract class ColorUtil {
 
+  static const LinearGradient themeGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      Color(0xffFF5F6D),
+      Color(0xff3140b0),
+    ],
+  );
+
   static const Color themeColor = Color(0xff3140b0);
   static const Color successColor =  Color(0xff04cd62);
   static const Color alertColor =  Color(0xffff0222);

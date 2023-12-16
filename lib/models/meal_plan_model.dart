@@ -1,7 +1,7 @@
 class MealPlanModel {
   String id;
   String name;
-  String disease;
+  String? disease;
   String description;
   int? totalCalories;
   Map<String, dynamic> days;
@@ -16,7 +16,7 @@ class MealPlanModel {
   MealPlanModel({
     required this.id,
     required this.name,
-    required this.disease,
+    this.disease,
     required this.description,
     this.totalCalories,
     required this.days,
@@ -53,7 +53,7 @@ class MealPlanModel {
       name: json['name'] ?? '',
       disease: json['disease'] ?? '',
       description: json['description'] ?? '',
-      totalCalories: json['totalCalories'] ?? 0,
+      // totalCalories: json['totalCalories'] ?? 0,
       days: json['days'] ?? {},
       // totalCarbs: json['totalCarbs'] ?? '',
       // totalProtein: json['totalProtein'] ?? '',
@@ -146,7 +146,7 @@ class Meal {
 
   Map<String, dynamic> toJson() {
     return {
-      'mealCalories': mealCalories,
+      // 'mealCalories': mealCalories,
       'title1': title1,
       'title2': title2,
       'title3': title3,

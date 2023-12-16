@@ -1,3 +1,4 @@
+import 'package:CoachBot/theme/color_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +19,7 @@ class FitnessAnalyzerForm extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: Text(AppStrings.yourFitnessDetails, style: CustomTextStyle.appBarStyle()),
-            backgroundColor: const Color(0xff3140b0),
+            backgroundColor: ColorUtil.themeColor,
             automaticallyImplyLeading: false,
             centerTitle: true,
           ),
@@ -45,12 +46,6 @@ class FitnessAnalyzerForm extends StatelessWidget {
                       myController: provider.weightController,
                       keyBoardType: TextInputType.number,
                       labelText: AppStrings.weightLabel,
-                      // onChange: (value) {
-                      //   provider.calculateBMI(((provider.selectedFeet * 12 +
-                      //               provider.selectedInch) /
-                      //           12) *
-                      //       30.48);
-                      // },
                       onValidator: (value) {
                         if (value!.isEmpty) {
                           return AppStrings.enterWeight;
@@ -66,85 +61,69 @@ class FitnessAnalyzerForm extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          child: DropdownButtonFormField<int>(
-                            value: provider.selectedFeet,
-                            onChanged: (value) {
-                              provider.setSelectedFeet(value!);
-                            },
-                            items: provider.feetOptions.map((feet) {
-                              return DropdownMenuItem<int>(
-                                value: feet,
-                                child: Text('$feet\'',
-                                style: CustomTextStyle.textStyle18(
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                ),
-                              );
-                            }).toList(),
-                            decoration: const InputDecoration(
-                              labelText: AppStrings.heightFeetLabel,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey), // Set your border color
+                              borderRadius: BorderRadius.circular(8.0), // Set border radius if needed
+                            ),
+                            child: DropdownButtonFormField<int>(
+                              value: provider.selectedFeet,
+                              onChanged: (value) {
+                                provider.setSelectedFeet(value!);
+                              },
+                              items: provider.feetOptions.map((feet) {
+                                return DropdownMenuItem<int>(
+                                  value: feet,
+                                  child: Text(
+                                    '$feet\'',
+                                    style: CustomTextStyle.textStyle18(
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                              decoration: InputDecoration(
+                                labelText: AppStrings.heightFeetLabel,
+                                border: InputBorder.none, // Remove default border
+                                contentPadding: EdgeInsets.symmetric(horizontal: 16.sp),
+                              ),
                             ),
                           ),
                         ),
-                        const SizedBox(width: 16),
+                        SizedBox(width: 16.w),
                         Expanded(
-                          child: DropdownButtonFormField<int>(
-                            value: provider.selectedInch,
-                            onChanged: (value) {
-                              provider.setSelectedInch(value!);
-                            },
-                            items: provider.inchesOptions.map((inch) {
-                              return DropdownMenuItem<int>(
-                                value: inch,
-                                child: Text('$inch"',
-                                  style: CustomTextStyle.textStyle18(
-                                    fontWeight: FontWeight.w400,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey), // Set your border color
+                              borderRadius: BorderRadius.circular(8.0), // Set border radius if needed
+                            ),
+                            child: DropdownButtonFormField<int>(
+                              value: provider.selectedInch,
+                              onChanged: (value) {
+                                provider.setSelectedInch(value!);
+                              },
+                              items: provider.inchesOptions.map((inch) {
+                                return DropdownMenuItem<int>(
+                                  value: inch,
+                                  child: Text(
+                                    '$inch"',
+                                    style: CustomTextStyle.textStyle18(
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
-                                ),
-                              );
-                            }).toList(),
-                            decoration: const InputDecoration(
-                              labelText: AppStrings.heightInchLabel,
+                                );
+                              }).toList(),
+                              decoration: InputDecoration(
+                                labelText: AppStrings.heightInchLabel,
+                                border: InputBorder.none, // Remove default border
+                                contentPadding: EdgeInsets.symmetric(horizontal: 16.sp),
+                              ),
                             ),
                           ),
                         ),
                       ],
                     ),
-                    // SizedBox(height: 30.h),
-                    // Container(
-                    //   padding: const EdgeInsets.symmetric(horizontal: 8),
-                    //   decoration: BoxDecoration(
-                    //     border: Border.all(
-                    //       color: Colors.grey,
-                    //     ),
-                    //     borderRadius: BorderRadius.circular(8.0),
-                    //   ),
-                    //   child: DropdownButtonFormField<String>(
-                    //     decoration: const InputDecoration(
-                    //       labelText: AppStrings.fitnessGoalLabel,
-                    //     ),
-                    //     value: provider.selectedFitnessGoal,
-                    //     onChanged: (newValue) {
-                    //       provider.setSelectedFitnessGoal(newValue!);
-                    //     },
-                    //     items: provider.fitnessGoal.map((fitnessGoal) {
-                    //       return DropdownMenuItem<String>(
-                    //         value: fitnessGoal,
-                    //         child: Text(fitnessGoal,
-                    //           style: MyTextStyle.textStyle18(
-                    //             fontWeight: FontWeight.w400,
-                    //           ),
-                    //         ),
-                    //       );
-                    //     }).toList(),
-                    //     validator: (value) {
-                    //       if (value == null) {
-                    //         return AppStrings.selectGoal;
-                    //       }
-                    //       return null;
-                    //     },
-                    //   ),
-                    // ),
+
                     SizedBox(height: 40.h),
                     CustomButton(
                       title: AppStrings.continueButton,

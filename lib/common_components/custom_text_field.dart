@@ -5,6 +5,7 @@ class CustomTextField extends StatelessWidget {
   final FormFieldValidator onValidator;
   final TextInputType keyBoardType;
   final String? labelText;
+  final String? initialValue;
   final int? maxLines;
   final bool autoFocus;
   final FocusNode? focusNode;
@@ -19,7 +20,7 @@ class CustomTextField extends StatelessWidget {
     //this.enable = true,
     this.autoFocus = false,
     this.focusNode,
-    this.onChange,
+    this.onChange, this.initialValue,
   }) : super(key: key);
 
 

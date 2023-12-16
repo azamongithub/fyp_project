@@ -1,5 +1,6 @@
 import 'package:CoachBot/constants/app_string_constants.dart';
 import 'package:CoachBot/notifications_services/notifications_services.dart';
+import 'package:CoachBot/theme/color_util.dart';
 import 'package:CoachBot/theme/text_style_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -15,21 +16,12 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   NotificationServices notificationServices = NotificationServices();
+  late DashboardController provider;
+  bool _dataFetched = false;
 
   @override
   void initState() {
     super.initState();
-
-    // Future<void> fetchDataAfterThreeSeconds() async {
-    //   await Future.delayed(Duration(seconds: 3));
-    //   DashboardController provider = Provider.of<DashboardController>(context);
-    //   await provider.fetchData();
-    //
-    //   // Now you can perform additional tasks after the data is fetched
-    //   print('Data fetched and additional tasks completed.');
-    // }
-
-
     notificationServices.requestNotificationPermission();
     notificationServices.getDeviceToken().then((value) async {
       notificationServices.firebaseInit(context);
@@ -44,12 +36,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_dataFetched) {
+      provider = Provider.of<DashboardController>(context);
+      provider.fetchData();
+      _dataFetched = true;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    //final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-   // final dashboardController = Provider.of<DashboardController>(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xff3140b0),
+        backgroundColor: ColorUtil.themeColor,
         title: Text(
           AppStrings.dashboard,
           style: CustomTextStyle.appBarStyle(),
@@ -63,8 +63,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   //provider.mergeUserDataByType();
                   //provider.mergeUserData();
                   provider.fetchData();
-                  provider
-                      .addMealPlan(provider.mealPlan);
+                  provider.addWorkoutPlan(provider.workoutPlan);
+                  // provider
+                  //     .addMealPlan(provider.mealPlan);
                 },
                 icon: const Icon(Icons.add),
                 label: const Text('Add'));

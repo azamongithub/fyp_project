@@ -38,6 +38,14 @@ class _LoginFormState extends State<LoginForm> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: ColorUtil.themeColor,
+          // backgroundColor: Colors.transparent,
+          // elevation: 0,
+          // flexibleSpace: Container(
+          //   decoration: BoxDecoration(
+          //     gradient: ColorUtil.themeGradient,
+          //   ),
+          // ),
+
           automaticallyImplyLeading: false,
           title: Center(
               child: Text(

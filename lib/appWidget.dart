@@ -1,3 +1,4 @@
+import 'package:CoachBot/modules/my_plans/controller/my_plans_controller.dart';
 import 'package:CoachBot/theme/color_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => FitnessGoalController()),
         ChangeNotifierProvider(create: (_) => HealthStatusController()),
         ChangeNotifierProvider(create: (_) => DashboardController()),
+        ChangeNotifierProvider(create: (_) => MyPlansController()),
       ],
       child: Builder(builder: (context) {
         return ScreenUtilInit(

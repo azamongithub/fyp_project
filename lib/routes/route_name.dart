@@ -8,8 +8,11 @@ class RouteName {
   static const String changePasswordScreen = 'changePasswordScreen';
   static const String accountDetailsScreen = 'accountDetailsScreen';
   static const String settingsTab = 'settingsTab';
-  static const String mealPlanDetailsScreen = 'mealPlanDetailsScreen';
   static const String mealPlanDaysScreen = 'mealPlanDaysScreen';
+  static const String mealPlanDetailsScreen = 'mealPlanDetailsScreen';
+  static const String workoutPlanDaysScreen = 'workoutPlanDaysScreen';
+  static const String workoutPlanDetailsScreen = 'workoutPlanDetailsScreen';
+
   static const String findWorkoutsScreen= 'findWorkoutsScreen';
   static const String findNutritionFactsScreen= 'findNutritionFactsScreen';
 

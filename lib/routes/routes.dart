@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../common_components/bottom_nav_bar.dart';
+import '../models/workout_plan_model.dart';
 import '../modules/fitness_analyzer/view/fitness_analyzer_form/fitness_analyzer_form.dart';
 import '../modules/health_status/view/select_health_status/health_status_screen.dart';
 import '../modules/meal_plan/view/meal_plan_days_screen/meal_plan_days_screen.dart';
@@ -19,6 +20,8 @@ import '../modules/send_feedback_screen/view/send_feedback_screen.dart';
 import '../modules/signup/view/signup_screen.dart';
 import '../modules/splash/view/splash_screen.dart';
 import '../modules/workout/find_workout_screen.dart';
+import '../modules/workout_plan/view/workout_plan_days_screen.dart';
+import '../modules/workout_plan/view/workout_plan_details_screen.dart';
 import 'route_name.dart';
 
 class Routes {
@@ -89,6 +92,31 @@ class Routes {
            // totalCalories: calories,
           ),
         );
+
+
+
+      case RouteName.workoutPlanDetailsScreen:
+        final argsItem = routs.arguments as Map<String, dynamic>;
+        final String day = argsItem['day'];
+        final WorkoutDay dayDetails = argsItem['dayDetails'];
+        return CupertinoPageRoute(
+          builder: (_) => WorkoutPlanDetailsScreen(
+            day: day,
+            dayDetails: dayDetails,
+          ),
+        );
+
+      case RouteName.workoutPlanDaysScreen:
+        final argsItem = routs.arguments as Map<String, dynamic>;
+        final String name = argsItem['name'];
+        return CupertinoPageRoute(
+          builder: (_) => WorkoutPlanDaysScreen(
+            name: name,
+          ),
+        );
+
+
+
 
       case RouteName.findWorkoutsScreen:
         return CupertinoPageRoute(builder: (_) => FindWorkoutsScreen());
