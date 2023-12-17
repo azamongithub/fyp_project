@@ -17,10 +17,9 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int index = 0;
   final screens = [
-    DashboardScreen(),
+    const DashboardScreen(),
     PlansTab(),
     const SettingsTab(),
-    // StatsTab(),
   ];
 
   @override

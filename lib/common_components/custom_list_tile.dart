@@ -1,7 +1,8 @@
+import 'package:CoachBot/theme/text_style_util.dart';
 import 'package:flutter/material.dart';
 
 class CustomListTile extends StatelessWidget {
-  final String title;
+  final Widget title;
   final Widget? trailing;
   final IconData? iconData;
   final VoidCallback? onTap;
@@ -18,14 +19,17 @@ class CustomListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        GestureDetector(
+        InkWell(
           onTap: onTap,
           child: ListTile(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
-            title: Text(title),
-            leading: Icon(iconData , size: 20,),
+            title: title,
+            leading: Icon(
+              iconData,
+              size: 20,
+            ),
             trailing: trailing,
           ),
         ),
@@ -37,5 +41,3 @@ class CustomListTile extends StatelessWidget {
     );
   }
 }
-
-

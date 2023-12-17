@@ -1,7 +1,7 @@
 import 'package:CoachBot/constants/app_string_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:CoachBot/utils/toast_utils.dart';
+import 'package:CoachBot/utils/utils.dart';
 import '../../../common_components/custom_button.dart';
 import '../../../common_components/password_text_field.dart';
 import '../../../theme/text_style_util.dart';
@@ -33,16 +33,16 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           );
           await user.reauthenticateWithCredential(credential);
           await user.updatePassword(newPassword);
-          ToastUtils.positiveToastMessage('Password changed successfully');
+          Utils.positiveToastMessage('Password changed successfully');
           Navigator.pop(context);
         }
       } catch (e) {
         print('Error: $e');
 
         if (e is FirebaseAuthException && e.code == 'wrong-password') {
-          ToastUtils.negativeToastMessage('Incorrect Current Password');
+          Utils.negativeToastMessage('Incorrect Current Password');
         } else {
-          ToastUtils.positiveToastMessage('We have blocked all requests from this device due to unusual activity. Try again later.');
+          Utils.positiveToastMessage('We have blocked all requests from this device due to unusual activity. Try again later.');
 
         }
       }
@@ -136,7 +136,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
 
 // import 'package:CoachBot/res/component/custom_button.dart';
-// import 'package:CoachBot/utils/toast_utils.dart';
+// import 'package:CoachBot/utils/utils.dart';
 // import 'package:flutter/material.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import '../../res/component/password_text_field.dart';

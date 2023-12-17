@@ -10,49 +10,6 @@ import '../../../services/firestore_service.dart';
 
 class DashboardController extends ChangeNotifier {
   NotificationServices notificationServices = NotificationServices();
-  final ApiRepository _apiRepository = ApiRepository();
-  late PredictionModel _apiData;
-  PredictionModel get apiData => _apiData;
-  final FirestoreService _firestoreService = FirestoreService();
-  Map<String, dynamic> _responseData = {};
-  Map<String, dynamic> get responseData => _responseData;
-
-
-  Future<void> fetchData() async {
-    final user = FirebaseAuth.instance.currentUser;
-    DocumentSnapshot snapshot = await FirebaseFirestore.instance
-        .collection('UserDataCollection')
-        .doc(user!.uid)
-        .get();
-
-    if (snapshot.exists) {
-      final userData = snapshot.data() as Map<String, dynamic>?;
-      if (userData != null) {
-        fetchDataAndStore({
-          "Age": userData['age'],
-          "Gender": userData['gender'],
-          "Height": userData['heightInFeet'],
-          "Weight": userData['weight'],
-          "Fitness_Level": userData['fitnessLevel'],
-          "Fitness_Goal": userData['fitnessGoal'],
-          "Medical_History": userData['disease'] == 'other' ? userData['disease'] = 'none' : userData['disease'],
-        });
-      }
-    } else {
-      print('Document does not exist');
-    }
-  }
-
-  Future<void> fetchDataAndStore(Map<String, dynamic> requestData) async {
-    try {
-      _responseData = await _apiRepository.fetchData(requestData);
-      await _firestoreService.storeUserData(_responseData);
-      notifyListeners(); // Notify listeners about the change in state
-    } catch (e) {
-      print('Error: $e');
-    }
-  }
-
 
   Future<void> addMealPlan(MealPlanModel mealPlan) async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -340,105 +297,89 @@ class DashboardController extends ChangeNotifier {
   );
 
   WorkoutPlanModel workoutPlan = WorkoutPlanModel(
-    id: '150-WeekStrength&StaminaProgram-Diabetes',
-    name: '150/Week Strength & Stamina Program',
-    disease: 'Diabetes',
-    description: '150 minutes/week of moderate-intensity aerobic and strength training.',
+    id: 'HighCardio-None',
+    name: 'High Cardio',
+    disease: 'None',
+    description: 'Ignite cardiovascular fitness with high-intensity cardio workouts. Boost endurance and burn calories through an energizing and challenging weekly routine.',
     days: {
       'Monday': WorkoutDay(
         exercises: [
           Exercise(
-            name: 'Warm-up',
-            description1: '5-10 minutes of light cardio (jogging, jumping jacks, etc.)',
-            description2: 'Dynamic stretches (arm circles, leg swings)',
-          ),
-          Exercise(
-            name: 'Strength Training',
-            description1: 'Squats: 3 sets of 10-12 reps',
-            description2: 'Push-ups: 3 sets of 10-15 reps',
-            description3: 'Bent-over Rows: 3 sets of 12 reps (using dumbbells)',
-            description4: 'Lunges: 3 sets of 12 reps per leg',
-            description5: 'Plank: 3 sets, hold for 30-60 seconds',
-          ),
-          Exercise(
-            name: 'Cardio Finisher',
-            description1: '15-20 minutes of moderate-intensity cardio (running, cycling, or elliptical)',
+            name: 'HIIT Workout',
+            description1: 'Jumping Jacks: 4 sets of 30 seconds on, 10 seconds off',
+            description2: 'Burpees: 4 sets of 30 seconds on, 10 seconds off',
+            description3: 'Mountain Climbers: 4 sets of 30 seconds on, 10 seconds off',
+            description4: 'Rest: 2 minutes between sets',
           ),
         ],
       ),
       'Tuesday': WorkoutDay(
         exercises: [
           Exercise(
-            name: 'Warm-up',
-            description1: '5-10 minutes of light cardio',
-            description2: 'Core activation exercises (plank variations, Russian twists)',
-          ),
-          Exercise(
-            name: 'Cardio',
-            description1: 'Interval training: 30 seconds high intensity (sprinting or fast-paced jogging) followed by 30 seconds of rest. Repeat for 20-30 minutes',
+            name: 'Sprint Intervals',
+            description1: 'Sprinting: 10 sets of 20 seconds sprinting, 40 seconds rest',
           ),
           Exercise(
             name: 'Core Work',
-            description1: 'Bicycle Crunches: 3 sets of 15 reps per side',
-            description2: 'Leg Raises: 3 sets of 12 reps',
-            description3: 'Oblique Twists: 3 sets of 15 reps per side',
+            description1: 'Plank: 3 sets, hold for 45 seconds each',
+            description2: 'Russian Twists: 3 sets of 20 reps',
           ),
         ],
       ),
       'Wednesday': WorkoutDay(
         exercises: [
           Exercise(
-            name: 'Active Recovery or Rest',
-            description1: 'Light activities like walking, yoga, or stretching to aid recovery.',
+            name: 'Cycling Intervals',
+            description1: 'Cycling: 30 minutes alternating between high and low intensity',
+          ),
+          Exercise(
+            name: 'Light Strength Training',
+            description1: 'Bodyweight exercises: 3 sets of 15 reps',
           ),
         ],
       ),
       'Thursday': WorkoutDay(
         exercises: [
           Exercise(
-            name: 'Warm-up',
-            description1: '5-10 minutes of light cardio (jogging, jumping jacks, etc.)',
-            description2: 'Dynamic stretches',
+            name: 'Tabata Cardio',
+            description1: 'Jump Rope: 8 sets of 20 seconds on, 10 seconds off',
+            description2: 'High Knees: 8 sets of 20 seconds on, 10 seconds off',
           ),
           Exercise(
-            name: 'HIIT Workout',
-            description1: 'Jump Squats: 4 sets of 20 seconds on, 10 seconds off',
-            description2: 'Burpees: 4 sets of 20 seconds on, 10 seconds off',
-            description3: 'Mountain Climbers: 4 sets of 20 seconds on, 10 seconds off',
-            description4: 'Rest: 2 minutes between sets',
+            name: 'Light Aerobic Exercises',
+            description1: 'Jumping jacks, side steps: 3 sets of 20 reps each',
           ),
         ],
       ),
       'Friday': WorkoutDay(
         exercises: [
           Exercise(
-            name: 'Warm-up',
-            description1: '10 minutes of light cardio',
-            description2: 'Joint mobility exercises (arm circles, leg swings)',
+            name: 'Rowing Sprints',
+            description1: 'Rowing Machine: 10 sets of 30 seconds rowing, 30 seconds rest',
           ),
           Exercise(
-            name: 'Flexibility Training',
-            description1: 'Static stretches for major muscle groups (hamstrings, quadriceps, shoulders, etc.) for 20-30 seconds each',
-          ),
-          Exercise(
-            name: 'Yoga or Pilates',
-            description1: 'Follow a 30-minute session focusing on flexibility and core strength.',
+            name: 'Gentle Yoga',
+            description1: 'Gentle yoga poses for 15 minutes',
           ),
         ],
       ),
       'Saturday': WorkoutDay(
         exercises: [
           Exercise(
+            name: 'Stair Climbing',
+            description1: 'Stair Climbing: 20 minutes at a brisk pace',
+          ),
+          Exercise(
             name: 'Active Recreation',
-            description1: 'Engage in a recreational activity you enjoy, such as hiking, biking, or playing a sport.',
+            description1: 'Engage in a recreational activity you enjoy',
           ),
         ],
       ),
       'Sunday': WorkoutDay(
         exercises: [
           Exercise(
-            name: 'Rest',
-            description1: 'Allow your body to recover completely.',
+            name: 'Rest or Light Activity',
+            description1: 'Rest or engage in light activities like walking or gardening',
           ),
         ],
       ),
@@ -448,7 +389,29 @@ class DashboardController extends ChangeNotifier {
 
 
 
-  // Future<void> mergeUserDataByType() async {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Future<void> mergeUserDataByType() async {
   //   try {
   //     final user = FirebaseAuth.instance.currentUser;
   //

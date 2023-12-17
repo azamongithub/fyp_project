@@ -34,11 +34,6 @@ class HealthStatusController extends ChangeNotifier {
       };
 
       await FirebaseFirestore.instance.collection('UserDataCollection').doc(user!.uid).set(healthData, SetOptions(merge: true));
-
-      // await FirebaseFirestore.instance
-      //     .collection('UserHealthCollection')
-      //     .doc(user!.uid)
-      //     .set(healthData);
       await SharedPreferencesHelper.setHealthCompleted(true);
     } catch (e) {
       print(e.toString());

@@ -1,3 +1,4 @@
+import 'package:CoachBot/modules/my_plans/controller/my_plans_controller.dart';
 import 'package:CoachBot/theme/color_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,7 +7,7 @@ import '../../../../common_components/custom_button.dart';
 import '../../../../common_components/custom_card.dart';
 import '../../../../routes/route_name.dart';
 import '../../../../theme/text_style_util.dart';
-import '../../../../utils/toast_utils.dart';
+import '../../../../utils/utils.dart';
 import 'package:CoachBot/constants/app_string_constants.dart';
 import '../../controller/health_status_controller.dart';
 
@@ -15,8 +16,8 @@ class HealthStatusForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HealthStatusController>(
-      builder: (context, provider, child) {
+    return Consumer2<HealthStatusController, MyPlansController>(
+      builder: (context, controller, plansController,_) {
         return Scaffold(
           appBar: AppBar(
             title: Text(AppStrings.yourMedicalCondition, style: CustomTextStyle.appBarStyle()),
@@ -43,65 +44,62 @@ class HealthStatusForm extends StatelessWidget {
                   SizedBox(height: 30.h),
                   CustomCard(
                     title: AppStrings.diabetesLabel,
-                    isSelected: provider.selectedDisease == AppStrings.diabetesLabel,
+                    isSelected: controller.selectedDisease == AppStrings.diabetesLabel,
                     onTap: () {
-                      provider.setSelectedDisease(AppStrings.diabetesLabel);
+                      controller.setSelectedDisease(AppStrings.diabetesLabel);
                     },
                   ),
                   CustomCard(
                     title: AppStrings.hypercholesterolemiaLabel,
-                    isSelected: provider.selectedDisease == AppStrings.hypercholesterolemiaLabel,
+                    isSelected: controller.selectedDisease == AppStrings.hypercholesterolemiaLabel,
                     onTap: () {
-                      provider.setSelectedDisease(AppStrings.hypercholesterolemiaLabel);
+                      controller.setSelectedDisease(AppStrings.hypercholesterolemiaLabel);
                     },
                   ),
                   CustomCard(
                     title: AppStrings.celiacLabel,
-                    isSelected: provider.selectedDisease == AppStrings.celiacLabel,
+                    isSelected: controller.selectedDisease == AppStrings.celiacLabel,
                     onTap: () {
-                      provider.setSelectedDisease(AppStrings.celiacLabel);
+                      controller.setSelectedDisease(AppStrings.celiacLabel);
                     },
                   ),
                   CustomCard(
                     title: AppStrings.goutLabel,
-                    isSelected: provider.selectedDisease == AppStrings.goutLabel,
+                    isSelected: controller.selectedDisease == AppStrings.goutLabel,
                     onTap: () {
-                      provider.setSelectedDisease(AppStrings.goutLabel);
+                      controller.setSelectedDisease(AppStrings.goutLabel);
                     },
                   ),
                   CustomCard(
                     title: AppStrings.otherLabel,
-                    isSelected: provider.selectedDisease == 'other',
+                    isSelected: controller.selectedDisease == 'other',
                     onTap: () {
-                      provider.setSelectedDisease('other');
+                      controller.setSelectedDisease('other');
                     },
                   ),
                   CustomCard(
                     title: AppStrings.noneLabel,
-                    isSelected: provider.selectedDisease == 'none',
+                    isSelected: controller.selectedDisease == 'none',
                     onTap: () {
-                      provider.setSelectedDisease('none');
+                      controller.setSelectedDisease('none');
                     },
                   ),
                   SizedBox(height: 30.h),
                   CustomButton(
                     title: AppStrings.continueButton,
-                    loading: provider.isLoading,
+                    loading: controller.isLoading,
                     onTap: () async {
-                      if (provider.selectedDisease != null) {
-                        provider.setIsLoading(true);
-                        provider.saveHealthDetails(context);
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => BottomNavBar()),
-                        // );
+                      if (controller.selectedDisease != null) {
+                        controller.setIsLoading(true);
+                        controller.saveHealthDetails(context);
+                        plansController.fetchAndPassUserDetails();
                         Navigator.pushNamedAndRemoveUntil(
                           context,
                           RouteName.bottomNavBar,
                               (route) => false,
                         );
                       } else {
-                        ToastUtils.positiveToastMessage(AppStrings.selectDisease);
+                        Utils.positiveToastMessage(AppStrings.selectAnyOne);
                       }
                     },
                   ),

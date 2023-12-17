@@ -1,8 +1,8 @@
+import 'package:CoachBot/modules/my_plans/controller/my_plans_controller.dart';
 import 'package:CoachBot/theme/color_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../common_components/custom_button.dart';
 import '../../../../common_components/custom_text_field.dart';
 import '../../../../constants/app_string_constants.dart';
@@ -10,22 +10,30 @@ import '../../../../theme/text_style_util.dart';
 import '../../controller/fitness_form_controller.dart';
 
 class FitnessAnalyzerForm extends StatelessWidget {
-  const FitnessAnalyzerForm({Key? key}) : super(key: key);
+  final bool isEdit;
+  const FitnessAnalyzerForm({
+    Key? key,
+    this.isEdit = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<FitnessFormController>(
-      builder: (context, provider, child) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(AppStrings.yourFitnessDetails, style: CustomTextStyle.appBarStyle()),
-            backgroundColor: ColorUtil.themeColor,
-            automaticallyImplyLeading: false,
-            centerTitle: true,
-          ),
-          body: SingleChildScrollView(
-            child: Form(
-              key: provider.formKey,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(AppStrings.yourFitnessDetails,
+            style: CustomTextStyle.appBarStyle()),
+        backgroundColor: ColorUtil.themeColor,
+        iconTheme: const IconThemeData(color: ColorUtil.whiteColor),
+        automaticallyImplyLeading: isEdit ? true : false,
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: ChangeNotifierProvider(
+          create: (_) => FitnessFormController(),
+          child: Consumer2<FitnessFormController, MyPlansController>(
+              builder: (context, controller, plansController, _) {
+            return Form(
+              key: controller.formKey,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: Column(
@@ -35,7 +43,9 @@ class FitnessAnalyzerForm extends StatelessWidget {
                     SizedBox(height: 10.h),
                     Center(
                       child: Text(
-                        AppStrings.fitnessDetailsMessage,
+                        isEdit
+                            ? AppStrings.updateFitnessMessage
+                            : AppStrings.fitnessDetailsMessage,
                         style: CustomTextStyle.textStyle22(
                           fontWeight: FontWeight.w600,
                         ),
@@ -43,7 +53,7 @@ class FitnessAnalyzerForm extends StatelessWidget {
                     ),
                     SizedBox(height: 40.h),
                     CustomTextField(
-                      myController: provider.weightController,
+                      myController: controller.weightController,
                       keyBoardType: TextInputType.number,
                       labelText: AppStrings.weightLabel,
                       onValidator: (value) {
@@ -63,15 +73,17 @@ class FitnessAnalyzerForm extends StatelessWidget {
                         Expanded(
                           child: Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey), // Set your border color
-                              borderRadius: BorderRadius.circular(8.0), // Set border radius if needed
+                              border: Border.all(color: Colors.grey),
+                              // Set your border color
+                              borderRadius: BorderRadius.circular(
+                                  8.0), // Set border radius if needed
                             ),
                             child: DropdownButtonFormField<int>(
-                              value: provider.selectedFeet,
+                              value: isEdit ? controller.selectedFeet : null,
                               onChanged: (value) {
-                                provider.setSelectedFeet(value!);
+                                controller.setSelectedFeet(value!);
                               },
-                              items: provider.feetOptions.map((feet) {
+                              items: controller.feetOptions.map((feet) {
                                 return DropdownMenuItem<int>(
                                   value: feet,
                                   child: Text(
@@ -84,9 +96,18 @@ class FitnessAnalyzerForm extends StatelessWidget {
                               }).toList(),
                               decoration: InputDecoration(
                                 labelText: AppStrings.heightFeetLabel,
-                                border: InputBorder.none, // Remove default border
-                                contentPadding: EdgeInsets.symmetric(horizontal: 16.sp),
+                                hintText: AppStrings.heightFeetHint,
+                                border:
+                                    InputBorder.none, // Remove default border
+                                contentPadding:
+                                    EdgeInsets.symmetric(horizontal: 16.sp),
                               ),
+                              validator: (value) {
+                                if (value == null) {
+                                  return AppStrings.selectFeet;
+                                }
+                                return null;
+                              },
                             ),
                           ),
                         ),
@@ -94,15 +115,15 @@ class FitnessAnalyzerForm extends StatelessWidget {
                         Expanded(
                           child: Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey), // Set your border color
-                              borderRadius: BorderRadius.circular(8.0), // Set border radius if needed
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(8.0),
                             ),
                             child: DropdownButtonFormField<int>(
-                              value: provider.selectedInch,
+                              value: isEdit ? controller.selectedInch : null,
                               onChanged: (value) {
-                                provider.setSelectedInch(value!);
+                                controller.setSelectedInch(value!);
                               },
-                              items: provider.inchesOptions.map((inch) {
+                              items: controller.inchesOptions.map((inch) {
                                 return DropdownMenuItem<int>(
                                   value: inch,
                                   child: Text(
@@ -115,33 +136,45 @@ class FitnessAnalyzerForm extends StatelessWidget {
                               }).toList(),
                               decoration: InputDecoration(
                                 labelText: AppStrings.heightInchLabel,
-                                border: InputBorder.none, // Remove default border
-                                contentPadding: EdgeInsets.symmetric(horizontal: 16.sp),
+                                hintText: AppStrings.heightInchHint,
+                                border:
+                                    InputBorder.none, // Remove default border
+                                contentPadding:
+                                    EdgeInsets.symmetric(horizontal: 16.sp),
                               ),
+                              validator: (value) {
+                                if (value == null) {
+                                  return AppStrings.selectInch;
+                                }
+                                return null;
+                              },
                             ),
                           ),
                         ),
                       ],
                     ),
-
                     SizedBox(height: 40.h),
                     CustomButton(
-                      title: AppStrings.continueButton,
-                      loading: provider.isLoading,
-                      onTap: () {
-                        if (provider.formKey.currentState!.validate()) {
-                          provider.setIsLoading(true);
-                          provider.saveFitnessDetails(context);
+                      title: isEdit
+                          ? AppStrings.updateButton
+                          : AppStrings.continueButton,
+                      loading: controller.isLoading,
+                      onTap: () async {
+                        if (controller.formKey.currentState!.validate()) {
+                          controller.setIsLoading(true);
+                          controller.saveFitnessDetails(context);
+                          plansController.fetchAndPassUserDetails();
+                          isEdit ? Navigator.pop(context) : null;
                         }
                       },
                     ),
                   ],
                 ),
               ),
-            ),
-          ),
-        );
-      },
+            );
+          }),
+        ),
+      ),
     );
   }
 }

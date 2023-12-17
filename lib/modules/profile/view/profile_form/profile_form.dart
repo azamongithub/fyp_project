@@ -1,3 +1,5 @@
+import 'package:CoachBot/constants/app_string_constants.dart';
+import 'package:CoachBot/constants/assets_constants.dart';
 import 'package:CoachBot/theme/color_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,25 +7,18 @@ import 'package:provider/provider.dart';
 import '../../../../common_components/calender_text_field.dart';
 import '../../../../common_components/custom_button.dart';
 import '../../../../common_components/custom_text_field.dart';
-import '../../../../constants/app_string_constants.dart';
-import '../../../../constants/assets_constants.dart';
 import '../../../../theme/text_style_util.dart';
-import '../../../../utils/toast_utils.dart';
+import '../../../../utils/utils.dart';
 import '../../controller/profile_form_controller.dart';
 
 class ProfileForm extends StatelessWidget {
-  final ProfileData? profileData;
-  const ProfileForm({Key? key, this.profileData}) : super(key: key);
+  const ProfileForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
     return Consumer<ProfileFormController>(
-      builder: (context, provider, child) {
-        print('Consumer is here');
-        WidgetsBinding.instance?.addPostFrameCallback((_) {
-          provider.setInitialValues(profileData);
-        });
+      builder: (context, controller, child) {
         return Scaffold(
           appBar: AppBar(
             title: Text(AppStrings.yourPersonalDetails, style: CustomTextStyle.appBarStyle()),
@@ -48,7 +43,7 @@ class ProfileForm extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                provider.setSelectedGender('M');
+                                controller.setSelectedGender('M');
                               },
                               child: CircleAvatar(
                                 backgroundColor: Colors.transparent,
@@ -65,16 +60,12 @@ class ProfileForm extends StatelessWidget {
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                           border: Border.all(
-                                            color: provider.selectedGender == 'M' ||
-                                                (profileData != null &&
-                                                    profileData!.gender == 'M')
+                                            color: controller.selectedGender ==
+                                                'M'
                                                 ? Colors.green
                                                 : Colors.grey,
-                                            width:
-                                            provider.selectedGender == 'M' ||
-                                                (profileData != null &&
-                                                    profileData!.gender ==
-                                                        'M')
+                                            width: controller.selectedGender ==
+                                                'M'
                                                 ? 4
                                                 : 1,
                                           ),
@@ -97,7 +88,7 @@ class ProfileForm extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                provider.setSelectedGender('F');
+                                controller.setSelectedGender('F');
                               },
                               child: CircleAvatar(
                                 backgroundColor: Colors.transparent,
@@ -114,16 +105,12 @@ class ProfileForm extends StatelessWidget {
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                           border: Border.all(
-                                            color: provider.selectedGender == 'F' ||
-                                                (profileData != null &&
-                                                    profileData!.gender == 'F')
+                                            color: controller.selectedGender ==
+                                                'F'
                                                 ? Colors.green
                                                 : Colors.grey,
-                                            width:
-                                            provider.selectedGender == 'F' ||
-                                                (profileData != null &&
-                                                    profileData!.gender ==
-                                                        'F')
+                                            width: controller.selectedGender ==
+                                                'F'
                                                 ? 4
                                                 : 1,
                                           ),
@@ -145,14 +132,13 @@ class ProfileForm extends StatelessWidget {
                     ),
                     SizedBox(height: 30.h),
                     CustomTextField(
-                      myController: provider.nameController,
-                      initialValue: profileData?.name ?? '',
+                      myController: controller.nameController,
                       keyBoardType: TextInputType.name,
                       labelText: AppStrings.nameLabel,
                       onValidator: (value) {
                         if (value!.isEmpty) {
                           return AppStrings.enterName;
-                        } else if (!provider.nameRegExp.hasMatch(value)) {
+                        } else if (!controller.nameRegExp.hasMatch(value)) {
                           return AppStrings.enterValidName;
                         }
                         return null;
@@ -160,8 +146,7 @@ class ProfileForm extends StatelessWidget {
                     ),
                     SizedBox(height: 30.h),
                     CalendarTextField(
-                      calenderController: provider.dateOfBirthController,
-                      initialValue: profileData?.dateOfBirth ?? '',
+                      calenderController: controller.dateOfBirthController,
                       labelText: AppStrings.dateOfBirthLabel,
                       onValidator: (value) {
                         if (value!.isEmpty) {
@@ -169,18 +154,19 @@ class ProfileForm extends StatelessWidget {
                         }
                         return null;
                       },
-                      onDateSelected: provider.onDateSelected,
+                      onDateSelected: controller.onDateSelected,
                     ),
                     SizedBox(height: 70.h),
                     CustomButton(
                       title: AppStrings.continueButton,
-                      loading: provider.isLoading,
+                      loading: controller.isLoading,
                       onTap: () {
                         if (formKey.currentState!.validate()) {
-                          if (provider.selectedGender.isNotEmpty) {
-                            provider.saveProfileDetails(context);
+                          if (controller.selectedGender.isNotEmpty) {
+                            controller.saveProfileDetails(context);
+                            //plansController.fetchAndPassUserDetails();
                           } else {
-                            ToastUtils.positiveToastMessage(
+                            Utils.positiveToastMessage(
                                 AppStrings.selectGender);
                           }
                         }
@@ -198,26 +184,9 @@ class ProfileForm extends StatelessWidget {
 }
 
 
-class ProfileData {
-  final String id;
-  final String name;
-  final String dateOfBirth;
-  final String gender;
-
-  ProfileData({
-    required this.id,
-    required this.name,
-    required this.dateOfBirth,
-    required this.gender,
-  });
-}
 
 
 
-
-
-// import 'package:CoachBot/constants/app_string_constants.dart';
-// import 'package:CoachBot/constants/assets_constants.dart';
 // import 'package:CoachBot/theme/color_util.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -225,18 +194,25 @@ class ProfileData {
 // import '../../../../common_components/calender_text_field.dart';
 // import '../../../../common_components/custom_button.dart';
 // import '../../../../common_components/custom_text_field.dart';
+// import '../../../../constants/app_string_constants.dart';
+// import '../../../../constants/assets_constants.dart';
 // import '../../../../theme/text_style_util.dart';
-// import '../../../../utils/toast_utils.dart';
+// import '../../../../utils/utils.dart';
 // import '../../controller/profile_form_controller.dart';
 //
 // class ProfileForm extends StatelessWidget {
-//   const ProfileForm({Key? key}) : super(key: key);
+//   final ProfileData? profileData;
+//   const ProfileForm({Key? key, this.profileData,}) : super(key: key);
 //
 //   @override
 //   Widget build(BuildContext context) {
 //     final formKey = GlobalKey<FormState>();
 //     return Consumer<ProfileFormController>(
 //       builder: (context, provider, child) {
+//         print('Consumer is here');
+//         // WidgetsBinding.instance?.addPostFrameCallback((_) {
+//         //   provider.setInitialValues(profileData);
+//         // });
 //         return Scaffold(
 //           appBar: AppBar(
 //             title: Text(AppStrings.yourPersonalDetails, style: CustomTextStyle.appBarStyle()),
@@ -278,12 +254,16 @@ class ProfileData {
 //                                         decoration: BoxDecoration(
 //                                           shape: BoxShape.circle,
 //                                           border: Border.all(
-//                                             color: provider.selectedGender ==
-//                                                 'M'
+//                                             color: provider.selectedGender == 'M' ||
+//                                                 (profileData != null &&
+//                                                     profileData!.gender == 'M')
 //                                                 ? Colors.green
 //                                                 : Colors.grey,
-//                                             width: provider.selectedGender ==
-//                                                 'M'
+//                                             width:
+//                                             provider.selectedGender == 'M' ||
+//                                                 (profileData != null &&
+//                                                     profileData!.gender ==
+//                                                         'M')
 //                                                 ? 4
 //                                                 : 1,
 //                                           ),
@@ -323,12 +303,16 @@ class ProfileData {
 //                                         decoration: BoxDecoration(
 //                                           shape: BoxShape.circle,
 //                                           border: Border.all(
-//                                             color: provider.selectedGender ==
-//                                                 'F'
+//                                             color: provider.selectedGender == 'F' ||
+//                                                 (profileData != null &&
+//                                                     profileData!.gender == 'F')
 //                                                 ? Colors.green
 //                                                 : Colors.grey,
-//                                             width: provider.selectedGender ==
-//                                                 'F'
+//                                             width:
+//                                             provider.selectedGender == 'F' ||
+//                                                 (profileData != null &&
+//                                                     profileData!.gender ==
+//                                                         'F')
 //                                                 ? 4
 //                                                 : 1,
 //                                           ),
@@ -365,6 +349,7 @@ class ProfileData {
 //                     SizedBox(height: 30.h),
 //                     CalendarTextField(
 //                       calenderController: provider.dateOfBirthController,
+//                       initialValue: profileData?.dateOfBirth ?? '',
 //                       labelText: AppStrings.dateOfBirthLabel,
 //                       onValidator: (value) {
 //                         if (value!.isEmpty) {
@@ -383,7 +368,7 @@ class ProfileData {
 //                           if (provider.selectedGender.isNotEmpty) {
 //                             provider.saveProfileDetails(context);
 //                           } else {
-//                             ToastUtils.positiveToastMessage(
+//                             Utils.positiveToastMessage(
 //                                 AppStrings.selectGender);
 //                           }
 //                         }
@@ -398,4 +383,19 @@ class ProfileData {
 //       },
 //     );
 //   }
+// }
+//
+//
+// class ProfileData {
+//   final String id;
+//   final String name;
+//   final String dateOfBirth;
+//   final String gender;
+//
+//   ProfileData({
+//     required this.id,
+//     required this.name,
+//     required this.dateOfBirth,
+//     required this.gender,
+//   });
 // }

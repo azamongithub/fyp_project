@@ -9,15 +9,15 @@ import '../../../routes/route_name.dart';
 import '../controller/dashboard_controller.dart';
 
 class DashboardScreen extends StatefulWidget {
-  DashboardScreen({super.key});
+  const DashboardScreen({super.key});
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
   NotificationServices notificationServices = NotificationServices();
-  late DashboardController provider;
-  bool _dataFetched = false;
+  // late DashboardController provider;
+  // bool _dataFetched = false;
 
   @override
   void initState() {
@@ -35,15 +35,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
     });
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_dataFetched) {
-      provider = Provider.of<DashboardController>(context);
-      provider.fetchData();
-      _dataFetched = true;
-    }
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   provider = Provider.of<DashboardController>(context);
+  //   if (!_dataFetched) {
+  //     provider = Provider.of<DashboardController>(context);
+  //     provider.fetchData();
+  //     _dataFetched = true;
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 onPressed: () async {
                   //provider.mergeUserDataByType();
                   //provider.mergeUserData();
-                  provider.fetchData();
                   provider.addWorkoutPlan(provider.workoutPlan);
                   // provider
                   //     .addMealPlan(provider.mealPlan);

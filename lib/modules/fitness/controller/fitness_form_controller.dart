@@ -5,9 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../routes/route_name.dart';
 import '../../../services/shared_preferences_helper.dart';
-import '../../../utils/toast_utils.dart';
 
 class FitnessFormController extends ChangeNotifier {
+  final user = FirebaseAuth.instance.currentUser;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController weightController = TextEditingController();
   final TextEditingController caloriesController = TextEditingController();
@@ -16,21 +16,57 @@ class FitnessFormController extends ChangeNotifier {
   List<int> inchesOptions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
   int selectedFeet = 4;
   int selectedInch = 9;
-  String? selectedFitnessGoal;
-  List<String> fitnessGoal = [
-    AppStrings.muscleBuildingValue,
-    AppStrings.weightGainValue,
-    AppStrings.weightLossValue,
-  ];
+
+  double calculatedWeight = 0.0;
+  double? calculatedHeightInFeet = 0.0;
+
+  double? get weight => calculatedWeight;
+  double? get height => calculatedHeightInFeet;
+  // String? selectedFitnessGoal;
+  // List<String> fitnessGoal = [
+  //   AppStrings.muscleBuildingValue,
+  //   AppStrings.weightGainValue,
+  //   AppStrings.weightLossValue,
+  // ];
   double _calculatedBmi = 0.0;
   String? _fitnessLevel;
   bool isLoading = false;
 
   double? get calculatedBmi => _calculatedBmi;
   String? get fitnessLevel => _fitnessLevel;
+  // String get fitnessGoal => selectedFitnessGoal;
 
   bool _isFitnessCompleted = false;
   bool get isFitnessCompleted => _isFitnessCompleted;
+
+
+  FitnessFormController() {
+    loadFitnessData();
+  }
+
+  Future<void> loadFitnessData() async {
+    try {
+      if (user != null) {
+        DocumentSnapshot snapshot = await FirebaseFirestore.instance
+            .collection('UserDataCollection')
+            .doc(user!.uid)
+            .get();
+
+        if (snapshot.exists) {
+          Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+          weightController.text = data['weight'] == null ? '' : data['weight'].toString();
+          selectedFeet = data['feet'] ?? '';
+          selectedInch = data['inch'] ?? '';
+          notifyListeners();
+        }
+        else {
+          print('Fitness data not found');
+        }
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 
   void setFitnessCompleted() {
     _isFitnessCompleted = true;
@@ -44,11 +80,6 @@ class FitnessFormController extends ChangeNotifier {
 
   void setSelectedInch(int value) {
     selectedInch = value;
-    notifyListeners();
-  }
-
-  void setSelectedFitnessGoal(String value) {
-    selectedFitnessGoal = value;
     notifyListeners();
   }
   void findFitnessLevel(double weight, double heightInCm) {
@@ -75,19 +106,18 @@ class FitnessFormController extends ChangeNotifier {
 
   Future<void> saveFitnessDetails(BuildContext context) async {
     try {
-      final user = FirebaseAuth.instance.currentUser;
-
       int totalInches = selectedFeet * 12 + selectedInch;
       double totalFeet = totalInches / 12;
       double heightInCm = totalFeet * 30.48;
 
-      double? calculatedHeightInFeet = double.tryParse(totalFeet.toStringAsFixed(2));
-      double? calculatedWeight = double.tryParse(weightController.text);
-
-      findFitnessLevel(calculatedWeight!, heightInCm);
+      calculatedHeightInFeet = double.tryParse(totalFeet.toStringAsFixed(2));
+      calculatedWeight = double.tryParse(weightController.text) ?? 0;
+      findFitnessLevel(calculatedWeight, heightInCm);
 
       final fitnessData = {
         'weight': calculatedWeight,
+        'feet': selectedFeet,
+        'inch': selectedInch,
         'heightInFeet': calculatedHeightInFeet,
         'heightInCm': heightInCm,
         'bmi': calculatedBmi,
@@ -105,7 +135,6 @@ class FitnessFormController extends ChangeNotifier {
       await SharedPreferencesHelper.setFitnessCompleted(true);
       Navigator.pushNamed(context, RouteName.fitnessGoalForm);
     } catch (e) {
-      ToastUtils.negativeToastMessage('Error');
       if (kDebugMode) {
         print(e.toString());
       }
@@ -114,70 +143,6 @@ class FitnessFormController extends ChangeNotifier {
       notifyListeners();
     }
   }
-
-
-  // void calculateBMI(double heightInCm) {
-  //   double weight = double.tryParse(weightController.text) ?? 0;
-  //
-  //   if (weight != 0 && heightInCm != 0) {
-  //     _bmi = weight / ((heightInCm / 100) * (heightInCm / 100));
-  //     if (_bmi < 18.5) {
-  //       fitnessLevel = 'Underweight';
-  //     } else if (_bmi >= 18.5 && _bmi < 25) {
-  //       fitnessLevel = 'Normal weight';
-  //     } else if (_bmi >= 25 && _bmi < 30) {
-  //       fitnessLevel = 'Overweight';
-  //     } else if (_bmi >= 30) {
-  //       fitnessLevel = 'Obesity';
-  //     }
-  //     notifyListeners();
-  //     //return _bmi;
-  //   } else {
-  //     _bmi = 'Not Found' as double;
-  //     fitnessLevel = AppStrings.fitnessCategoryNotDefined;
-  //     notifyListeners();
-  //   }
-  // }
-  //
-  // Future<void> saveFitnessDetails(BuildContext context) async {
-  //   try {
-  //     final user = FirebaseAuth.instance.currentUser;
-  //
-  //     int totalInches = selectedFeet * 12 + selectedInch;
-  //     double totalFeet = totalInches / 12;
-  //     double heightInCm = totalFeet * 30.48;
-  //
-  //     final fitnessData = {
-  //       //'email': user!.email,
-  //       'weight': weightController.text,
-  //       'heightInFeet': totalFeet.toString(),
-  //       'heightInCm': heightInCm.toString(),
-  //       //'bmi': calculateBMI(heightInCm),
-  //       'bmi': bmi,
-  //       'fitnessLevel': fitnessLevel,
-  //       'fitnessGoal': selectedFitnessGoal,
-  //       'calories': caloriesController.text,
-  //       'workout': workoutController.text,
-  //     };
-  //     calculateBMI(heightInCm);
-  //     await FirebaseFirestore.instance
-  //         .collection('UserFitnessCollection')
-  //         .doc(user!.uid)
-  //         .set(fitnessData);
-  //     //setFitnessCompleted();
-  //
-  //     await SharedPreferencesHelper.setFitnessCompleted(true);
-  //     Navigator.pushNamed(context, RouteName.healthStatusForm);
-  //   } catch (e) {
-  //     Utils.negativeToastMessage('Error');
-  //     if (kDebugMode) {
-  //       print(e.toString());
-  //     }
-  //   } finally {
-  //     isLoading = false;
-  //     notifyListeners();
-  //   }
-  // }
 
   void setIsLoading(bool value) {
     isLoading = value;

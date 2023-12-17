@@ -25,7 +25,7 @@ class WorkoutPlanDaysScreen extends StatelessWidget {
         title: Text('Workout Plan ', style: CustomTextStyle.appBarStyle()),
         backgroundColor: const Color(0xff3140b0),
       ),
-      body: FutureBuilder<WorkoutPlanModel>(
+      body: FutureBuilder(
         future: fetchWorkoutPlan(name),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {

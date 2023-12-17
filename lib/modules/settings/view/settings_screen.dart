@@ -1,9 +1,15 @@
 import 'package:CoachBot/constants/app_string_constants.dart';
+import 'package:CoachBot/modules/fitness/controller/fitness_form_controller.dart';
+import 'package:CoachBot/modules/profile/controller/profile_form_controller.dart';
+import 'package:CoachBot/modules/select_fitness_goal/view/fitness_goal._screen.dart';
+import 'package:CoachBot/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import '../../../common_components/custom_list_tile.dart';
 import '../../../routes/route_name.dart';
 import '../../../theme/text_style_util.dart';
@@ -11,7 +17,7 @@ import '../../login/view/login_screen.dart';
 
 class SettingsTab extends StatelessWidget {
   const SettingsTab({super.key});
-  //final bool _isTapped = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +33,7 @@ class SettingsTab extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomListTile(
-                title: "Profile",
+                title: const Text("Profile"),
                 iconData: FontAwesomeIcons.user,
                 onTap: () {
                   Navigator.pushNamed(context, RouteName.profileDetailsScreen);
@@ -38,7 +44,7 @@ class SettingsTab extends StatelessWidget {
                 },
               ),
               CustomListTile(
-                title: 'Change Password',
+                title: const Text('Change Password'),
                 iconData: Icons.lock_outline,
                 onTap: () {
                   Navigator.pushNamed(context, RouteName.changePasswordScreen);
@@ -49,35 +55,35 @@ class SettingsTab extends StatelessWidget {
                 },
               ),
               CustomListTile(
-                title: 'Send Feedback',
+                title: const Text('Send Feedback'),
                 iconData: Icons.feedback_outlined,
                 onTap: () {
                   Navigator.pushNamed(context, RouteName.sendFeedbackScreen);
                 },
               ),
               CustomListTile(
-                title: 'Terms & Conditions',
+                title: const Text('Terms & Conditions'),
                 iconData: FontAwesomeIcons.file,
                 onTap: () {},
               ),
               CustomListTile(
-                title: 'Privacy Policy',
+                title: const Text('Privacy Policy'),
                 iconData: FontAwesomeIcons.shieldHalved,
                 onTap: () {},
               ),
               ListTile(
                 leading: const Icon(FontAwesomeIcons.rightFromBracket),
                 title: const Text('Logout'),
-                onTap: () {
-                  FirebaseAuth.instance
-                      .signOut(); // Sign out the user from Firebase Auth
-                  FirebaseFirestore.instance.terminate();
+                onTap: () async {
+                  await FirebaseAuth.instance
+                      .signOut();
+                 await FirebaseFirestore.instance.terminate();
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => const LoginForm()),
+                    CupertinoPageRoute(builder: (context) => const LoginForm()),
                     (route) => false,
                   );
-                  Fluttertoast.showToast(msg: "You are Logged Out");
+                  Utils.showLoadingSnackBar(context, 'Logging out....');
                 },
               ),
               // ListTile(

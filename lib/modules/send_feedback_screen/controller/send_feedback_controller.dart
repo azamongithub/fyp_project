@@ -1,4 +1,4 @@
-import 'package:CoachBot/utils/toast_utils.dart';
+import 'package:CoachBot/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -24,7 +24,7 @@ class SendFeedbackController extends ChangeNotifier {
       notifyListeners();
 
       await FirebaseFirestore.instance.collection('UserFeedbacks').add(feedbackData);
-      ToastUtils.positiveToastMessage('Thanks for giving a feedback');
+      Utils.positiveToastMessage('Thanks for giving a feedback');
     } finally {
       isLoading = false;
       notifyListeners();

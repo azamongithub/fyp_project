@@ -2,7 +2,7 @@ import 'package:CoachBot/modules/profile/view/profile_details/profile_details.da
 import 'package:CoachBot/theme/color_util.dart';
 import 'package:flutter/material.dart';
 import '../../../../theme/text_style_util.dart';
-import '../../../fitness_analyzer/view/fitness_details/fitness_details.dart';
+import '../../../fitness/view/fitness_details/fitness_details.dart';
 import '../../../health_status/view/health_status_details/health_details_screen.dart';
 
 class ProfileDetailsScreen extends StatefulWidget {

@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'constants/app_string_constants.dart';
 import 'modules/dashboard/controller/dashboard_controller.dart';
-import 'modules/fitness_analyzer/controller/fitness_form_controller.dart';
+import 'modules/fitness/controller/fitness_form_controller.dart';
 import 'modules/health_status/controller/health_status_controller.dart';
 import 'modules/profile/controller/profile_form_controller.dart';
 import 'modules/select_fitness_goal/controller/fitness_goal_controller.dart';
@@ -48,7 +48,6 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ProfileFormController()),
-        ChangeNotifierProvider(create: (_) => FitnessFormController()),
         ChangeNotifierProvider(create: (_) => FitnessGoalController()),
         ChangeNotifierProvider(create: (_) => HealthStatusController()),
         ChangeNotifierProvider(create: (_) => DashboardController()),
@@ -77,7 +76,7 @@ class MyApp extends StatelessWidget {
                           ),
                         ),
                         initialRoute: RouteName.splashScreen,
-                        onGenerateRoute: Routes.generateRoute,
+                onGenerateRoute: Routes().onGenerateRoute,
               ),
             );
           },

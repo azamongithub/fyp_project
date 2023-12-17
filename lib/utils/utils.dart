@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class ToastUtils {
+class Utils {
   static negativeToastMessage(String message) {
     Fluttertoast.showToast(
       msg: message,
@@ -32,6 +32,17 @@ class ToastUtils {
       Fluttertoast.cancel();
     });
   }
+
+
+  static Future<void> showLoadingSnackBar(BuildContext context, String message) async {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(milliseconds: 500),
+      ),
+    );
+  }
+
 }
 
 

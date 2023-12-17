@@ -25,40 +25,40 @@ class ProfileFormController extends ChangeNotifier {
   RegExp nameRegExp = RegExp(r'^[a-zA-Z\s]{1,50}$');
 
 
-  ProfileFormController() {
-    // Load profile data if available
-    loadProfileData();
-  }
+  // ProfileFormController() {
+  //   // Load profile data if available
+  //   loadProfileData();
+  // }
 
-  void setInitialValues(ProfileData? profileData) {
-    if (profileData != null) {
-      nameController.text = profileData.name;
-      dateOfBirthController.text = profileData.dateOfBirth;
-      setSelectedGender(profileData.gender);
-    }
-  }
+  // void setInitialValues(ProfileData? profileData) {
+  //   if (profileData != null) {
+  //     nameController.text = profileData.name;
+  //     dateOfBirthController.text = profileData.dateOfBirth;
+  //     setSelectedGender(profileData.gender);
+  //   }
+  // }
 
-  Future<void> loadProfileData() async {
-    try {
-      if (user != null) {
-        // Fetch profile data from Firestore using user.uid
-        DocumentSnapshot snapshot = await FirebaseFirestore.instance
-            .collection('UserDataCollection')
-            .doc(user!.uid)
-            .get();
-
-        if (snapshot.exists) {
-          Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-
-          nameController.text = data['name'] ?? '';
-          dateOfBirthController.text = data['dateOfBirth'] ?? '';
-          selectedGender = data['gender'] ?? '';
-        }
-      }
-    } catch (e) {
-      // Handle any errors or log them
-    }
-  }
+  // Future<void> loadProfileData() async {
+  //   try {
+  //     if (user != null) {
+  //       // Fetch profile data from Firestore using user.uid
+  //       DocumentSnapshot snapshot = await FirebaseFirestore.instance
+  //           .collection('UserDataCollection')
+  //           .doc(user!.uid)
+  //           .get();
+  //
+  //       if (snapshot.exists) {
+  //         Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+  //
+  //         nameController.text = data['name'] ?? '';
+  //         dateOfBirthController.text = data['dateOfBirth'] ?? '';
+  //         selectedGender = data['gender'] ?? '';
+  //       }
+  //     }
+  //   } catch (e) {
+  //     // Handle any errors or log them
+  //   }
+  // }
 
   void setSelectedGender(String gender) {
     selectedGender = gender;
@@ -117,7 +117,7 @@ class ProfileFormController extends ChangeNotifier {
       isLoading = true;
       notifyListeners();
 
-      await FirebaseFirestore.instance.collection('UserDataCollection').doc(user.uid).set(profileData, SetOptions(merge: true));
+      await FirebaseFirestore.instance.collection('UserDataCollection').doc(user!.uid).set(profileData, SetOptions(merge: true));
 
       // await FirebaseFirestore.instance
       //     .collection('UserProfileCollection')
@@ -125,6 +125,11 @@ class ProfileFormController extends ChangeNotifier {
       //     .set(profileData);
 
       await SharedPreferencesHelper.setProfileCompleted(true);
+      // Navigator.pushNamed(
+      //   context,
+      //   RouteName.fitnessAnalyzerForm,
+      //   arguments: {'isEdit': false},
+      // );
       Navigator.pushNamed(context, RouteName.fitnessAnalyzerForm);
 
     } finally {

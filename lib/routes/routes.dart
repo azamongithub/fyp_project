@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../common_components/bottom_nav_bar.dart';
 import '../models/workout_plan_model.dart';
-import '../modules/fitness_analyzer/view/fitness_analyzer_form/fitness_analyzer_form.dart';
+import '../modules/fitness/view/fitness_analyzer_form/fitness_analyzer_form.dart';
 import '../modules/health_status/view/select_health_status/health_status_screen.dart';
 import '../modules/meal_plan/view/meal_plan_days_screen/meal_plan_days_screen.dart';
 import '../modules/meal_plan/view/meal_plan_details_screen/meal_plan_details_screen.dart';
@@ -25,10 +25,8 @@ import '../modules/workout_plan/view/workout_plan_details_screen.dart';
 import 'route_name.dart';
 
 class Routes {
-  static Route<dynamic> generateRoute(RouteSettings routs) {
-    //final arguments = routs.arguments;
-    switch (routs.name) {
-
+  Route? onGenerateRoute(settings) {
+    switch (settings.name) {
       case RouteName.splashScreen:
         return CupertinoPageRoute(builder: (_) => const SplashScreen());
       case RouteName.signupForm:
@@ -39,17 +37,15 @@ class Routes {
       case RouteName.forgotPasswordScreen:
         return CupertinoPageRoute(builder: (_) => const ForgotPasswordScreen());
       case RouteName.changePasswordScreen:
-        return CupertinoPageRoute(builder: (_) => ChangePasswordScreen());
+        return CupertinoPageRoute(builder: (_) => const ChangePasswordScreen());
       // case RouteName.AccountDetailsScreen:
       //   return CupertinoPageRoute(builder: (_) => const AccountDetailsScreen());
-
-
 
       case RouteName.bottomNavBar:
         return CupertinoPageRoute(builder: (_) => const BottomNavBar());
 
       case RouteName.myPlanTab:
-        return CupertinoPageRoute(builder: (_) => DashboardScreen());
+        return CupertinoPageRoute(builder: (_) => const DashboardScreen());
       case RouteName.workoutTab:
         return CupertinoPageRoute(builder: (_) => PlansTab());
       case RouteName.settingsTab:
@@ -57,13 +53,34 @@ class Routes {
 
       case RouteName.profileForm:
         return CupertinoPageRoute(builder: (_) => const ProfileForm());
+
+      // case RouteName.fitnessAnalyzerForm:
+      //   final argsItem = settings.arguments as Map<String, dynamic>;
+      //   final bool isEdit = argsItem['isEdit'] ?? false;
+      //   return CupertinoPageRoute(
+      //     builder: (_) => FitnessAnalyzerForm(
+      //       isEdit: isEdit,
+      //     ),
+      //   );
+      //
+      // case RouteName.fitnessGoalForm:
+      //   return CupertinoPageRoute(
+      //     builder: (context) {
+      //       //final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      //       final argsItem = settings.arguments as Map<String, dynamic>;
+      //       final bool isEdit = argsItem['isEdit'] ?? false;
+      //       return FitnessGoalForm(isEdit: isEdit);
+      //     },
+      //   );
+
       case RouteName.fitnessAnalyzerForm:
         return CupertinoPageRoute(builder: (_) => const FitnessAnalyzerForm());
+
       case RouteName.fitnessGoalForm:
         return CupertinoPageRoute(builder: (_) => const FitnessGoalForm());
+
       case RouteName.healthStatusForm:
         return CupertinoPageRoute(builder: (_) => const HealthStatusForm());
-
 
       case RouteName.profileDetailsScreen:
         return CupertinoPageRoute(builder: (_) => const ProfileDetailsScreen());
@@ -72,7 +89,7 @@ class Routes {
         return CupertinoPageRoute(builder: (_) => const SendFeedbackScreen());
 
       case RouteName.mealPlanDetailsScreen:
-        final argsItem = routs.arguments as Map<String, dynamic>;
+        final argsItem = settings.arguments as Map<String, dynamic>;
         final String day = argsItem['day'];
         final Map<String, dynamic> dayDetails = argsItem['dayDetails'];
         return CupertinoPageRoute(
@@ -83,20 +100,18 @@ class Routes {
         );
 
       case RouteName.mealPlanDaysScreen:
-        final argsItem = routs.arguments as Map<String, dynamic>;
+        final argsItem = settings.arguments as Map<String, dynamic>;
         final String name = argsItem['name'];
         //final int calories = argsItem['calories'];
         return CupertinoPageRoute(
           builder: (_) => MealPlanDaysScreen(
             name: name,
-           // totalCalories: calories,
+            // totalCalories: calories,
           ),
         );
 
-
-
       case RouteName.workoutPlanDetailsScreen:
-        final argsItem = routs.arguments as Map<String, dynamic>;
+        final argsItem = settings.arguments as Map<String, dynamic>;
         final String day = argsItem['day'];
         final WorkoutDay dayDetails = argsItem['dayDetails'];
         return CupertinoPageRoute(
@@ -107,7 +122,7 @@ class Routes {
         );
 
       case RouteName.workoutPlanDaysScreen:
-        final argsItem = routs.arguments as Map<String, dynamic>;
+        final argsItem = settings.arguments as Map<String, dynamic>;
         final String name = argsItem['name'];
         return CupertinoPageRoute(
           builder: (_) => WorkoutPlanDaysScreen(
@@ -115,22 +130,14 @@ class Routes {
           ),
         );
 
-
-
-
       case RouteName.findWorkoutsScreen:
         return CupertinoPageRoute(builder: (_) => FindWorkoutsScreen());
 
-        case RouteName.findNutritionFactsScreen:
+      case RouteName.findNutritionFactsScreen:
         return CupertinoPageRoute(builder: (_) => FindNutritionFactsScreen());
+
       default:
-        return CupertinoPageRoute(builder: (_) {
-          return Scaffold(
-            body: Center(
-              child: Text('No route defined for ${routs.name}'),
-            ),
-          );
-        });
+        return CupertinoPageRoute(builder: (_) => const LoginForm());
     }
   }
 }

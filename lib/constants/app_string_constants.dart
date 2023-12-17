@@ -22,6 +22,7 @@ abstract class AppStrings {
   //Continue and Send Button text
   static const String continueButton = 'Continue';
   static const String sendButton = 'Send';
+  static const String updateButton = 'Update';
 
 
   //Profile Form
@@ -46,13 +47,18 @@ abstract class AppStrings {
   //Fitness Form
   static const String yourFitnessDetails = 'Your Fitness Details';
   static const String fitnessDetailsMessage = 'Enter required inputs to find your fitness level';
+  static const String updateFitnessMessage = 'Update your Fitness Details';
   static const String weightLabel = 'Weight (kg)';
   static const String heightFeetLabel = 'Height (Feet)';
   static const String heightInchLabel = 'Height (Inches)';
+  static const String heightFeetHint = 'Feet';
+  static const String heightInchHint = 'Inch';
+
+  //Fitness Goal
   static const String fitnessGoalLabel = 'Fitness Goal';
-  //Fitness Goal List
   static const String yourFitnessGoal = 'Your Fitness Goal';
   static const String fitnessGoalMessage = 'Select your Fitness Goal';
+  static const String updateGoalMessage = 'Update your Fitness Goal';
   static const String muscleBuildingLabel = 'Muscle Building';
   static const String weightGainLabel = 'Weight Gain';
   static const String weightLossLabel = 'Weight Loss';
@@ -64,6 +70,8 @@ abstract class AppStrings {
   //Fitness Form Validations
   static const String enterWeight = 'Please enter your weight';
   static const String enterValidWeight = 'Please enter a valid weight';
+  static const String selectFeet = 'Please select feet';
+  static const String selectInch = 'Please select inch';
   static const String selectGoal = 'Please select your fitness goal';
 
   //Fitness Details
@@ -86,7 +94,7 @@ abstract class AppStrings {
   static const String otherLabel = 'Other';
 
   //Health Status Form Validation
-  static const String selectDisease = 'Please select any one of them';
+  static const String selectAnyOne = 'Please select any one of them';
 
   //Dashboard Screen, Bottom Nav Bar
   static const String dashboard = 'Dashboard';
