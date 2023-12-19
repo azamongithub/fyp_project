@@ -2,14 +2,91 @@ import 'package:CoachBot/models/workout_plan_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import '../../../models/all_plan_model.dart';
 import '../../../models/meal_plan_model.dart';
 import '../../../notifications_services/notifications_services.dart';
-import '../../../services/api_repository.dart';
-import '../../../services/firestore_service.dart';
 
 class DashboardController extends ChangeNotifier {
   NotificationServices notificationServices = NotificationServices();
+
+  double _workoutProgress = 0.0;
+  double _mealProgress = 0.0;
+
+  double get workoutProgress => _workoutProgress;
+  double get mealProgress => _mealProgress;
+
+
+  Future<void> fetchWeeklyProgress() async {
+    try {
+      double mealPercentage = await calculateWeeklyMealProgress();
+      double workoutPercentage = await calculateWeeklyWorkoutProgress();
+      _mealProgress = mealPercentage;
+      _workoutProgress = workoutPercentage;
+      notifyListeners();
+    } catch (e) {
+      print('Error fetching weekly progress: $e');
+    }
+  }
+
+  Future<double> calculateWeeklyMealProgress() async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      final mealProgressRef = FirebaseFirestore.instance.collection('MealProgress').doc(user.uid);
+      try {
+        DocumentSnapshot progressSnapshot = await mealProgressRef.get();
+        if (progressSnapshot.exists) {
+          int totalDaysInWeek = 7;
+          // Explicitly cast to Map<String, dynamic>
+          Map<String, dynamic> progressData = progressSnapshot.data() as Map<String, dynamic>;
+          // Get the keys (days) from the map
+          List<String> recordedDays = List<String>.from(progressData.keys);
+          // Remove the 'totalProgress' key
+          recordedDays.remove('totalProgress');
+          // Calculate the progress percentage
+          double progressPercentage = (recordedDays.length / totalDaysInWeek) * 100;
+          // Print the progress percentage
+          print('Meal Progress Percentage: $progressPercentage%');
+          return progressPercentage;
+        } else {
+          print('No progress data found.');
+        }
+      } catch (e) {
+        print('Error calculating weekly progress: $e');
+      }
+    }
+
+    return 0.0;
+  }
+  Future<double> calculateWeeklyWorkoutProgress() async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      final workoutProgressRef = FirebaseFirestore.instance.collection('WorkoutProgress').doc(user.uid);
+      try {
+        DocumentSnapshot progressSnapshot = await workoutProgressRef.get();
+        if (progressSnapshot.exists) {
+          int totalDaysInWeek = 7;
+          // Explicitly cast to Map<String, dynamic>
+          Map<String, dynamic> progressData = progressSnapshot.data() as Map<String, dynamic>;
+          // Get the keys (days) from the map
+          List<String> recordedDays = List<String>.from(progressData.keys);
+          // Remove the 'totalProgress' key
+          recordedDays.remove('totalProgress');
+          // Calculate the progress percentage
+          double progressPercentage = (recordedDays.length / totalDaysInWeek) * 100;
+          // Print the progress percentage
+          print('Weekly Progress Percentage: $progressPercentage%');
+          return progressPercentage;
+        } else {
+          print('No progress data found.');
+        }
+      } catch (e) {
+        print('Error calculating weekly progress: $e');
+      }
+    }
+
+    return 0.0;
+  }
 
   Future<void> addMealPlan(MealPlanModel mealPlan) async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;

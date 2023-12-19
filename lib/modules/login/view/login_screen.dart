@@ -128,6 +128,8 @@ class _LoginFormState extends State<LoginForm> {
                         return CustomButton(
                             title: AppStrings.loginButton,
                             loading: provider.loading,
+                            height: 50.h,
+                            width: 400.w,
                             onTap: () {
                               if (_formKey.currentState!.validate()) {
                                 provider.login(context, emailController.text,

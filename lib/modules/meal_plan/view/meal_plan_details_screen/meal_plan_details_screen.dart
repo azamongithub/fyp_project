@@ -1,11 +1,104 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:CoachBot/theme/text_style_util.dart';
 import '../../../../constants/AppColors.dart';
+import '../../../../utils/utils.dart';
 
-class MealPlanDetailsScreen extends StatelessWidget {
+class MealPlanDetailsScreen extends StatefulWidget {
   final String day;
   final Map<String, dynamic> dayDetails;
+
+
+  MealPlanDetailsScreen({required this.day, required this.dayDetails});
+
+  @override
+  State<MealPlanDetailsScreen> createState() => _MealPlanDetailsScreenState();
+}
+
+class _MealPlanDetailsScreenState extends State<MealPlanDetailsScreen> {
+  bool isButtonDisabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    initializeButtonState();
+  }
+
+  Future<void> initializeButtonState() async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      final mealProgressRef = FirebaseFirestore.instance
+          .collection('MealProgress')
+          .doc(user.uid);
+      try {
+        DocumentSnapshot progressSnapshot = await mealProgressRef.get();
+        if (progressSnapshot.exists) {
+          String day = widget.day;
+          DateTime? lastTappedDate = progressSnapshot[day] != null
+              ? (progressSnapshot[day] as Timestamp).toDate()
+              : null;
+
+          // If lastTappedDate is null or more than 7 days old, enable the button
+          setState(() {
+            isButtonDisabled = lastTappedDate == null ||
+                DateTime.now().difference(lastTappedDate) >=
+                    const Duration(seconds: 5);
+          });
+        }
+      } catch (e) {
+        print('Error initializing button state: $e');
+      }
+    }
+  }
+
+  Future<void> addProgress(String day) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null && !isButtonDisabled) {
+      final workoutProgressRef = FirebaseFirestore.instance
+          .collection('MealProgress')
+          .doc(user.uid);
+      try {
+        DocumentSnapshot progressSnapshot = await workoutProgressRef.get();
+        Map<String, dynamic>? dayData = progressSnapshot.exists
+            ? progressSnapshot.data() as Map<String, dynamic>?
+            : null;
+        int currentProgress = progressSnapshot.exists
+            ? progressSnapshot['totalProgress'] ?? 0
+            : 0;
+        if (dayData == null || !dayData.containsKey(day)) {
+          // Create the day field dynamically
+          dayData ??= {};
+          dayData[day] = FieldValue.serverTimestamp();
+          await workoutProgressRef.set({
+            'totalProgress': currentProgress + 1,
+            ...dayData,
+          });
+          Utils.positiveToastMessage('Progress for $day has added.');
+          print('Progress for $day added.');
+        } else {
+          Utils.positiveToastMessage('Progress for $day has already added.');
+          print('Progress for $day already added.');
+        }
+        setState(() {
+          isButtonDisabled = true;
+        });
+
+        //Re-enable the button after a delay (adjust as needed)
+        Future.delayed(const Duration(seconds: 1), () async {
+          setState(() {
+            isButtonDisabled = false;
+          });
+          // Print statement to check if the button is being re-enabled
+          print('Button re-enabled after delay.');
+        });
+      } catch (e) {
+        print('Error updating progress: $e');
+      }
+    }
+  }
 
   List<Widget> buildTextWidgets(
       Map<String, dynamic>? titles, String prefix, TextStyle textStyle) {
@@ -21,15 +114,13 @@ class MealPlanDetailsScreen extends StatelessWidget {
     return textWidgets;
   }
 
-  MealPlanDetailsScreen({required this.day, required this.dayDetails});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         title: Text(
-            day,
+            widget.day,
         style: CustomTextStyle.appBarStyle(),
         ),
         backgroundColor: const Color(0xff3140b0),
@@ -44,7 +135,7 @@ class MealPlanDetailsScreen extends StatelessWidget {
                 'Breakfast',
                 style: CustomTextStyle.textStyle24(),
               ),
-              ...buildTextWidgets(dayDetails['breakfast'], '►', CustomTextStyle.textStyle16()),
+              ...buildTextWidgets(widget.dayDetails['breakfast'], '►', CustomTextStyle.textStyle16()),
 
               SizedBox(
                 height: 40.h,
@@ -53,7 +144,7 @@ class MealPlanDetailsScreen extends StatelessWidget {
                 'Morning Snack',
                 style: CustomTextStyle.textStyle24(),
               ),
-              ...buildTextWidgets(dayDetails['morningSnack'], '►', CustomTextStyle.textStyle16()),
+              ...buildTextWidgets(widget.dayDetails['morningSnack'], '►', CustomTextStyle.textStyle16()),
               SizedBox(
                 height: 40.h,
               ),
@@ -61,7 +152,7 @@ class MealPlanDetailsScreen extends StatelessWidget {
                 'Lunch',
                 style: CustomTextStyle.textStyle24(),
               ),
-              ...buildTextWidgets(dayDetails['lunch'], '►', CustomTextStyle.textStyle16()),
+              ...buildTextWidgets(widget.dayDetails['lunch'], '►', CustomTextStyle.textStyle16()),
               SizedBox(
                 height: 40.h,
               ),
@@ -69,7 +160,7 @@ class MealPlanDetailsScreen extends StatelessWidget {
                 'Afternoon Snack',
                 style: CustomTextStyle.textStyle24(),
               ),
-              ...buildTextWidgets(dayDetails['afternoonSnack'], '►', CustomTextStyle.textStyle16()),
+              ...buildTextWidgets(widget.dayDetails['afternoonSnack'], '►', CustomTextStyle.textStyle16()),
               SizedBox(
                 height: 40.h,
               ),
@@ -77,7 +168,18 @@ class MealPlanDetailsScreen extends StatelessWidget {
                 'Dinner',
                 style: CustomTextStyle.textStyle24(),
               ),
-              ...buildTextWidgets(dayDetails['dinner'], '►', CustomTextStyle.textStyle16()),
+              ...buildTextWidgets(widget.dayDetails['dinner'], '►', CustomTextStyle.textStyle16()),
+
+
+              Container(
+                padding: EdgeInsets.only(bottom: 50.h),
+                child: Center(
+                  child: ElevatedButton(
+                    onPressed: isButtonDisabled ? null : () => addProgress(widget.day),
+                    child: Text('Mark as Done'),
+                  ),
+                ),
+              ),
               // Add more details as needed
             ],
           ),

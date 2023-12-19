@@ -116,6 +116,8 @@ class _SignupFormState extends State<SignupForm> {
                         CustomButton(
                           title: AppStrings.signupButton,
                           loading: provider.loading,
+                          height: 50.h,
+                          width: 400.w,
                           onTap: () {
                             if (_formKey.currentState!.validate()) {
                               provider.signUp(context, emailController.text, passwordController.text);

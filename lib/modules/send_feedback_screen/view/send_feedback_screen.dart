@@ -62,6 +62,8 @@ class SendFeedbackScreen extends StatelessWidget {
                     return CustomButton(
                       title: AppStrings.sendButton,
                       loading: provider.isLoading,
+                      height: 50.h,
+                      width: 400.w,
                       onTap: () {
                         if (formKey.currentState!.validate()) {
                           provider.saveFeedback(context);

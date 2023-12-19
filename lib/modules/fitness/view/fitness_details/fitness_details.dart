@@ -59,11 +59,7 @@ class FitnessDetails extends StatelessWidget {
             ),
           );
         }
-        //updateBMI();
         return Scaffold(
-            // appBar: AppBar(
-            //   title: Text('Fitness Details'),
-            // ),
             resizeToAvoidBottomInset: false,
             body: ChangeNotifierProvider(
               create: (_) => FitnessFormController(),

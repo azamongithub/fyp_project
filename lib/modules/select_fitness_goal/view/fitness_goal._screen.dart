@@ -69,6 +69,8 @@ class FitnessGoalForm extends StatelessWidget {
                   CustomButton(
                     title: isEdit ? AppStrings.updateButton : AppStrings.continueButton,
                     loading: controller.isLoading,
+                    height: 50.h,
+                    width: 400.w,
                     onTap: () async {
                       if (controller.selectedFitnessGoal != null) {
                         controller.setIsLoading(true);

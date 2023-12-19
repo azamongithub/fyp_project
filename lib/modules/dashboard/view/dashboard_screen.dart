@@ -4,6 +4,7 @@ import 'package:CoachBot/theme/color_util.dart';
 import 'package:CoachBot/theme/text_style_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../../../routes/route_name.dart';
 import '../controller/dashboard_controller.dart';
@@ -16,12 +17,15 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   NotificationServices notificationServices = NotificationServices();
-  // late DashboardController provider;
-  // bool _dataFetched = false;
+  double workoutProgress = 0.0;
+  double mealProgress = 0.0;
 
   @override
   void initState() {
     super.initState();
+    DashboardController controller = Provider.of<DashboardController>(
+        context, listen: false);
+    controller.fetchWeeklyProgress();
     notificationServices.requestNotificationPermission();
     notificationServices.getDeviceToken().then((value) async {
       notificationServices.firebaseInit(context);
@@ -34,17 +38,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
       }
     });
   }
-
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  //   provider = Provider.of<DashboardController>(context);
-  //   if (!_dataFetched) {
-  //     provider = Provider.of<DashboardController>(context);
-  //     provider.fetchData();
-  //     _dataFetched = true;
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -78,56 +71,80 @@ class _DashboardScreenState extends State<DashboardScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Center(
-                child: Text(
-                  'Welcome to CoachBot Fitness App',
-                  style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width * 0.058,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              const Card(
+              SizedBox(height: 20.h),
+              Card(
                 child: Padding(
-                  padding: EdgeInsets.all(16),
+                  padding: EdgeInsets.all(16.sp),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Fitness Goals',
+                        'Weekly Meal Progress',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 18.sp,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 10),
-                      Text('Progress towards your fitness goals'),
-                      SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('75% Completed'),
-                          // ElevatedButton(
-                          //   onPressed: () {
-                          //     Navigator.push(
-                          //       context,
-                          //       MaterialPageRoute(
-                          //           builder: (context) => ExerciseListScreen()),
-                          //     );
-                          //   },
-                          //   child: const Text('View Exercises'),
-                          // ),
-                        ],
+                      SizedBox(height: 10.h),
+                      const Text('Progress towards your fitness goals'),
+                      SizedBox(height: 10.h),
+                      Consumer<DashboardController>(
+                        builder: (context, dashboardController, child){
+                          //dashboardController.fetchWeeklyProgress();
+                          return Column(
+                            children: [
+                              Text( dashboardController.mealProgress == 100 ?
+                                  'Congrats, you have completed your weekly meal plan' :
+                                '${dashboardController.mealProgress.toStringAsFixed(2)}% Completed',
+                                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          );
+                        },
                       ),
                     ],
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
               Card(
                 child: Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: EdgeInsets.all(16.sp),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Weekly Workout Progress',
+                        style: TextStyle(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 10.h),
+                      const Text('Progress towards your fitness goals'),
+                      SizedBox(height: 10.h),
+                      Consumer<DashboardController>(
+                        builder: (context, dashboardController, child){
+                         // dashboardController.fetchWeeklyProgress();
+                          return Column(
+                            children: [
+                              Text( dashboardController.workoutProgress == 100 ?
+                              'Congrats, you have completed your weekly workout plan' :
+                              '${dashboardController.workoutProgress.toStringAsFixed(2)}% Completed',
+                                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 20.h),
+              Card(
+                child: Padding(
+                  padding: EdgeInsets.all(16.sp),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -138,9 +155,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: 10.h),
                       const Text('Discover workouts tailored to your goals'),
-                      const SizedBox(height: 10),
+                      SizedBox(height: 10.h),
                       ElevatedButton(
                         onPressed: () {
                           Navigator.pushNamed(
@@ -157,23 +174,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
               Card(
                 child: Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: EdgeInsets.all(16.sp),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'Nutrition',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 18.sp,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: 10.h),
                       const Text('Find nutrition facts of any Item'),
-                      const SizedBox(height: 10),
+                      SizedBox(height: 10.h),
                       ElevatedButton(
                         onPressed: () {
                           Navigator.pushNamed(

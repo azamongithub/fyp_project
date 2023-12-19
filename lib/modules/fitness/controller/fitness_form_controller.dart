@@ -61,6 +61,7 @@ class FitnessFormController extends ChangeNotifier {
         }
         else {
           print('Fitness data not found');
+          print('Fitness data not found');
         }
       }
     } catch (e) {

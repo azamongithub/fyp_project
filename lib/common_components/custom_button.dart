@@ -8,6 +8,8 @@ class CustomButton extends StatelessWidget {
   final VoidCallback onTap;
   final Color color, textColor;
   final bool loading;
+  final double height;
+  final double width;
 
   const CustomButton(
       {Key? key,
@@ -16,6 +18,8 @@ class CustomButton extends StatelessWidget {
       this.loading = false,
       this.color = Colors.black,
         this.textColor = Colors.black,
+        required this.height,
+        required this.width,
         })
       : super(key: key);
 
@@ -24,8 +28,8 @@ class CustomButton extends StatelessWidget {
     return InkWell(
       onTap: loading? null : onTap,
       child: Container(
-        height: 50.h,
-        width: 400.w,
+        height: height,
+        width: width,
         decoration: BoxDecoration(
           color: ColorUtil.themeColor,
           borderRadius: BorderRadius.circular(50),

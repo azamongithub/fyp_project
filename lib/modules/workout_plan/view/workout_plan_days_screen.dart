@@ -1,5 +1,7 @@
 import 'package:CoachBot/models/workout_plan_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../theme/text_style_util.dart';
@@ -16,6 +18,16 @@ class WorkoutPlanDaysScreen extends StatelessWidget {
     this.disease,
     this.workoutPlanId,
   });
+
+  Future<void> totalProgress(double progress) async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    final totalProgress = {
+      'totalProgress' : progress,
+    };
+
+    await FirebaseFirestore.instance.collection('UserDataCollection').doc(user!.uid).set(totalProgress, SetOptions(merge: true));
+  }
 
   @override
   Widget build(BuildContext context) {

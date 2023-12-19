@@ -1,19 +1,116 @@
+import 'package:CoachBot/theme/color_util.dart';
+import 'package:CoachBot/utils/utils.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:CoachBot/theme/text_style_util.dart';
-
 import '../../../models/workout_plan_model.dart';
+import '../../../theme/text_style_util.dart';
 
-class WorkoutPlanDetailsScreen extends StatelessWidget {
+class WorkoutPlanDetailsScreen extends StatefulWidget {
   final String day;
   final WorkoutDay dayDetails;
+
+  const WorkoutPlanDetailsScreen({
+    super.key,
+    required this.day,
+    required this.dayDetails,
+  });
+
+  @override
+  State<WorkoutPlanDetailsScreen> createState() =>
+      _WorkoutPlanDetailsScreenState();
+}
+
+class _WorkoutPlanDetailsScreenState extends State<WorkoutPlanDetailsScreen> {
+  bool isButtonDisabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    initializeButtonState();
+  }
+
+  Future<void> initializeButtonState() async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      final workoutProgressRef = FirebaseFirestore.instance
+          .collection('WorkoutProgress')
+          .doc(user.uid);
+      try {
+        DocumentSnapshot progressSnapshot = await workoutProgressRef.get();
+        if (progressSnapshot.exists) {
+          String day = widget.day;
+          DateTime? lastTappedDate = progressSnapshot[day] != null
+              ? (progressSnapshot[day] as Timestamp).toDate()
+              : null;
+
+          // If lastTappedDate is null or more than 7 days old, enable the button
+          setState(() {
+            isButtonDisabled = lastTappedDate == null ||
+                DateTime.now().difference(lastTappedDate) >=
+                    const Duration(seconds: 5);
+          });
+        }
+      } catch (e) {
+        print('Error initializing button state: $e');
+      }
+    }
+  }
+
+  Future<void> addProgress(String day) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null && !isButtonDisabled) {
+      final workoutProgressRef = FirebaseFirestore.instance
+          .collection('WorkoutProgress')
+          .doc(user.uid);
+      try {
+        DocumentSnapshot progressSnapshot = await workoutProgressRef.get();
+        Map<String, dynamic>? dayData = progressSnapshot.exists
+            ? progressSnapshot.data() as Map<String, dynamic>?
+            : null;
+        int currentProgress = progressSnapshot.exists
+            ? progressSnapshot['totalProgress'] ?? 0
+            : 0;
+        if (dayData == null || !dayData.containsKey(day)) {
+          // Create the day field dynamically
+          dayData ??= {};
+          dayData[day] = FieldValue.serverTimestamp();
+          await workoutProgressRef.set({
+            'totalProgress': currentProgress + 1,
+            ...dayData,
+          });
+          Utils.positiveToastMessage('Progress for $day has added.');
+          print('Progress for $day added.');
+        } else {
+          Utils.positiveToastMessage('Progress for $day has already added.');
+          print('Progress for $day already added.');
+        }
+        setState(() {
+          isButtonDisabled = true;
+        });
+
+        //Re-enable the button after a delay (adjust as needed)
+        Future.delayed(const Duration(seconds: 1), () async {
+          setState(() {
+            isButtonDisabled = false;
+          });
+          // Print statement to check if the button is being re-enabled
+          print('Button re-enabled after delay.');
+        });
+      } catch (e) {
+        print('Error updating progress: $e');
+      }
+    }
+  }
 
   List<Widget> buildExerciseWidgets(List<Exercise> exercises) {
     List<Widget> exerciseWidgets = [];
 
     for (var exercise in exercises) {
-      // Build Text widgets for each exercise
-      List<Widget> descriptions = buildTextWidgets(exercise, '►', CustomTextStyle.textStyle16());
+      List<Widget> descriptions =
+          buildTextWidgets(exercise, '►', const TextStyle(fontSize: 16));
 
       exerciseWidgets.add(
         Column(
@@ -21,10 +118,10 @@ class WorkoutPlanDetailsScreen extends StatelessWidget {
           children: [
             Text(
               exercise.name,
-              style: CustomTextStyle.textStyle24(),
+              style: const TextStyle(fontSize: 24),
             ),
             ...descriptions,
-            SizedBox(height: 20.h),
+            const SizedBox(height: 20),
           ],
         ),
       );
@@ -33,7 +130,8 @@ class WorkoutPlanDetailsScreen extends StatelessWidget {
     return exerciseWidgets;
   }
 
-  List<Widget> buildTextWidgets(Exercise exercise, String prefix, TextStyle textStyle) {
+  List<Widget> buildTextWidgets(
+      Exercise exercise, String prefix, TextStyle textStyle) {
     List<String> descriptions = [
       exercise.description1,
       exercise.description2,
@@ -49,58 +147,50 @@ class WorkoutPlanDetailsScreen extends StatelessWidget {
     return textWidgets;
   }
 
-  // List<Widget> buildTextWidgets(Exercise exercise, String prefix, TextStyle textStyle) {
-  //   List<Widget> textWidgets = [];
-  //
-  //   if (exercise.description1.isNotEmpty) {
-  //     textWidgets.add(Text('$prefix ${exercise.description1}', style: textStyle));
-  //   }
-  //   if (exercise.description2.isNotEmpty) {
-  //     textWidgets.add(Text('$prefix ${exercise.description2}', style: textStyle));
-  //   }
-  //   if (exercise.description3.isNotEmpty) {
-  //     textWidgets.add(Text('$prefix ${exercise.description3}', style: textStyle));
-  //   }
-  //   if (exercise.description4.isNotEmpty) {
-  //     textWidgets.add(Text('$prefix ${exercise.description4}', style: textStyle));
-  //   }
-  //
-  //   return textWidgets;
-  // }
-
-  WorkoutPlanDetailsScreen({
-    required this.day,
-    required this.dayDetails,
-  });
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         title: Text(
-          day,
+          widget.day,
           style: CustomTextStyle.appBarStyle(),
         ),
-        backgroundColor: const Color(0xff3140b0),
+        backgroundColor: ColorUtil.themeColor,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Exercises',
-                style: CustomTextStyle.textStyle24(),
+      body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Exercises',
+                    style: TextStyle(fontSize: 24),
+                  ),
+                  SizedBox(height: 20.h),
+                  ...buildExerciseWidgets(widget.dayDetails.exercises),
+                  SizedBox(height: 20.h),
+                ],
               ),
-              SizedBox(height: 20.h),
-              ...buildExerciseWidgets(dayDetails.exercises),
-              // Add more sections as needed
-            ],
+            ),
           ),
         ),
-      ),
+            Container(
+              padding: EdgeInsets.only(bottom: 50.h),
+              child: Center(
+                child: ElevatedButton(
+                  onPressed: isButtonDisabled ? null : () => addProgress(widget.day),
+                  child: Text('Mark as Done'),
+                ),
+              ),
+            ),
+
+      ]),
     );
   }
 }

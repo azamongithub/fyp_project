@@ -160,6 +160,8 @@ class ProfileForm extends StatelessWidget {
                     CustomButton(
                       title: AppStrings.continueButton,
                       loading: controller.isLoading,
+                      height: 50.h,
+                      width: 400.w,
                       onTap: () {
                         if (formKey.currentState!.validate()) {
                           if (controller.selectedGender.isNotEmpty) {

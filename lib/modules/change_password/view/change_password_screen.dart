@@ -1,7 +1,9 @@
 import 'package:CoachBot/constants/app_string_constants.dart';
+import 'package:CoachBot/theme/color_util.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:CoachBot/utils/utils.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../common_components/custom_button.dart';
 import '../../../common_components/password_text_field.dart';
 import '../../../theme/text_style_util.dart';
@@ -63,17 +65,17 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         title: Text(AppStrings.changePassBtn, style: CustomTextStyle.appBarStyle()),
-        backgroundColor: const Color(0xff3140b0),
+        backgroundColor: ColorUtil.themeColor,
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.sp),
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const SizedBox(height: 16.0),
+                SizedBox(height: 16.h),
                 PasswordTextField(
                   controller: _currentPasswordController,
                   labelText: AppStrings.currentPassLabel,
@@ -84,7 +86,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 25.0),
+                SizedBox(height: 25.h),
                 PasswordTextField(
                   controller: _newPasswordController,
                   labelText: AppStrings.newPassLabel,
@@ -99,7 +101,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 25.0),
+                SizedBox(height: 25.h),
                 PasswordTextField(
                   controller: _confirmPasswordController,
                   labelText: AppStrings.confirmPassLabel,
@@ -113,9 +115,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 25.0),
+                SizedBox(height: 25.h),
                 CustomButton(
                   title: AppStrings.changePassBtn,
+                  height: 50.h,
+                  width: 400.w,
                   onTap: () {
                     if (_formKey.currentState?.validate() ?? false) {
                       _changePassword(context);

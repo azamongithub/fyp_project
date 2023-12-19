@@ -1,5 +1,6 @@
 import 'package:CoachBot/theme/color_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../theme/text_style_util.dart';
@@ -35,13 +36,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         appBar: AppBar(
           iconTheme: const IconThemeData(color: ColorUtil.whiteColor),
           title: Text('Coachbot ', style: CustomTextStyle.appBarStyle()),
-          backgroundColor: const Color(0xff3140b0),
+          backgroundColor: ColorUtil.themeColor,
 
         ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(left: 25, right: 25),
+              padding: EdgeInsets.only(left: 25.w, right: 25.w),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -51,7 +52,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   //   width: 150,
                   //   image: AssetImage('images/fitness_logo1.jpg'),
                   // ),
-                  SizedBox(height: height * 0.06),
+                  SizedBox(height: height * 0.06.h),
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -61,7 +62,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           color: Color(0xff203142)),
                     ),
                   ),
-                  SizedBox(height: height * 0.03),
+                  SizedBox(height: height * 0.03.h),
                   const Center(
                       child: Text(
                     'Enter your email for the verification process. we will send you the reset passsword link to your email',
@@ -87,7 +88,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: height * 0.04),
+                  SizedBox(height: height * 0.04.h),
 
                   ChangeNotifierProvider(
                       create: (_) => ForgotPasswordController(),
@@ -96,6 +97,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         return CustomButton(
                           title: 'Request Reset Link',
                           loading: provider.loading,
+                          height: 50.h,
+                          width: 400.w,
                           onTap: () {
                             if (_formKey.currentState!.validate()) {
                               provider.forgotPassword(
@@ -105,7 +108,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         );
                       })),
 
-                  SizedBox(height: height * 0.02),
+                  SizedBox(height: height * 0.02.h),
                   InkWell(
                       onTap: () {
                         Navigator.pushNamed(context, RouteName.loginForm);
