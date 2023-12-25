@@ -1,10 +1,8 @@
 import 'dart:math';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
 import '../modules/my_plans/view/plans_tab.dart';
 
 class NotificationServices {
@@ -26,7 +24,7 @@ class NotificationServices {
         onDidReceiveNotificationResponse: (payLoad) {
       handleMessage(context, message);
       const AndroidInitializationSettings('@mipmap/ic_launcher');
-        });
+    });
   }
 
   void requestNotificationPermission() async {
@@ -82,59 +80,51 @@ class NotificationServices {
         print(message.data['type']);
         print(message.data['id']);
       }
-        initLocalNotifications(context, message);
-
+      initLocalNotifications(context, message);
     });
   }
 
-
-
   Future<void> showNotification(RemoteMessage message) async {
     AndroidNotificationChannel channel = AndroidNotificationChannel(
-        Random.secure().nextInt(100000).toString(),
+      Random.secure().nextInt(100000).toString(),
       'High Importance Notification',
-        importance: Importance.high,
-    );
-
-    AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
-        channel.id.toString(),
-      channel.name.toString(),
-      channelDescription: 'Your channel description',
       importance: Importance.high,
-      priority: Priority.high,
-      ticker: 'ticker'
     );
 
-    DarwinNotificationDetails darwinNotificationDetails = const DarwinNotificationDetails(
-        presentAlert: true,
-        presentBadge:true,
-        presentSound: true,
+    AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails(
+            channel.id.toString(), channel.name.toString(),
+            channelDescription: 'Your channel description',
+            importance: Importance.high,
+            priority: Priority.high,
+            ticker: 'ticker');
+
+    DarwinNotificationDetails darwinNotificationDetails =
+        const DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
     );
     NotificationDetails notificationDetails = NotificationDetails(
       android: androidNotificationDetails,
       iOS: darwinNotificationDetails,
     );
 
-
-
-    Future.delayed(Duration.zero, (){
-    _flutterLocalNotificationsPlugin.show(
-    1, //id
-    message.notification!.title.toString(),
-    message.notification!.body.toString(),
-    notificationDetails
-    );
+    Future.delayed(Duration.zero, () {
+      _flutterLocalNotificationsPlugin.show(
+          1, //id
+          message.notification!.title.toString(),
+          message.notification!.body.toString(),
+          notificationDetails);
     });
-
-
   }
 
-  Future<void> setupInteractMessage(BuildContext context) async{
-
+  Future<void> setupInteractMessage(BuildContext context) async {
     //When App is Terminated
-    RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
 
-    if(initialMessage!= null){
+    if (initialMessage != null) {
       handleMessage(context, initialMessage);
     }
 
@@ -143,10 +133,11 @@ class NotificationServices {
       handleMessage(context, event);
     });
   }
-  void handleMessage(BuildContext context, RemoteMessage message){
-    if(message.data['type'] == 'msg'){
-      Navigator.push(context, MaterialPageRoute(builder: (context) => PlansTab() ));
-    }
 
+  void handleMessage(BuildContext context, RemoteMessage message) {
+    if (message.data['type'] == 'msg') {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => PlansTab()));
+    }
   }
 }

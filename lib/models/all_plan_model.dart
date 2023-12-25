@@ -1,5 +1,3 @@
-// api_data_model.dart
-
 class PredictionModel {
   final String mealPlan;
   final double calories;

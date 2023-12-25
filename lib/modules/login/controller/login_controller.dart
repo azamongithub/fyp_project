@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import '../../../routes/route_name.dart';
 
 class LoginController with ChangeNotifier {
@@ -30,7 +29,7 @@ class LoginController with ChangeNotifier {
         Navigator.pushNamedAndRemoveUntil(
           context,
           RouteName.bottomNavBar,
-              (route) => false,
+          (route) => false,
         );
       } else {
         setLoading(false);
@@ -43,8 +42,7 @@ class LoginController with ChangeNotifier {
       } else if (e.code == 'wrong-password') {
         setLoading(false);
         Fluttertoast.showToast(msg: "Wrong password provided for that user.");
-      }
-      else if (!emailRegex.hasMatch(email)) {
+      } else if (!emailRegex.hasMatch(email)) {
         setLoading(false);
         Fluttertoast.showToast(msg: "Invalid email format");
       }

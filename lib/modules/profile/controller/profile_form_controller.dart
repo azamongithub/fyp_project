@@ -1,11 +1,8 @@
 import 'package:CoachBot/constants/app_string_constants.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../../../services/shared_preferences_helper.dart';
 import '../../../routes/route_name.dart';
-import '../view/profile_form/profile_form.dart';
 
 class ProfileFormController extends ChangeNotifier {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -18,47 +15,7 @@ class ProfileFormController extends ChangeNotifier {
   String? dateOfBirthError;
   String? genderError;
   late DateTime selectedDate;
-
-  bool _isProfileCompleted = false;
-  bool get isProfileCompleted => _isProfileCompleted;
-
   RegExp nameRegExp = RegExp(r'^[a-zA-Z\s]{1,50}$');
-
-
-  // ProfileFormController() {
-  //   // Load profile data if available
-  //   loadProfileData();
-  // }
-
-  // void setInitialValues(ProfileData? profileData) {
-  //   if (profileData != null) {
-  //     nameController.text = profileData.name;
-  //     dateOfBirthController.text = profileData.dateOfBirth;
-  //     setSelectedGender(profileData.gender);
-  //   }
-  // }
-
-  // Future<void> loadProfileData() async {
-  //   try {
-  //     if (user != null) {
-  //       // Fetch profile data from Firestore using user.uid
-  //       DocumentSnapshot snapshot = await FirebaseFirestore.instance
-  //           .collection('UserDataCollection')
-  //           .doc(user!.uid)
-  //           .get();
-  //
-  //       if (snapshot.exists) {
-  //         Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-  //
-  //         nameController.text = data['name'] ?? '';
-  //         dateOfBirthController.text = data['dateOfBirth'] ?? '';
-  //         selectedGender = data['gender'] ?? '';
-  //       }
-  //     }
-  //   } catch (e) {
-  //     // Handle any errors or log them
-  //   }
-  // }
 
   void setSelectedGender(String gender) {
     selectedGender = gender;
@@ -116,33 +73,16 @@ class ProfileFormController extends ChangeNotifier {
       };
       isLoading = true;
       notifyListeners();
-
-      await FirebaseFirestore.instance.collection('UserDataCollection').doc(user!.uid).set(profileData, SetOptions(merge: true));
-
-      // await FirebaseFirestore.instance
-      //     .collection('UserProfileCollection')
-      //     .doc(user.uid)
-      //     .set(profileData);
-
-      await SharedPreferencesHelper.setProfileCompleted(true);
-      // Navigator.pushNamed(
-      //   context,
-      //   RouteName.fitnessAnalyzerForm,
-      //   arguments: {'isEdit': false},
-      // );
+      await FirebaseFirestore.instance
+          .collection('UserDataCollection')
+          .doc(user.uid)
+          .set(profileData, SetOptions(merge: true));
       Navigator.pushNamed(context, RouteName.fitnessAnalyzerForm);
-
     } finally {
       isLoading = false;
       notifyListeners();
     }
   }
-
-  void setProfileCompleted() {
-    _isProfileCompleted = true;
-    notifyListeners();
-  }
-
 
   @override
   void dispose() {
@@ -151,118 +91,3 @@ class ProfileFormController extends ChangeNotifier {
     super.dispose();
   }
 }
-
-
-
-
-// import 'package:CoachBot/constants/app_string_constants.dart';
-// import 'package:flutter/foundation.dart';
-// import 'package:flutter/material.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import '../../../../services/shared_preferences_helper.dart';
-// import '../../../routes/route_name.dart';
-//
-// class ProfileFormController extends ChangeNotifier {
-//   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-//   final TextEditingController nameController = TextEditingController();
-//   final TextEditingController dateOfBirthController = TextEditingController();
-//   final user = FirebaseAuth.instance.currentUser;
-//   bool isLoading = false;
-//   String selectedGender = '';
-//   String? nameError;
-//   String? dateOfBirthError;
-//   String? genderError;
-//   late DateTime selectedDate;
-//
-//   bool _isProfileCompleted = false;
-//   bool get isProfileCompleted => _isProfileCompleted;
-//
-//   RegExp nameRegExp = RegExp(r'^[a-zA-Z\s]{1,50}$');
-//
-//   void setSelectedGender(String gender) {
-//     selectedGender = gender;
-//     genderError = null;
-//     notifyListeners();
-//   }
-//
-//   void onDateSelected(DateTime? date) {
-//     if (date != null) {
-//       selectedDate = date;
-//     }
-//   }
-//
-//   int calculateAge(DateTime dateOfBirth) {
-//     DateTime currentDate = DateTime.now();
-//     int age = currentDate.year - dateOfBirth.year;
-//
-//     if (currentDate.month < dateOfBirth.month ||
-//         (currentDate.month == dateOfBirth.month &&
-//             currentDate.day < dateOfBirth.day)) {
-//       age--;
-//     }
-//     return age;
-//   }
-//
-//   String findAgeGroup() {
-//     int age = calculateAge(selectedDate);
-//
-//     if (age >= 13 && age <= 19) {
-//       return AppStrings.teenager;
-//     } else if (age >= 20 && age <= 29) {
-//       return AppStrings.youngAdult;
-//     } else if (age >= 30 && age <= 54) {
-//       return AppStrings.middleAgedAdult;
-//     } else if (age >= 55) {
-//       return AppStrings.olderAdult;
-//     } else {
-//       return AppStrings.ageGroupNotDefined;
-//     }
-//   }
-//
-//   Future<void> saveProfileDetails(BuildContext context) async {
-//     try {
-//       final user = FirebaseAuth.instance.currentUser;
-//       int age = calculateAge(selectedDate);
-//       String ageGroup = findAgeGroup();
-//       final profileData = {
-//         'id': user!.uid,
-//         'name': nameController.text,
-//         'age': age.toString(),
-//         'dateOfBirth': dateOfBirthController.text,
-//         'ageGroup': ageGroup,
-//         'gender': selectedGender,
-//         'email': user.email,
-//       };
-//       isLoading = true;
-//       notifyListeners();
-//
-//       await FirebaseFirestore.instance.collection('UserDataCollection').doc(user.uid).set(profileData, SetOptions(merge: true));
-//
-//       // await FirebaseFirestore.instance
-//       //     .collection('UserProfileCollection')
-//       //     .doc(user.uid)
-//       //     .set(profileData);
-//
-//       await SharedPreferencesHelper.setProfileCompleted(true);
-//       Navigator.pushNamed(context, RouteName.fitnessAnalyzerForm);
-//
-//     } finally {
-//       isLoading = false;
-//       notifyListeners();
-//     }
-//   }
-//
-//   void setProfileCompleted() {
-//     _isProfileCompleted = true;
-//     notifyListeners();
-//   }
-//
-//
-//   @override
-//   void dispose() {
-//     nameController.dispose();
-//     dateOfBirthController.dispose();
-//     super.dispose();
-//   }
-// }

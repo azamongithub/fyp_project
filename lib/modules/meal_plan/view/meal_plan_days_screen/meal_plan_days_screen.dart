@@ -1,5 +1,6 @@
 import 'package:CoachBot/theme/color_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../models/meal_plan_model.dart';
@@ -7,13 +8,12 @@ import '../../../../routes/route_name.dart';
 import '../../../../theme/text_style_util.dart';
 
 class MealPlanDaysScreen extends StatelessWidget {
-  //late double cal;
   final int? totalCalories;
   final String name;
   final String? disease;
   final String? mealPlanId;
 
-  MealPlanDaysScreen({
+  const MealPlanDaysScreen({
     super.key,
     //required this.totalCalories,
     this.totalCalories,
@@ -28,10 +28,9 @@ class MealPlanDaysScreen extends StatelessWidget {
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         title: Text('Meal Plan ', style: CustomTextStyle.appBarStyle()),
-        backgroundColor: ColorUtil.themeColor,
+        backgroundColor: AppColors.themeColor,
       ),
       body: FutureBuilder<List<MealPlanModel>>(
-        //future: fetchMealPlansByCalories(name, totalCalories),
         future: fetchMealPlansByCalories(name),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -68,7 +67,6 @@ class MealPlanDaysScreen extends StatelessWidget {
                   calories: mealPlans.first.totalCalories.toString(),
                   name: mealPlans.first.name.toString(),
                   onPressed: () {
-
                     Navigator.pushNamed(
                       context,
                       RouteName.mealPlanDetailsScreen,
@@ -77,15 +75,6 @@ class MealPlanDaysScreen extends StatelessWidget {
                         'dayDetails': dayEntry.value,
                       },
                     );
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => MealPlanDetailsScreen(
-                    //       day: dayEntry.key,
-                    //       dayDetails: dayEntry.value,
-                    //     ),
-                    //   ),
-                    // );
                   },
                 ),
             ],
@@ -111,15 +100,14 @@ Widget daysCard({
             day,
             style: CustomTextStyle.titleStyle20(),
           ),
-          // leading: Text(
-          //     calories!,
-          //   style: MyTextStyle.subTitleStyle14(),
-          // ),
           subtitle: Text(
-              name!,
+            name!,
             style: CustomTextStyle.subTitleStyle14(),
           ),
-          trailing:  Icon(Icons.arrow_forward, size: 28.sp,),
+          trailing: Icon(
+            Icons.arrow_forward,
+            size: 28.sp,
+          ),
           onTap: onPressed,
         ),
       ),
@@ -127,8 +115,7 @@ Widget daysCard({
   );
 }
 
-Future<List<MealPlanModel>> fetchMealPlansByCalories(
-    String name) async {
+Future<List<MealPlanModel>> fetchMealPlansByCalories(String name) async {
   try {
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection('meal_plans')
@@ -146,7 +133,9 @@ Future<List<MealPlanModel>> fetchMealPlansByCalories(
       return Future.error('No data found for meal plan: $name');
     }
   } catch (e) {
-    print('Error fetching meal plans: $e');
+    if (kDebugMode) {
+      print('Error fetching meal plans: $e');
+    }
     return Future.error('Error fetching meal plans: $e');
   }
 

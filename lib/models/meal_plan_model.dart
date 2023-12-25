@@ -5,13 +5,6 @@ class MealPlanModel {
   String description;
   int? totalCalories;
   Map<String, dynamic> days;
-  // String? totalCarbs;
-  // String? totalProtein;
-  // String? totalSugar;
-  // String? totalFat;
-  // String? totalCholesterol;
-  // String? totalSodium;
-  // String? totalPotassium;
 
   MealPlanModel({
     required this.id,
@@ -20,13 +13,6 @@ class MealPlanModel {
     required this.description,
     this.totalCalories,
     required this.days,
-    // this.totalCarbs,
-    // this.totalProtein,
-    // this.totalSugar,
-    // this.totalFat,
-    // this.totalCholesterol,
-    // this.totalSodium,
-    // this.totalPotassium,
   });
 
   Map<String, dynamic> toJson() {
@@ -37,13 +23,6 @@ class MealPlanModel {
       'description': description,
       //'totalCalories': totalCalories,
       'days': days,
-      // 'totalCarbs': totalCarbs,
-      // 'totalProtein': totalProtein,
-      // 'totalSugar': totalSugar,
-      // 'totalFat': totalFat,
-      // 'totalCholesterol': totalCholesterol,
-      // 'totalSodium': totalSodium,
-      // 'totalPotassium': totalPotassium,
     };
   }
 
@@ -55,13 +34,6 @@ class MealPlanModel {
       description: json['description'] ?? '',
       // totalCalories: json['totalCalories'] ?? 0,
       days: json['days'] ?? {},
-      // totalCarbs: json['totalCarbs'] ?? '',
-      // totalProtein: json['totalProtein'] ?? '',
-      // totalSugar: json['totalSugar'] ?? '',
-      // totalFat: json['totalFat'] ?? '',
-      // totalCholesterol: json['totalCholesterol'] ?? '',
-      // totalSodium: json['totalSodium'] ?? '',
-      // totalPotassium: json['totalPotassium'] ?? '',
     );
   }
 }
@@ -113,14 +85,6 @@ class Meal {
   String? title11;
   String? title12;
 
-  // String? itemCarbs;
-  // String? itemProtein;
-  // String? itemSugar;
-  // String? itemFat;
-  // String? itemCholesterol;
-  // String? itemSodium;
-  // String? itemPotassium;
-
   Meal({
     this.mealCalories,
     this.title1,
@@ -135,13 +99,6 @@ class Meal {
     this.title10,
     this.title11,
     this.title12,
-    // this.itemCarbs,
-    // this.itemProtein,
-    // this.itemSugar,
-    // this.itemFat,
-    // this.itemCholesterol,
-    // this.itemSodium,
-    // this.itemPotassium,
   });
 
   Map<String, dynamic> toJson() {

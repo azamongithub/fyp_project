@@ -1,18 +1,15 @@
 import 'package:CoachBot/constants/app_string_constants.dart';
-import 'package:CoachBot/modules/fitness/controller/fitness_form_controller.dart';
-import 'package:CoachBot/modules/profile/controller/profile_form_controller.dart';
-import 'package:CoachBot/modules/select_fitness_goal/view/fitness_goal._screen.dart';
 import 'package:CoachBot/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
+import '../../../add_diseases/view/add_disease_screen.dart';
 import '../../../common_components/custom_list_tile.dart';
 import '../../../routes/route_name.dart';
 import '../../../theme/text_style_util.dart';
+import '../../health_status/view/health_status_details/health_details_screen.dart';
 import '../../login/view/login_screen.dart';
 
 class SettingsTab extends StatelessWidget {
@@ -37,10 +34,6 @@ class SettingsTab extends StatelessWidget {
                 iconData: FontAwesomeIcons.user,
                 onTap: () {
                   Navigator.pushNamed(context, RouteName.profileDetailsScreen);
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => const ProfileDetailsScreen()));
                 },
               ),
               CustomListTile(
@@ -48,10 +41,6 @@ class SettingsTab extends StatelessWidget {
                 iconData: Icons.lock_outline,
                 onTap: () {
                   Navigator.pushNamed(context, RouteName.changePasswordScreen);
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => ChangePasswordScreen()));
                 },
               ),
               CustomListTile(
@@ -75,9 +64,8 @@ class SettingsTab extends StatelessWidget {
                 leading: const Icon(FontAwesomeIcons.rightFromBracket),
                 title: const Text('Logout'),
                 onTap: () async {
-                  await FirebaseAuth.instance
-                      .signOut();
-                 await FirebaseFirestore.instance.terminate();
+                  await FirebaseAuth.instance.signOut();
+                  await FirebaseFirestore.instance.terminate();
                   Navigator.pushAndRemoveUntil(
                     context,
                     CupertinoPageRoute(builder: (context) => const LoginForm()),
@@ -86,19 +74,23 @@ class SettingsTab extends StatelessWidget {
                   Utils.showLoadingSnackBar(context, 'Logging out....');
                 },
               ),
-              // ListTile(
-              //   leading: const Icon(FontAwesomeIcons.signOutAlt),
-              //   title: const Text('Delete Account'),
-              //   onTap: () {
-              //     Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //           builder: (context) => DeleteAccountScreen()),
-              //     );
-              //     FirebaseAuth.instance.signOut(); // Sign out the user from Firebase Auth
-              //     FirebaseFirestore.instance.terminate();
-              //   },
-              // ),
+
+              ListTile(
+                leading: const Icon(FontAwesomeIcons.plus),
+                title: const Text('Add Disease'),
+                onTap: () {
+                  Navigator.push(context,
+                      CupertinoPageRoute(builder: (context) => DiseaseForm()));
+                },
+              ),
+              ListTile(
+                leading: const Icon(FontAwesomeIcons.plus),
+                title: const Text('Health Details'),
+                onTap: () {
+                  Navigator.push(context,
+                      CupertinoPageRoute(builder: (context) => HealthDetailsScreen()));
+                },
+              ),
               // ListTile(
               //   shape: RoundedRectangleBorder(
               //     borderRadius: BorderRadius.circular(20),

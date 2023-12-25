@@ -1,6 +1,4 @@
-
 class RouteName {
-
   static const String splashScreen = 'splashScreen';
   static const String signupForm = 'signupForm';
   static const String loginForm = 'loginScreen';
@@ -13,9 +11,8 @@ class RouteName {
   static const String workoutPlanDaysScreen = 'workoutPlanDaysScreen';
   static const String workoutPlanDetailsScreen = 'workoutPlanDetailsScreen';
 
-  static const String findWorkoutsScreen= 'findWorkoutsScreen';
-  static const String findNutritionFactsScreen= 'findNutritionFactsScreen';
-
+  static const String findWorkoutsScreen = 'findWorkoutsScreen';
+  static const String findNutritionFactsScreen = 'findNutritionFactsScreen';
 
   static const String profileDetailsScreen = 'profileDetailsScreen';
   static const String sendFeedbackScreen = 'sendFeedbackScreen';
@@ -24,10 +21,8 @@ class RouteName {
   static const String fitnessGoalForm = 'fitnessGoalForm';
   static const String healthStatusForm = 'healthStatusForm';
 
-
   static const String bottomNavBar = 'bottomNavBar';
   static const String myPlanTab = 'myPlanTab';
   static const String workoutTab = 'workoutTab';
   static const String mealTab = 'mealTab';
-
 }

@@ -12,17 +12,20 @@ import 'package:CoachBot/constants/app_string_constants.dart';
 import '../../controller/health_status_controller.dart';
 
 class HealthStatusForm extends StatelessWidget {
-  const HealthStatusForm({Key? key}) : super(key: key);
+  final bool isEdit;
+  const HealthStatusForm({Key? key, this.isEdit = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Consumer2<HealthStatusController, MyPlansController>(
-      builder: (context, controller, plansController,_) {
+      builder: (context, controller, plansController, _) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(AppStrings.yourMedicalCondition, style: CustomTextStyle.appBarStyle()),
-            backgroundColor: ColorUtil.themeColor,
-            automaticallyImplyLeading: false,
+            title: Text(AppStrings.yourMedicalCondition,
+                style: CustomTextStyle.appBarStyle()),
+            backgroundColor: AppColors.themeColor,
+            automaticallyImplyLeading: isEdit ? true : false,
+            iconTheme: const IconThemeData(color: AppColors.whiteColor),
             centerTitle: true,
           ),
           body: Padding(
@@ -35,7 +38,9 @@ class HealthStatusForm extends StatelessWidget {
                   SizedBox(height: 10.h),
                   Center(
                     child: Text(
-                      AppStrings.medicalConditionMessage,
+                      isEdit
+                          ? AppStrings.updateMedicalMessage
+                          : AppStrings.medicalConditionMessage,
                       style: CustomTextStyle.textStyle22(
                         fontWeight: FontWeight.w600,
                       ),
@@ -44,28 +49,33 @@ class HealthStatusForm extends StatelessWidget {
                   SizedBox(height: 30.h),
                   CustomCard(
                     title: AppStrings.diabetesLabel,
-                    isSelected: controller.selectedDisease == AppStrings.diabetesLabel,
+                    isSelected:
+                        controller.selectedDisease == AppStrings.diabetesLabel,
                     onTap: () {
                       controller.setSelectedDisease(AppStrings.diabetesLabel);
                     },
                   ),
                   CustomCard(
                     title: AppStrings.hypercholesterolemiaLabel,
-                    isSelected: controller.selectedDisease == AppStrings.hypercholesterolemiaLabel,
+                    isSelected: controller.selectedDisease ==
+                        AppStrings.hypercholesterolemiaLabel,
                     onTap: () {
-                      controller.setSelectedDisease(AppStrings.hypercholesterolemiaLabel);
+                      controller.setSelectedDisease(
+                          AppStrings.hypercholesterolemiaLabel);
                     },
                   ),
                   CustomCard(
                     title: AppStrings.celiacLabel,
-                    isSelected: controller.selectedDisease == AppStrings.celiacLabel,
+                    isSelected:
+                        controller.selectedDisease == AppStrings.celiacLabel,
                     onTap: () {
                       controller.setSelectedDisease(AppStrings.celiacLabel);
                     },
                   ),
                   CustomCard(
                     title: AppStrings.goutLabel,
-                    isSelected: controller.selectedDisease == AppStrings.goutLabel,
+                    isSelected:
+                        controller.selectedDisease == AppStrings.goutLabel,
                     onTap: () {
                       controller.setSelectedDisease(AppStrings.goutLabel);
                     },
@@ -86,7 +96,9 @@ class HealthStatusForm extends StatelessWidget {
                   ),
                   SizedBox(height: 30.h),
                   CustomButton(
-                    title: AppStrings.continueButton,
+                    title: isEdit
+                        ? AppStrings.updateButton
+                        : AppStrings.continueButton,
                     loading: controller.isLoading,
                     height: 50.h,
                     width: 400.w,
@@ -95,11 +107,13 @@ class HealthStatusForm extends StatelessWidget {
                         controller.setIsLoading(true);
                         controller.saveHealthDetails(context);
                         plansController.fetchAndPassUserDetails();
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          RouteName.bottomNavBar,
-                              (route) => false,
-                        );
+                        isEdit
+                            ? Navigator.pop(context)
+                            : Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                RouteName.bottomNavBar,
+                                (route) => false,
+                              );
                       } else {
                         Utils.positiveToastMessage(AppStrings.selectAnyOne);
                       }

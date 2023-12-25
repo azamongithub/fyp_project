@@ -1,7 +1,6 @@
 import 'package:CoachBot/constants/app_string_constants.dart';
 import 'package:CoachBot/constants/assets_constants.dart';
 import 'package:flutter/material.dart';
-
 import '../services/splash_services.dart';
 
 class SplashScreen extends StatefulWidget {

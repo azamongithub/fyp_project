@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'color_util.dart';
 
 class CustomTextStyle {
-
   //For AppBar
   static TextStyle appBarStyle({
     Color? color,
@@ -12,12 +11,11 @@ class CustomTextStyle {
     double? fontSize,
   }) {
     return TextStyle(
-      color: ColorUtil.whiteColor,
+      color: AppColors.whiteColor,
       fontSize: 22.sp,
       //fontWeight: FontWeight.bold,
     );
   }
-
 
   //For Heading 1 Text
   static TextStyle headingStyle32({
@@ -27,13 +25,11 @@ class CustomTextStyle {
     double? fontSize,
   }) {
     return TextStyle(
-      color: ColorUtil.titleColor,
+      color: AppColors.titleColor,
       fontSize: 32.sp,
       fontWeight: FontWeight.bold,
-
     );
   }
-
 
   //For Title Text
   static TextStyle titleStyle20({
@@ -45,7 +41,7 @@ class CustomTextStyle {
   }) {
     return TextStyle(
       fontSize: 20.sp,
-      color: ColorUtil.titleColor,
+      color: AppColors.titleColor,
       fontWeight: fontWeight,
       fontFamily: fontFamily,
       letterSpacing: letterSpacing,
@@ -60,7 +56,7 @@ class CustomTextStyle {
     double? fontSize,
   }) {
     return TextStyle(
-      color: ColorUtil.subTitleColor,
+      color: AppColors.subTitleColor,
       fontSize: 14.sp,
       fontWeight: fontWeight,
     );
@@ -84,10 +80,11 @@ class CustomTextStyle {
       fontFamily: fontFamily,
     );
     return underline
-        ? baseStyle.merge(
-        const TextStyle(
-      decoration: TextDecoration.underline,
-    )).merge(style)
+        ? baseStyle
+            .merge(const TextStyle(
+              decoration: TextDecoration.underline,
+            ))
+            .merge(style)
         : baseStyle.merge(style);
   }
 
@@ -99,12 +96,11 @@ class CustomTextStyle {
     double? fontSize,
   }) {
     return TextStyle(
-      color: ColorUtil.titleColor,
+      color: AppColors.titleColor,
       fontSize: 11.sp,
       fontWeight: fontWeight,
     );
   }
-
 
   //For text 14
   static TextStyle textStyle14({
@@ -114,12 +110,11 @@ class CustomTextStyle {
     double? fontSize,
   }) {
     return TextStyle(
-      color: ColorUtil.titleColor,
+      color: AppColors.titleColor,
       fontSize: 14.sp,
       fontWeight: fontWeight,
     );
   }
-
 
   //For text 16
   static TextStyle textStyle16({
@@ -129,7 +124,7 @@ class CustomTextStyle {
     double? fontSize,
   }) {
     return TextStyle(
-      color: ColorUtil.titleColor,
+      color: AppColors.titleColor,
       fontSize: 16.sp,
       fontWeight: fontWeight,
     );
@@ -149,7 +144,7 @@ class CustomTextStyle {
     );
   }
 
-  //For text 20
+  // //For text 20
   static TextStyle textStyle20({
     Color? color,
     FontWeight? fontWeight,
@@ -169,7 +164,6 @@ class CustomTextStyle {
     FontWeight? fontWeight,
     String? fontFamily,
     double? fontSize,
-
   }) {
     return TextStyle(
       color: color,
@@ -177,7 +171,6 @@ class CustomTextStyle {
       fontWeight: fontWeight,
     );
   }
-
 
   //For text 24
   static TextStyle textStyle24({
@@ -196,18 +189,28 @@ class CustomTextStyle {
   //For Custom Text
   static TextStyle customTextStyle({
     Color? color,
-    double? fontSize,
     FontWeight? fontWeight,
+    FontStyle? fontStyle,
     String? fontFamily,
+    double? fontSize,
     double? letterSpacing,
-    //double? fontSize,
+    TextStyle? style,
+    bool underline = false,
   }) {
-    return TextStyle(
-      fontSize: fontSize,
-      color: ColorUtil.titleColor,
+    TextStyle baseStyle = TextStyle(
+      color: color,
+      fontSize: fontSize ?? 10.sp,
       fontWeight: fontWeight,
+      fontStyle: fontStyle,
       fontFamily: fontFamily,
       letterSpacing: letterSpacing,
     );
+    return underline
+        ? baseStyle
+            .merge(const TextStyle(
+              decoration: TextDecoration.underline,
+            ))
+            .merge(style)
+        : baseStyle.merge(style);
   }
 }

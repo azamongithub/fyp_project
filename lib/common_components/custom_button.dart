@@ -1,7 +1,6 @@
 import 'package:CoachBot/theme/color_util.dart';
 import 'package:CoachBot/theme/text_style_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomButton extends StatelessWidget {
   final String title;
@@ -11,38 +10,37 @@ class CustomButton extends StatelessWidget {
   final double height;
   final double width;
 
-  const CustomButton(
-      {Key? key,
-      required this.title,
-      required this.onTap,
-      this.loading = false,
-      this.color = Colors.black,
-        this.textColor = Colors.black,
-        required this.height,
-        required this.width,
-        })
-      : super(key: key);
+  const CustomButton({
+    Key? key,
+    required this.title,
+    required this.onTap,
+    this.loading = false,
+    this.color = Colors.black,
+    this.textColor = Colors.black,
+    required this.height,
+    required this.width,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: loading? null : onTap,
+      onTap: loading ? null : onTap,
       child: Container(
         height: height,
         width: width,
         decoration: BoxDecoration(
-          color: ColorUtil.themeColor,
+          color: AppColors.themeColor,
           borderRadius: BorderRadius.circular(50),
-
         ),
         child: Center(
           child: loading
-              ? const Center(child: CircularProgressIndicator(strokeWidth: 3 , color: ColorUtil.whiteColor))
+              ? const Center(
+                  child: CircularProgressIndicator(
+                      strokeWidth: 3, color: AppColors.whiteColor))
               : Text(
                   title,
-                  style: CustomTextStyle.textStyle20(
-                    color: ColorUtil.whiteColor
-                  ),
+                  style:
+                      CustomTextStyle.textStyle20(color: AppColors.whiteColor),
                 ),
         ),
       ),

@@ -15,7 +15,8 @@ class CalendarTextField extends StatelessWidget {
     required this.labelText,
     required this.onDateSelected,
     this.calenderValidationText,
-    this.onValidator, this.initialValue,
+    this.onValidator,
+    this.initialValue,
   }) : super(key: key);
 
   Future<void> _selectDate(BuildContext context) async {

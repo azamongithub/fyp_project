@@ -1,7 +1,7 @@
 import 'package:CoachBot/models/workout_plan_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../theme/text_style_util.dart';
@@ -12,7 +12,7 @@ class WorkoutPlanDaysScreen extends StatelessWidget {
   final String? disease;
   final String? workoutPlanId;
 
-  WorkoutPlanDaysScreen({
+  const WorkoutPlanDaysScreen({
     super.key,
     required this.name,
     this.disease,
@@ -23,10 +23,13 @@ class WorkoutPlanDaysScreen extends StatelessWidget {
     final user = FirebaseAuth.instance.currentUser;
 
     final totalProgress = {
-      'totalProgress' : progress,
+      'totalProgress': progress,
     };
 
-    await FirebaseFirestore.instance.collection('UserDataCollection').doc(user!.uid).set(totalProgress, SetOptions(merge: true));
+    await FirebaseFirestore.instance
+        .collection('UserDataCollection')
+        .doc(user!.uid)
+        .set(totalProgress, SetOptions(merge: true));
   }
 
   @override
@@ -62,10 +65,10 @@ class WorkoutPlanDaysScreen extends StatelessWidget {
             'Sunday': DateTime.sunday,
           };
           List<MapEntry<String, WorkoutDay>> orderedDays =
-          workoutPlan.days.entries.toList()
-            ..sort((a, b) {
-              return weekdaysMap[a.key]! - weekdaysMap[b.key]!;
-            });
+              workoutPlan.days.entries.toList()
+                ..sort((a, b) {
+                  return weekdaysMap[a.key]! - weekdaysMap[b.key]!;
+                });
           return ListView(
             children: [
               for (var dayEntry in orderedDays)
@@ -110,7 +113,10 @@ Widget workoutDaysCard({
             name!,
             style: CustomTextStyle.subTitleStyle14(),
           ),
-          trailing: Icon(Icons.arrow_forward, size: 28.sp,),
+          trailing: Icon(
+            Icons.arrow_forward,
+            size: 28.sp,
+          ),
           onTap: onPressed,
         ),
       ),
@@ -136,7 +142,9 @@ Future<WorkoutPlanModel> fetchWorkoutPlan(String name) async {
       return Future.error('No data found for workout plan: $name');
     }
   } catch (e) {
-    print('Error fetching workout plans: $e');
-    throw e;
+    if (kDebugMode) {
+      print('Error fetching workout plans: $e');
+    }
+    rethrow;
   }
 }

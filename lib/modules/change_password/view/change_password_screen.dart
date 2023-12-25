@@ -16,9 +16,11 @@ class ChangePasswordScreen extends StatefulWidget {
 }
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
-  final TextEditingController _currentPasswordController = TextEditingController();
+  final TextEditingController _currentPasswordController =
+      TextEditingController();
   final TextEditingController _newPasswordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   Future<void> _changePassword(BuildContext context) async {
@@ -44,8 +46,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         if (e is FirebaseAuthException && e.code == 'wrong-password') {
           Utils.negativeToastMessage('Incorrect Current Password');
         } else {
-          Utils.positiveToastMessage('We have blocked all requests from this device due to unusual activity. Try again later.');
-
+          Utils.positiveToastMessage(
+              'We have blocked all requests from this device due to unusual activity. Try again later.');
         }
       }
     }
@@ -64,8 +66,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
-        title: Text(AppStrings.changePassBtn, style: CustomTextStyle.appBarStyle()),
-        backgroundColor: ColorUtil.themeColor,
+        title: Text(AppStrings.changePassBtn,
+            style: CustomTextStyle.appBarStyle()),
+        backgroundColor: AppColors.themeColor,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -93,7 +96,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   validator: (value) {
                     if (value?.isEmpty ?? false) {
                       return AppStrings.enterNewPass;
-                    } else if (_currentPasswordController.text == _newPasswordController.text) {
+                    } else if (_currentPasswordController.text ==
+                        _newPasswordController.text) {
                       return AppStrings.newPassNotEqualCurrentPass;
                     } else if (value!.length < 6) {
                       return AppStrings.passValidation;
@@ -134,10 +138,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     );
   }
 }
-
-
-
-
 
 // import 'package:CoachBot/res/component/custom_button.dart';
 // import 'package:CoachBot/utils/utils.dart';

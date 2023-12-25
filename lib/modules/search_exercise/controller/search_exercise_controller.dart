@@ -4,23 +4,13 @@ import 'package:CoachBot/models/ExerciseDataModel.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../models/NutritionFactsModel.dart';
-
 class ExerciseDataController extends ChangeNotifier {
-
-  String _apiResponse = '';
+  final String _apiResponse = '';
   String get apiResponse => _apiResponse;
-
-
-
   List<ExerciseDataModel> _exerciseList = [];
-
   List<ExerciseDataModel> get exercisesList => _exerciseList;
-
-
   bool _loading = false;
   bool get loading => _loading;
-
 
   setLoading(bool value) {
     _loading = value;
@@ -29,18 +19,22 @@ class ExerciseDataController extends ChangeNotifier {
 
   Future<void> fetchExerciseDataByMuscle(String muscle) async {
     setLoading(true);
-    final apiUrl =
-        '${ApiConstant.searchExerciseApi}=$muscle';
-    final response = await http.get(Uri.parse(apiUrl),
+    final apiUrl = '${ApiConstant.searchExerciseApi}=$muscle';
+    final response = await http.get(
+      Uri.parse(apiUrl),
       headers: {
-      'X-RapidAPI-Key': ApiConstant.searchExerciseApiKey,
-      'X-RapidAPI-Host': 'exercises-by-api-ninjas.p.rapidapi.com'
-    },
+        'X-RapidAPI-Key': ApiConstant.searchExerciseApiKey,
+        'X-RapidAPI-Host': 'exercises-by-api-ninjas.p.rapidapi.com'
+      },
     );
     if (response.statusCode == 200) {
       final List<dynamic> jsonData = json.decode(response.body);
-      _exerciseList = jsonData.map((dynamic item) => ExerciseDataModel.fromJson(item)).toList();
-      print("Exercise List is: ${_exerciseList}");
+      _exerciseList = jsonData
+          .map((dynamic item) => ExerciseDataModel.fromJson(item))
+          .toList();
+      if (kDebugMode) {
+        print("Exercise List is: $_exerciseList");
+      }
       notifyListeners();
       setLoading(false);
       notifyListeners();

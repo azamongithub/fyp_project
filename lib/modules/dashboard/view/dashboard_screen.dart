@@ -43,27 +43,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: ColorUtil.themeColor,
+        backgroundColor: AppColors.themeColor,
         title: Text(
           AppStrings.dashboard,
           style: CustomTextStyle.appBarStyle(),
         ),
         automaticallyImplyLeading: false,
-        actions: [
-          Consumer<DashboardController>(
-              builder: (context, provider, child) {
-            return ElevatedButton.icon(
-                onPressed: () async {
-                  //provider.mergeUserDataByType();
-                  //provider.mergeUserData();
-                  provider.addWorkoutPlan(provider.workoutPlan);
-                  // provider
-                  //     .addMealPlan(provider.mealPlan);
-                },
-                icon: const Icon(Icons.add),
-                label: const Text('Add'));
-          })
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -162,11 +147,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         onPressed: () {
                           Navigator.pushNamed(
                               context, RouteName.findWorkoutsScreen);
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //       builder: (context) => FindWorkoutsScreen()),
-                          // );
                         },
                         child: const Text('View Workouts'),
                       ),
@@ -195,12 +175,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         onPressed: () {
                           Navigator.pushNamed(
                               context, RouteName.findNutritionFactsScreen);
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //       builder: (context) =>
-                          //           FindNutritionFactsScreen()),
-                          // );
                         },
                         child: const Text('Nutrition Facts'),
                       ),

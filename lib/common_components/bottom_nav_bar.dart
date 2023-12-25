@@ -2,7 +2,6 @@ import 'package:CoachBot/constants/app_string_constants.dart';
 import 'package:CoachBot/theme/color_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../modules/dashboard/view/dashboard_screen.dart';
 import '../modules/my_plans/view/plans_tab.dart';
 import '../modules/settings/view/settings_screen.dart';
@@ -25,9 +24,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      // onWillPop: () async {
-      //   return true;
-      // },
       child: Scaffold(
         body: screens[index],
         bottomNavigationBar: NavigationBarTheme(
@@ -43,24 +39,23 @@ class _BottomNavBarState extends State<BottomNavBar> {
             destinations: [
               NavigationDestination(
                 icon: Icon(Icons.home_outlined,
-                    color: ColorUtil.themeColor, size: 30.sp),
+                    color: AppColors.themeColor, size: 30.sp),
                 selectedIcon: Icon(Icons.home_outlined,
-                    color: ColorUtil.themeColor, size: 35.sp),
+                    color: AppColors.themeColor, size: 35.sp),
                 label: AppStrings.dashboard,
-                //selectedIcon: Icon(Icons.home_outlined, color: Color(0xff3140b0)),
               ),
               NavigationDestination(
                 icon: Icon(Icons.edit_calendar_outlined,
-                    color: ColorUtil.themeColor, size: 25.sp),
+                    color: AppColors.themeColor, size: 25.sp),
                 selectedIcon: Icon(Icons.edit_calendar_outlined,
-                    color: ColorUtil.themeColor, size: 30.sp),
+                    color: AppColors.themeColor, size: 30.sp),
                 label: AppStrings.myPlans,
               ),
               NavigationDestination(
                 icon: Icon(Icons.settings_outlined,
-                    color: ColorUtil.themeColor, size: 30.sp),
+                    color: AppColors.themeColor, size: 30.sp),
                 selectedIcon: Icon(Icons.settings_outlined,
-                    color: ColorUtil.themeColor, size: 35.sp),
+                    color: AppColors.themeColor, size: 35.sp),
                 label: AppStrings.settings,
               ),
             ],

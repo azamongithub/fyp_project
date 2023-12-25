@@ -17,10 +17,9 @@ class SendFeedbackScreen extends StatelessWidget {
     final formKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppStrings.feedback,
-            style: CustomTextStyle.appBarStyle()),
-        iconTheme: IconThemeData(color: ColorUtil.whiteColor),
-        backgroundColor: const Color(0xff3140b0),
+        title: Text(AppStrings.feedback, style: CustomTextStyle.appBarStyle()),
+        iconTheme: const IconThemeData(color: AppColors.whiteColor),
+        backgroundColor: AppColors.themeColor,
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -49,7 +48,7 @@ class SendFeedbackScreen extends StatelessWidget {
                   maxLines: 7,
                   onValidator: (value) {
                     if (value!.isEmpty) {
-                      return AppStrings.enterFeedback;
+                      return AppStrings.requiredField;
                     }
                     return null;
                   },

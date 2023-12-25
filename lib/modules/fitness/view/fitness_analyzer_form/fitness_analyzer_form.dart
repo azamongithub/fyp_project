@@ -22,8 +22,8 @@ class FitnessAnalyzerForm extends StatelessWidget {
       appBar: AppBar(
         title: Text(AppStrings.yourFitnessDetails,
             style: CustomTextStyle.appBarStyle()),
-        backgroundColor: ColorUtil.themeColor,
-        iconTheme: const IconThemeData(color: ColorUtil.whiteColor),
+        backgroundColor: AppColors.themeColor,
+        iconTheme: const IconThemeData(color: AppColors.whiteColor),
         automaticallyImplyLeading: isEdit ? true : false,
         centerTitle: true,
       ),

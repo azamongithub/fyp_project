@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-
 import '../../../models/all_plan_model.dart';
 import '../../../services/api_repository.dart';
 import '../../../services/firestore_service.dart';
@@ -28,7 +26,6 @@ class MyPlansController extends ChangeNotifier {
     notifyListeners();
   }
 
-
   Future<void> fetchAndPassUserDetails() async {
     final user = FirebaseAuth.instance.currentUser;
     DocumentSnapshot snapshot = await FirebaseFirestore.instance
@@ -46,7 +43,9 @@ class MyPlansController extends ChangeNotifier {
           "Weight": userData['weight'],
           "Fitness_Level": userData['fitnessLevel'],
           "Fitness_Goal": userData['fitnessGoal'],
-          "Medical_History": userData['disease'] == 'other' ? userData['disease'] = 'none' : userData['disease'],
+          "Medical_History": userData['disease'] == 'other'
+              ? userData['disease'] = 'none'
+              : userData['disease'],
         });
       }
     } else {
@@ -63,18 +62,19 @@ class MyPlansController extends ChangeNotifier {
       await _firestoreService.storeUserData(_responseData);
       notifyListeners();
     } catch (e) {
-      print('Error: $e');
+      if (kDebugMode) {
+        print('Error: $e');
+      }
     }
   }
 
   Future<void> fetchAllPlans() async {
     try {
-      print("fetchAllPlans called");
       final user = FirebaseAuth.instance.currentUser;
       CollectionReference userFitnessCollection =
-      FirebaseFirestore.instance.collection('UserDataCollection');
+          FirebaseFirestore.instance.collection('UserDataCollection');
       DocumentSnapshot userSnapshot =
-      await userFitnessCollection.doc(user!.uid).get();
+          await userFitnessCollection.doc(user!.uid).get();
 
       retrievedCalories = userSnapshot['calories'];
       mealPlan = userSnapshot['meal_plan'];

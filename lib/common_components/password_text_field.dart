@@ -26,7 +26,8 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
       obscureText: _obscureText,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),),
+          borderRadius: BorderRadius.circular(15),
+        ),
         labelText: widget.labelText,
         suffixIcon: IconButton(
           icon: Icon(

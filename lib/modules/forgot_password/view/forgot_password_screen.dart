@@ -2,7 +2,6 @@ import 'package:CoachBot/theme/color_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../theme/text_style_util.dart';
 import '../../../common_components/custom_button.dart';
 import '../../../common_components/custom_text_field.dart';
@@ -34,10 +33,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          iconTheme: const IconThemeData(color: ColorUtil.whiteColor),
+          iconTheme: const IconThemeData(color: AppColors.whiteColor),
           title: Text('Coachbot ', style: CustomTextStyle.appBarStyle()),
-          backgroundColor: ColorUtil.themeColor,
-
+          backgroundColor: AppColors.themeColor,
         ),
         body: SafeArea(
           child: SingleChildScrollView(
@@ -47,31 +45,21 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // const Image(
-                  //   height: 150,
-                  //   width: 150,
-                  //   image: AssetImage('images/fitness_logo1.jpg'),
-                  // ),
                   SizedBox(height: height * 0.06.h),
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Forgot Password',
-                      style: TextStyle(
-                          fontSize: 25,
-                          color: Color(0xff203142)),
+                      style: TextStyle(fontSize: 25, color: Color(0xff203142)),
                     ),
                   ),
                   SizedBox(height: height * 0.03.h),
                   const Center(
                       child: Text(
                     'Enter your email for the verification process. we will send you the reset passsword link to your email',
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: Color(0xff203142)),
+                    style: TextStyle(fontSize: 15, color: Color(0xff203142)),
                   )),
                   SizedBox(height: height * 0.04),
-
                   Form(
                     key: _formKey,
                     child: Column(
@@ -89,7 +77,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     ),
                   ),
                   SizedBox(height: height * 0.04.h),
-
                   ChangeNotifierProvider(
                       create: (_) => ForgotPasswordController(),
                       child: Consumer<ForgotPasswordController>(
@@ -107,7 +94,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           },
                         );
                       })),
-
                   SizedBox(height: height * 0.02.h),
                   InkWell(
                       onTap: () {
@@ -115,9 +101,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       },
                       child: const Text(
                         "Back to Login",
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Color(0xff3140b0)),
+                        style:
+                            TextStyle(fontSize: 15, color: Color(0xff3140b0)),
                       )),
                 ],
               ),

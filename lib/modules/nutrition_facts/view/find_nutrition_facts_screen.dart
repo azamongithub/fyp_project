@@ -75,7 +75,7 @@ class FindNutritionFactsScreen extends StatelessWidget {
                                         )),
                                   ),
                                   SizedBox(height: 20.h),
-                                  NutririonListTile(
+                                  NutritionListTile(
                                     title: Text(
                                       'Serving Size',
                                       style: TextStyle(
@@ -93,52 +93,52 @@ class FindNutritionFactsScreen extends StatelessWidget {
                                         )),
                                   ),
                                   SizedBox(height: 20.h),
-                                  NutririonListTile(
+                                  NutritionListTile(
                                     title: const Text('Calories'),
                                     trailing: Text(
                                         '${nutritionProvider.nutritionFacts!.calories}'),
                                   ),
-                                  NutririonListTile(
+                                  NutritionListTile(
                                     title: const Text('Protien'),
                                     trailing: Text(
                                         '${nutritionProvider.nutritionFacts!.protein} g'),
                                   ),
-                                  NutririonListTile(
+                                  NutritionListTile(
                                     title: const Text('Carbs'),
                                     trailing: Text(
                                         '${nutritionProvider.nutritionFacts!.totalCarbohydrates} g'),
                                   ),
-                                  NutririonListTile(
+                                  NutritionListTile(
                                     title: const Text('Total Fat'),
                                     trailing: Text(
                                         '${nutritionProvider.nutritionFacts!.totalFat} g'),
                                   ),
-                                  NutririonListTile(
+                                  NutritionListTile(
                                     title: const Text('Saturated Fat'),
                                     trailing: Text(
                                         '${nutritionProvider.nutritionFacts!.saturatedFat} g'),
                                   ),
-                                  NutririonListTile(
+                                  NutritionListTile(
                                     title: const Text('Fiber'),
                                     trailing: Text(
                                         '${nutritionProvider.nutritionFacts!.fiber} g'),
                                   ),
-                                  NutririonListTile(
+                                  NutritionListTile(
                                     title: const Text('Sugar'),
                                     trailing: Text(
                                         '${nutritionProvider.nutritionFacts!.sugar} g'),
                                   ),
-                                  NutririonListTile(
+                                  NutritionListTile(
                                     title: const Text('Cholesterol'),
                                     trailing: Text(
                                         '${nutritionProvider.nutritionFacts!.cholesterol} mg'),
                                   ),
-                                  NutririonListTile(
+                                  NutritionListTile(
                                     title: const Text('Sodium'),
                                     trailing: Text(
                                         '${nutritionProvider.nutritionFacts!.sodium} mg'),
                                   ),
-                                  NutririonListTile(
+                                  NutritionListTile(
                                     title: const Text('Potassium'),
                                     trailing: Text(
                                         '${nutritionProvider.nutritionFacts!.potassium} mg'),

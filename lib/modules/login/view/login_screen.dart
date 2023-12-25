@@ -2,7 +2,6 @@ import 'package:CoachBot/constants/app_string_constants.dart';
 import 'package:CoachBot/constants/assets_constants.dart';
 import 'package:CoachBot/theme/color_util.dart';
 import 'package:CoachBot/theme/text_style_util.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -37,15 +36,7 @@ class _LoginFormState extends State<LoginForm> {
     // final height = MediaQuery.of(context).size.height * 1;
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: ColorUtil.themeColor,
-          // backgroundColor: Colors.transparent,
-          // elevation: 0,
-          // flexibleSpace: Container(
-          //   decoration: BoxDecoration(
-          //     gradient: ColorUtil.themeGradient,
-          //   ),
-          // ),
-
+          backgroundColor: AppColors.themeColor,
           automaticallyImplyLeading: false,
           title: Center(
               child: Text(
@@ -119,7 +110,6 @@ class _LoginFormState extends State<LoginForm> {
                                   ),
                         ),
                       )),
-
                   SizedBox(height: 40.h),
                   ChangeNotifierProvider(
                       create: (_) => LoginController(),
@@ -143,9 +133,6 @@ class _LoginFormState extends State<LoginForm> {
                     children: [
                       const Text(AppStrings.notMember),
                       TextButton(
-                        // style: TextButton.styleFrom(
-                        //   primary: const Color(0xff3140b0),
-                        // ),
                         onPressed: () {
                           Navigator.pushNamedAndRemoveUntil(
                             context,
@@ -162,14 +149,6 @@ class _LoginFormState extends State<LoginForm> {
                       )
                     ],
                   ),
-// const SizedBox(height: 30,),
-// Center(
-//   child: InkWell(
-//       onTap: (){
-//         Navigator.push(context, MaterialPageRoute(builder: (context)=> const LoginWithPhoneScreen()));
-//       },
-//       child: const Text('Login with Phone Number')),
-// )
                 ],
               ),
             ),

@@ -25,7 +25,7 @@ class CustomCard extends StatelessWidget {
             width: 500.w,
             height: 70.h,
             decoration: BoxDecoration(
-              color: ColorUtil.whiteColor,
+              color: AppColors.whiteColor,
               borderRadius: BorderRadius.circular(15),
               border: Border.all(
                 color: isSelected ? Colors.green : Colors.grey,
@@ -36,7 +36,8 @@ class CustomCard extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 13.w, vertical: 15.h),
               child: Text(
                 title,
-                style: CustomTextStyle.textStyle22(), // Update with your text style
+                style: CustomTextStyle
+                    .textStyle22(), // Update with your text style
               ),
             ),
           ),

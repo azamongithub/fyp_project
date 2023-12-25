@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import '../common_components/bottom_nav_bar.dart';
 import '../models/workout_plan_model.dart';
 import '../modules/fitness/view/fitness_analyzer_form/fitness_analyzer_form.dart';

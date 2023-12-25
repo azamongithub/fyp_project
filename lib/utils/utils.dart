@@ -17,6 +17,7 @@ class Utils {
       Fluttertoast.cancel();
     });
   }
+
   static positiveToastMessage(String message) {
     Fluttertoast.showToast(
       msg: message,
@@ -33,8 +34,8 @@ class Utils {
     });
   }
 
-
-  static Future<void> showLoadingSnackBar(BuildContext context, String message) async {
+  static Future<void> showLoadingSnackBar(
+      BuildContext context, String message) async {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
@@ -42,7 +43,4 @@ class Utils {
       ),
     );
   }
-
 }
-
-

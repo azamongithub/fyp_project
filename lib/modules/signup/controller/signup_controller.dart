@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import '../../../routes/route_name.dart';
 
 class SignUpController with ChangeNotifier {
@@ -15,13 +15,14 @@ class SignUpController with ChangeNotifier {
     _loading = value;
     notifyListeners();
   }
+
   signUp(BuildContext context, String email, String password) async {
     setLoading(true);
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-          email: email,
-          password: password,
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
       );
       var authCredential = userCredential.user;
       print(authCredential!.uid);
@@ -32,11 +33,8 @@ class SignUpController with ChangeNotifier {
         Navigator.pushNamedAndRemoveUntil(
           context,
           RouteName.profileForm,
-              (route) => false,
+          (route) => false,
         );
-
-
-        // Navigator.pushReplacementNamed(context, RouteName.ProfileForm);
       } else {
         setLoading(false);
         Fluttertoast.showToast(msg: "Something is wrong");
@@ -48,26 +46,21 @@ class SignUpController with ChangeNotifier {
         Fluttertoast.showToast(
             msg: "The account already exists for that email.");
         setLoading(false);
-      }
-      else if (e.code == 'weak-password') {
+      } else if (e.code == 'weak-password') {
         setLoading(false);
         Fluttertoast.showToast(msg: "The password provided is too weak.");
-      }
-      else if (!emailRegex.hasMatch(email)) {
+      } else if (!emailRegex.hasMatch(email)) {
         setLoading(false);
-        Fluttertoast.showToast(
-            msg: "Invalid email format");
-    }
-      else {
-        Fluttertoast.showToast(
-            msg: "An error occurred: ${e.message}");
+        Fluttertoast.showToast(msg: "Invalid email format");
+      } else {
+        Fluttertoast.showToast(msg: "An error occurred: ${e.message}");
       }
     } catch (e) {
       setLoading(false);
-      Fluttertoast.showToast(
-
-          msg: "Some thing went wrong");
-      print(e);
+      Fluttertoast.showToast(msg: "Some thing went wrong");
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 }

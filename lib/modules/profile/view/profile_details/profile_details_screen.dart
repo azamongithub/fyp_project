@@ -1,3 +1,4 @@
+import 'package:CoachBot/modules/health_status/view/health_status_details/health_details_screen.dart';
 import 'package:CoachBot/modules/profile/view/profile_details/profile_details.dart';
 import 'package:CoachBot/theme/color_util.dart';
 import 'package:flutter/material.dart';
@@ -30,9 +31,9 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: ColorUtil.whiteColor),
+        iconTheme: const IconThemeData(color: AppColors.whiteColor),
         title: Text('Profile', style: CustomTextStyle.appBarStyle()),
-        backgroundColor: ColorUtil.themeColor,
+        backgroundColor: AppColors.themeColor,
       ),
       body: SafeArea(
         child: Column(
@@ -41,10 +42,14 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen>
             Expanded(
               child: TabBarView(
                 controller: _tabController,
-                children: const [
-                  PersonalDetails(),
-                  FitnessDetails(),
-                  HealthDetails(),
+                children: [
+                  const PersonalDetails(),
+                  const FitnessDetails(),
+                  //const HealthDetails(),
+                  HealthDetailsScreen(),
+
+
+
                 ],
               ),
             ),
@@ -54,8 +59,8 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen>
               labelColor: Colors.white,
               unselectedLabelColor: Colors.grey,
               indicatorSize: TabBarIndicatorSize.tab,
-              indicator: BoxDecoration(
-                color: ColorUtil.themeColor,
+              indicator: const BoxDecoration(
+                color: AppColors.themeColor,
               ),
               tabs: const [
                 Tab(text: 'Personal'),

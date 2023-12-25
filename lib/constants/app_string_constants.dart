@@ -24,7 +24,6 @@ abstract class AppStrings {
   static const String sendButton = 'Send';
   static const String updateButton = 'Update';
 
-
   //Profile Form
   static const String yourPersonalDetails = 'Your Personal Details';
   static const String maleLabel = 'Male';
@@ -43,10 +42,10 @@ abstract class AppStrings {
   static const String olderAdult = 'Older Adult';
   static const String ageGroupNotDefined = 'Age Group Not Defined';
 
-
   //Fitness Form
   static const String yourFitnessDetails = 'Your Fitness Details';
-  static const String fitnessDetailsMessage = 'Enter required inputs to find your fitness level';
+  static const String fitnessDetailsMessage =
+      'Enter required inputs to find your fitness level';
   static const String updateFitnessMessage = 'Update your Fitness Details';
   static const String weightLabel = 'Weight (kg)';
   static const String heightFeetLabel = 'Height (Feet)';
@@ -81,10 +80,12 @@ abstract class AppStrings {
   static const String obesity = 'Obesity';
   static const String fitnessLevelNotDefined = 'Fitness Level Not Defined';
 
-    //Health Status Form
+  //Health Status Form
   static const String yourMedicalCondition = 'Your Medical Condition';
   static const String medicalConditionMessage =
       'Share medical conditions or history with us';
+  static const String updateMedicalMessage =
+      'Update your medical condition';
   static const String diabetesLabel = 'Diabetes';
   static const String hypercholesterolemiaLabel = 'Hypercholesterolaemia';
   static const String celiacLabel = 'Celiac';
@@ -106,7 +107,8 @@ abstract class AppStrings {
   static const String customizedPlans = 'Your Customized Plans';
   static const String workoutPlan = 'Workout Plan';
   static const String mealPlan = 'Meal Plan';
-  static const String checkWorkoutPlan = 'Checkout your customized workout plan';
+  static const String checkWorkoutPlan =
+      'Checkout your customized workout plan';
   static const String checkMealPlan = 'Checkout your customized meal plan';
 
   //Change Password Screen
@@ -117,12 +119,13 @@ abstract class AppStrings {
   //Change Password Messages
   static const String passChangeSuccessfully = 'Password changed successfully';
 
-
   //Change Password Screen Validations
   static const String enterCurrentPass = 'Please enter your current password';
   static const String enterNewPass = 'Please enter your new password';
-  static const String newPassNotEqualCurrentPass = 'New password should not be the same as the current password';
-  static const String passValidation = 'Password must contain at least 8 characters including 1 uppercase, 1 special character and 1 number';
+  static const String newPassNotEqualCurrentPass =
+      'New password should not be the same as the current password';
+  static const String passValidation =
+      'Password must contain at least 8 characters including 1 uppercase, 1 special character and 1 number';
   static const String confirmNewPass = 'Please confirm your new password';
   static const String passNotMatch = 'Passwords do not match';
   static const String incorrectCurrentPass = 'Incorrect Current Password';
@@ -131,8 +134,9 @@ abstract class AppStrings {
   static const String changePassBtn = 'Change Password';
   //Send Feedback
   static const String feedback = 'Feedback';
-  static const String sendFeedbackLabel = 'Enter what you want to share with us';
-  static const String enterFeedback = 'This Field is required';
-
-
+  static const String sendFeedbackLabel =
+      'Enter what you want to share with us';
+  static const String sendMessageLabel =
+      'Enter what you want to share with our doctor';
+  static const String requiredField = 'This Field is required';
 }

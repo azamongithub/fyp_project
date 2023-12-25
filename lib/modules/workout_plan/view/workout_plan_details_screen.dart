@@ -2,6 +2,7 @@ import 'package:CoachBot/theme/color_util.dart';
 import 'package:CoachBot/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../models/workout_plan_model.dart';
@@ -54,7 +55,9 @@ class _WorkoutPlanDetailsScreenState extends State<WorkoutPlanDetailsScreen> {
           });
         }
       } catch (e) {
-        print('Error initializing button state: $e');
+        if (kDebugMode) {
+          print('Error initializing button state: $e');
+        }
       }
     }
   }
@@ -82,10 +85,14 @@ class _WorkoutPlanDetailsScreenState extends State<WorkoutPlanDetailsScreen> {
             ...dayData,
           });
           Utils.positiveToastMessage('Progress for $day has added.');
-          print('Progress for $day added.');
+          if (kDebugMode) {
+            print('Progress for $day added.');
+          }
         } else {
           Utils.positiveToastMessage('Progress for $day has already added.');
-          print('Progress for $day already added.');
+          if (kDebugMode) {
+            print('Progress for $day already added.');
+          }
         }
         setState(() {
           isButtonDisabled = true;
@@ -97,10 +104,14 @@ class _WorkoutPlanDetailsScreenState extends State<WorkoutPlanDetailsScreen> {
             isButtonDisabled = false;
           });
           // Print statement to check if the button is being re-enabled
-          print('Button re-enabled after delay.');
+          if (kDebugMode) {
+            print('Button re-enabled after delay.');
+          }
         });
       } catch (e) {
-        print('Error updating progress: $e');
+        if (kDebugMode) {
+          print('Error updating progress: $e');
+        }
       }
     }
   }
@@ -156,11 +167,9 @@ class _WorkoutPlanDetailsScreenState extends State<WorkoutPlanDetailsScreen> {
           widget.day,
           style: CustomTextStyle.appBarStyle(),
         ),
-        backgroundColor: ColorUtil.themeColor,
+        backgroundColor: AppColors.themeColor,
       ),
-      body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+      body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -180,16 +189,16 @@ class _WorkoutPlanDetailsScreenState extends State<WorkoutPlanDetailsScreen> {
             ),
           ),
         ),
-            Container(
-              padding: EdgeInsets.only(bottom: 50.h),
-              child: Center(
-                child: ElevatedButton(
-                  onPressed: isButtonDisabled ? null : () => addProgress(widget.day),
-                  child: Text('Mark as Done'),
-                ),
-              ),
+        Container(
+          padding: EdgeInsets.only(bottom: 50.h),
+          child: Center(
+            child: ElevatedButton(
+              onPressed:
+                  isButtonDisabled ? null : () => addProgress(widget.day),
+              child: const Text('Mark as Done'),
             ),
-
+          ),
+        ),
       ]),
     );
   }

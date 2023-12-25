@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
-class NutririonListTile extends StatelessWidget {
+class NutritionListTile extends StatelessWidget {
   final Widget title;
   final Widget trailing;
 
-  const NutririonListTile(
-      {Key? key,
-        required this.title,
-        required this.trailing})
+  const NutritionListTile(
+      {Key? key, required this.title, required this.trailing})
       : super(key: key);
 
   @override

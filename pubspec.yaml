@@ -30,6 +30,7 @@ dependencies:
   intl: ^0.18.0
   flutter_local_notifications: ^15.1.0+1
   flutter_screenutil:
+  email_launcher: ^1.1.1
   http:
 
 dev_dependencies:

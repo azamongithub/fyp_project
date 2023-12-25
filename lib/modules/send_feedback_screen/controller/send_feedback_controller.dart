@@ -23,7 +23,9 @@ class SendFeedbackController extends ChangeNotifier {
       isLoading = true;
       notifyListeners();
 
-      await FirebaseFirestore.instance.collection('UserFeedbacks').add(feedbackData);
+      await FirebaseFirestore.instance
+          .collection('UserFeedbacks')
+          .add(feedbackData);
       Utils.positiveToastMessage('Thanks for giving a feedback');
     } finally {
       isLoading = false;
@@ -31,11 +33,9 @@ class SendFeedbackController extends ChangeNotifier {
     }
   }
 
-
   @override
   void dispose() {
     feedbackController.dispose();
     super.dispose();
   }
-
 }

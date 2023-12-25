@@ -38,7 +38,7 @@ class FitnessDetails extends StatelessWidget {
           return Scaffold(
             body: Container(
               padding: EdgeInsets.all(40.sp),
-              color: ColorUtil.whiteColor,
+              color: AppColors.whiteColor,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,7 +52,7 @@ class FitnessDetails extends StatelessWidget {
                     },
                     child: Text('Complete your Fitness Details',
                         style: CustomTextStyle.textStyle18(
-                            color: ColorUtil.themeColor)),
+                            color: AppColors.themeColor)),
                   ),
                 ],
               ),
@@ -81,7 +81,7 @@ class FitnessDetails extends StatelessWidget {
                                 SizedBox(height: 1.w),
                                 Text('Editable',
                                     style: CustomTextStyle.textStyle10(
-                                        color: ColorUtil.themeColor,
+                                        color: AppColors.themeColor,
                                         underline: true)),
                               ],
                             ),
@@ -92,6 +92,7 @@ class FitnessDetails extends StatelessWidget {
                               Utils.showLoadingSnackBar(context, 'Loading...');
                               await Future.delayed(
                                   const Duration(milliseconds: 500));
+
                               Navigator.push(
                                   context,
                                   CupertinoPageRoute(
@@ -109,7 +110,7 @@ class FitnessDetails extends StatelessWidget {
                                 SizedBox(height: 1.w),
                                 Text('Editable',
                                     style: CustomTextStyle.textStyle10(
-                                        color: ColorUtil.themeColor,
+                                        color: AppColors.themeColor,
                                         underline: true)),
                               ],
                             ),
@@ -136,7 +137,7 @@ class FitnessDetails extends StatelessWidget {
                                 const Text('Fitness Goal'),
                                 Text('Editable',
                                     style: CustomTextStyle.textStyle10(
-                                        color: ColorUtil.themeColor,
+                                        color: AppColors.themeColor,
                                         underline: true)),
                               ],
                             ),

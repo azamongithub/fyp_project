@@ -1,27 +1,19 @@
 import 'package:flutter/material.dart';
 
-class CustomTextField extends StatelessWidget {
-  final TextEditingController myController;
-  final FormFieldValidator onValidator;
-  final TextInputType keyBoardType;
+class DiseaseTextField extends StatelessWidget {
+  final TextEditingController? myController;
+  final FormFieldValidator? onValidator;
   final String? labelText;
-  final String? initialValue;
   final int? maxLines;
-  final bool autoFocus;
-  final FocusNode? focusNode;
   final void Function(String)? onChange;
 
-  const CustomTextField({
+  const DiseaseTextField({
     Key? key,
-    required this.myController,
-    required this.keyBoardType,
+    this.myController,
     this.labelText,
     this.maxLines,
-    required this.onValidator,
-    this.autoFocus = false,
-    this.focusNode,
+    this.onValidator,
     this.onChange,
-    this.initialValue,
   }) : super(key: key);
 
   @override
@@ -30,8 +22,6 @@ class CustomTextField extends StatelessWidget {
       controller: myController,
       validator: onValidator,
       onChanged: onChange,
-      keyboardType: keyBoardType,
-      autofocus: autoFocus,
       maxLines: maxLines,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),

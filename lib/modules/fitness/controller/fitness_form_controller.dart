@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../routes/route_name.dart';
-import '../../../services/shared_preferences_helper.dart';
 
 class FitnessFormController extends ChangeNotifier {
   final user = FirebaseAuth.instance.currentUser;
@@ -16,29 +15,15 @@ class FitnessFormController extends ChangeNotifier {
   List<int> inchesOptions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
   int selectedFeet = 4;
   int selectedInch = 9;
-
   double calculatedWeight = 0.0;
   double? calculatedHeightInFeet = 0.0;
-
   double? get weight => calculatedWeight;
   double? get height => calculatedHeightInFeet;
-  // String? selectedFitnessGoal;
-  // List<String> fitnessGoal = [
-  //   AppStrings.muscleBuildingValue,
-  //   AppStrings.weightGainValue,
-  //   AppStrings.weightLossValue,
-  // ];
   double _calculatedBmi = 0.0;
   String? _fitnessLevel;
   bool isLoading = false;
-
   double? get calculatedBmi => _calculatedBmi;
   String? get fitnessLevel => _fitnessLevel;
-  // String get fitnessGoal => selectedFitnessGoal;
-
-  bool _isFitnessCompleted = false;
-  bool get isFitnessCompleted => _isFitnessCompleted;
-
 
   FitnessFormController() {
     loadFitnessData();
@@ -54,12 +39,12 @@ class FitnessFormController extends ChangeNotifier {
 
         if (snapshot.exists) {
           Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-          weightController.text = data['weight'] == null ? '' : data['weight'].toString();
+          weightController.text =
+              data['weight'] == null ? '' : data['weight'].toString();
           selectedFeet = data['feet'] ?? '';
           selectedInch = data['inch'] ?? '';
           notifyListeners();
-        }
-        else {
+        } else {
           print('Fitness data not found');
           print('Fitness data not found');
         }
@@ -67,11 +52,6 @@ class FitnessFormController extends ChangeNotifier {
     } catch (e) {
       throw Exception(e);
     }
-  }
-
-  void setFitnessCompleted() {
-    _isFitnessCompleted = true;
-    notifyListeners();
   }
 
   void setSelectedFeet(int value) {
@@ -83,12 +63,12 @@ class FitnessFormController extends ChangeNotifier {
     selectedInch = value;
     notifyListeners();
   }
+
   void findFitnessLevel(double weight, double heightInCm) {
-    //double weight = double.tryParse(weightController.text) ?? 0;
     if (weight != 0 && heightInCm != 0) {
       double _bmi = weight / ((heightInCm / 100) * (heightInCm / 100));
       _calculatedBmi = double.tryParse(_bmi.toStringAsFixed(2))!;
-      if (_calculatedBmi>=1 && _calculatedBmi < 18.5) {
+      if (_calculatedBmi >= 1 && _calculatedBmi < 18.5) {
         _fitnessLevel = 'Underweight';
       } else if (_calculatedBmi >= 18.5 && _calculatedBmi < 25) {
         _fitnessLevel = 'Normal weight';
@@ -99,7 +79,8 @@ class FitnessFormController extends ChangeNotifier {
       }
       notifyListeners();
     } else {
-      _calculatedBmi = 0; // or any default value you want to set when BMI is not calculable
+      _calculatedBmi =
+          0; // or any default value you want to set when BMI is not calculable
       _fitnessLevel = AppStrings.fitnessLevelNotDefined;
       notifyListeners();
     }
@@ -124,16 +105,11 @@ class FitnessFormController extends ChangeNotifier {
         'bmi': calculatedBmi,
         'fitnessLevel': fitnessLevel,
       };
+      await FirebaseFirestore.instance
+          .collection('UserDataCollection')
+          .doc(user!.uid)
+          .set(fitnessData, SetOptions(merge: true));
 
-      await FirebaseFirestore.instance.collection('UserDataCollection').doc(user!.uid).set(fitnessData, SetOptions(merge: true));
-
-
-      // await FirebaseFirestore.instance
-      //     .collection('UserFitnessCollection')
-      //     .doc(user!.uid)
-      //     .set(fitnessData);
-
-      await SharedPreferencesHelper.setFitnessCompleted(true);
       Navigator.pushNamed(context, RouteName.fitnessGoalForm);
     } catch (e) {
       if (kDebugMode) {
