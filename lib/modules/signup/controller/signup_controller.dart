@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../../../routes/route_name.dart';
 
 class SignUpController with ChangeNotifier {
@@ -16,51 +18,89 @@ class SignUpController with ChangeNotifier {
     notifyListeners();
   }
 
-  signUp(BuildContext context, String email, String password) async {
+  Future<void> signUp(BuildContext context, String email, String password) async {
     setLoading(true);
     try {
       UserCredential userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
       var authCredential = userCredential.user;
-      print(authCredential!.uid);
-      if (authCredential.uid.isNotEmpty) {
-        setLoading(false);
-        Fluttertoast.showToast(msg: "Your Account Created Successfully");
+      final userAccountInfo = {
+        'id': authCredential!.uid,
+        'email': email,
+        'joiningDate': DateTime.now(),
+      };
+      print(authCredential.uid);
+      //Navigator.pushReplacementNamed(context, RouteName.profileForm);
+      await authCredential.sendEmailVerification();
+      await FirebaseFirestore.instance
+          .collection('UserDataCollection')
+          .doc(authCredential.uid)
+          .set(userAccountInfo , SetOptions(merge: true));
+      await FirebaseAuth.instance.signOut();
 
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          RouteName.profileForm,
-          (route) => false,
-        );
-      } else {
-        setLoading(false);
-        Fluttertoast.showToast(msg: "Something is wrong");
-        setLoading(false);
-      }
+      setLoading(false);
+      Fluttertoast.showToast(msg: "Account created successfully. Please check your email for verification.");
     } on FirebaseAuthException catch (e) {
+      setLoading(false);
       if (e.code == 'email-already-in-use') {
-        setLoading(false);
-        Fluttertoast.showToast(
-            msg: "The account already exists for that email.");
-        setLoading(false);
+        Fluttertoast.showToast(msg: "The account already exists for that email.");
       } else if (e.code == 'weak-password') {
-        setLoading(false);
         Fluttertoast.showToast(msg: "The password provided is too weak.");
       } else if (!emailRegex.hasMatch(email)) {
-        setLoading(false);
         Fluttertoast.showToast(msg: "Invalid email format");
       } else {
         Fluttertoast.showToast(msg: "An error occurred: ${e.message}");
       }
     } catch (e) {
       setLoading(false);
-      Fluttertoast.showToast(msg: "Some thing went wrong");
+      Fluttertoast.showToast(msg: "Something went wrong");
       if (kDebugMode) {
         print(e);
       }
+    }
+  }
+
+
+  Future<UserCredential?> signInWithGoogle(BuildContext context) async {
+    final user = FirebaseAuth.instance.currentUser;
+    try {
+
+      final GoogleSignInAccount? googleSignInAccount =
+      await GoogleSignIn().signIn();
+
+      if (googleSignInAccount != null) {
+        final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount.authentication;
+
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleSignInAuthentication.accessToken,
+          idToken: googleSignInAuthentication.idToken,
+        );
+
+        final userAccountInfo = {
+          'id': googleSignInAccount.id,
+          'email': googleSignInAccount.email,
+          'joiningDate': DateTime.now(),
+        };
+        await FirebaseFirestore.instance
+            .collection('UserDataCollection')
+            .doc(user!.uid)
+            .set(userAccountInfo , SetOptions(merge: true));
+        setLoading(false);
+        Fluttertoast.showToast(msg: "Your Account Created Successfully");
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          RouteName.profileForm,
+              (route) => false,
+        );
+        return await FirebaseAuth.instance.signInWithCredential(credential);
+      }
+    } catch (e) {
+      print("Error signing in with Google: $e");
+      return null;
     }
   }
 }

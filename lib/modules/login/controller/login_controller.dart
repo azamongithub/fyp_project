@@ -2,8 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../routes/route_name.dart';
+import '../../splash/firebase_service.dart';
 
 class LoginController with ChangeNotifier {
+  FirebaseService firebaseService = FirebaseService();
   FirebaseAuth auth = FirebaseAuth.instance;
   bool _loading = false;
   bool get loading => _loading;
@@ -23,18 +25,31 @@ class LoginController with ChangeNotifier {
         password: password,
       );
       var authCredential = userCredential.user;
-      //authCredential!.uid;
-      if (authCredential!.uid.isNotEmpty) {
+
+      if (authCredential!.emailVerified) {
+        firebaseService.checkFormsFilled(context, authCredential.uid);
         setLoading(false);
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          RouteName.bottomNavBar,
-          (route) => false,
-        );
+        //Navigator.pushReplacementNamed(context, RouteName.bottomNavBar);
       } else {
+        await authCredential.sendEmailVerification();
         setLoading(false);
-        Fluttertoast.showToast(msg: "Something is wrong");
+        Fluttertoast.showToast(
+          msg: "Please verify your email before logging in.",
+        );
+        // Log the user out
+        await FirebaseAuth.instance.signOut();
       }
+      // if (authCredential!.uid.isNotEmpty) {
+      //   setLoading(false);
+      //   Navigator.pushNamedAndRemoveUntil(
+      //     context,
+      //     RouteName.bottomNavBar,
+      //     (route) => false,
+      //   );
+      // } else {
+      //   setLoading(false);
+      //   Fluttertoast.showToast(msg: "Something is wrong");
+      // }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         setLoading(false);

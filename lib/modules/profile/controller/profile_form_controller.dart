@@ -63,19 +63,17 @@ class ProfileFormController extends ChangeNotifier {
       int age = calculateAge(selectedDate);
       String ageGroup = findAgeGroup();
       final profileData = {
-        'id': user!.uid,
         'name': nameController.text,
-        'age': age.toString(),
         'dateOfBirth': dateOfBirthController.text,
+        'age': age.toString(),
         'ageGroup': ageGroup,
         'gender': selectedGender,
-        'email': user.email,
       };
       isLoading = true;
       notifyListeners();
       await FirebaseFirestore.instance
           .collection('UserDataCollection')
-          .doc(user.uid)
+          .doc(user!.uid)
           .set(profileData, SetOptions(merge: true));
       Navigator.pushNamed(context, RouteName.fitnessAnalyzerForm);
     } finally {
@@ -83,6 +81,18 @@ class ProfileFormController extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  // Future<void> markFormAsFilledOut(String userEmail, String formId) async {
+  //   try {
+  //     var userDocRef = FirebaseFirestore.instance.collection('UserDataCollection').doc(userEmail);
+  //     await userDocRef.update({
+  //       'filledForms.$formId': true,
+  //     });
+  //   } catch (e) {
+  //     print("Error marking form as filled out: $e");
+  //   }
+  // }
+
 
   @override
   void dispose() {

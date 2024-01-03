@@ -42,14 +42,10 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen>
             Expanded(
               child: TabBarView(
                 controller: _tabController,
-                children: [
-                  const PersonalDetails(),
-                  const FitnessDetails(),
-                  //const HealthDetails(),
+                children: const [
+                  PersonalDetails(),
+                  FitnessDetails(),
                   HealthDetailsScreen(),
-
-
-
                 ],
               ),
             ),

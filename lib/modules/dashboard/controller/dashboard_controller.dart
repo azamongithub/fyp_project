@@ -29,7 +29,7 @@ class DashboardController extends ChangeNotifier {
 
     if (user != null) {
       final mealProgressRef =
-          FirebaseFirestore.instance.collection('MealProgress').doc(user.uid);
+          FirebaseFirestore.instance.collection('MealProgress').doc(user.email);
       try {
         DocumentSnapshot progressSnapshot = await mealProgressRef.get();
         if (progressSnapshot.exists) {
@@ -70,7 +70,7 @@ class DashboardController extends ChangeNotifier {
     if (user != null) {
       final workoutProgressRef = FirebaseFirestore.instance
           .collection('WorkoutProgress')
-          .doc(user.uid);
+          .doc(user.email);
       try {
         DocumentSnapshot progressSnapshot = await workoutProgressRef.get();
         if (progressSnapshot.exists) {
@@ -103,4 +103,57 @@ class DashboardController extends ChangeNotifier {
     }
     return 0.0;
   }
+
+  Future<void> reNewProgressIfMonday() async {
+    final user = FirebaseAuth.instance.currentUser;
+    DateTime now = DateTime.now();
+
+    // Get the last execution date from Firestore
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('execution_dates').doc(user!.email).get();
+    if (snapshot.exists) {
+      DateTime lastExecutionDate = (snapshot.data() as Map)['date'].toDate();
+      Duration difference = now.difference(lastExecutionDate);
+      if (difference.inDays >= 7) {
+        await FirebaseFirestore.instance.collection('MealProgress').doc(user.email).delete();
+        await FirebaseFirestore.instance.collection('WorkoutProgress').doc(user.email).delete();
+        await FirebaseFirestore.instance.collection('execution_dates').doc(user.email).set({
+          'date': now,
+        });
+        if (kDebugMode) {
+          print('Document with ID 123 deleted because 7 days have passed since the last execution.');
+        }
+      } else {
+        if (kDebugMode) {
+          print('It has not been 7 days since the last execution. No action taken.');
+        }
+      }
+      fetchWeeklyProgress();
+    } else {
+      // If the document doesn't exist, create it with the current date
+      await FirebaseFirestore.instance.collection('execution_dates').doc(user.email).set({
+        'date': now,
+      });
+      if (kDebugMode) {
+        print('First time execution. Document with ID 123 not deleted.');
+      }
+    }
+  }
+
+
+// Future<void> reNewProgressIfMonday() async {
+  //   final user = FirebaseAuth.instance.currentUser;
+  //   DateTime now = DateTime.now();
+  //   int currentDay = now.weekday;
+  //   if (currentDay == DateTime.wednesday) {
+  //     await FirebaseFirestore.instance.collection('MealProgress').doc(user!.email).delete();
+  //     await FirebaseFirestore.instance.collection('WorkoutProgress').doc(user!.email).delete();
+  //     if (kDebugMode) {
+  //       print('Progress deleted on Monday.');
+  //     }
+  //   } else {
+  //     if (kDebugMode) {
+  //       print('Today is not Monday, no action taken.');
+  //     }
+  //   }
+  // }
 }

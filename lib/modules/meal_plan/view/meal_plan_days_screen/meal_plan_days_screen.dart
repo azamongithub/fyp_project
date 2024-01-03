@@ -64,7 +64,6 @@ class MealPlanDaysScreen extends StatelessWidget {
               for (var dayEntry in orderedDays)
                 daysCard(
                   day: dayEntry.key,
-                  calories: mealPlans.first.totalCalories.toString(),
                   name: mealPlans.first.name.toString(),
                   onPressed: () {
                     Navigator.pushNamed(
@@ -98,11 +97,7 @@ Widget daysCard({
         child: ListTile(
           title: Text(
             day,
-            style: CustomTextStyle.titleStyle20(),
-          ),
-          subtitle: Text(
-            name!,
-            style: CustomTextStyle.subTitleStyle14(),
+            style: CustomTextStyle.textStyle24(),
           ),
           trailing: Icon(
             Icons.arrow_forward,
@@ -130,7 +125,7 @@ Future<List<MealPlanModel>> fetchMealPlansByCalories(String name) async {
     if (mealPlans.isNotEmpty) {
       return [mealPlans.first];
     } else {
-      return Future.error('No data found for meal plan: $name');
+      return Future.error('No meal plan found');
     }
   } catch (e) {
     if (kDebugMode) {
@@ -145,34 +140,3 @@ Future<List<MealPlanModel>> fetchMealPlansByCalories(String name) async {
   //   return [];
   // }
 }
-
-// Future<List<MealPlanModel>> fetchMealPlansByCalories(
-//     String name, int totalCalories) async {
-//   try {
-//     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-//         .collection('meal_plans')
-//         .where('name', isEqualTo: name)
-//         .where('totalCalories', isEqualTo: totalCalories)
-//         .get();
-//
-//     List<MealPlanModel> mealPlans = querySnapshot.docs.map((doc) {
-//       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-//       return MealPlanModel.fromJson(doc.id, data);
-//     }).toList();
-//     print("meal plan is: ${mealPlans.first}");
-// //    return [mealPlans.first];
-//
-//     if (mealPlans.isNotEmpty) {
-//       mealPlans
-//           .sort((a, b) => (a.totalCalories - totalCalories).abs().compareTo(
-//                 (b.totalCalories - totalCalories).abs(),
-//               ));
-//       return [mealPlans.first];
-//     } else {
-//       return [];
-//     }
-//   } catch (e) {
-//     print('Error fetching meal plans: $e');
-//     return [];
-//   }
-// }

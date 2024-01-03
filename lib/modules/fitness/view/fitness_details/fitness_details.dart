@@ -27,14 +27,14 @@ class FitnessDetails extends StatelessWidget {
 
     return StreamBuilder<DocumentSnapshot>(
       stream: userFitnessStream,
-      builder: (ctx, snapshot) {
+      builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
         }
         final userData = snapshot.data!.data() as Map<String, dynamic>?;
-        if (userData!['weight'] == null) {
+        if (userData == null) {
           return Scaffold(
             body: Container(
               padding: EdgeInsets.all(40.sp),
@@ -70,33 +70,32 @@ class FitnessDetails extends StatelessWidget {
                       padding:
                           EdgeInsets.symmetric(vertical: 14.h, horizontal: 5.w),
                       child: Column(
-                        //crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           CustomListTile(
                             title: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text('Height'),
-                                SizedBox(height: 1.w),
+                                Text('Height',
+                                    style: CustomTextStyle.textStyle18()),
                                 Text('Editable',
                                     style: CustomTextStyle.textStyle10(
                                         color: AppColors.themeColor,
                                         underline: true)),
                               ],
                             ),
-                            trailing: Text('${userData!['heightInFeet']} ft',
-                                style: CustomTextStyle.textStyle11()),
+                            trailing: Text('${userData['heightInFeet']} ft',
+                                style: CustomTextStyle.textStyle14()),
                             iconData: FontAwesomeIcons.rulerVertical,
                             onTap: () async {
                               Utils.showLoadingSnackBar(context, 'Loading...');
                               await Future.delayed(
-                                  const Duration(milliseconds: 500));
-
+                                  const Duration(milliseconds: 400));
                               Navigator.push(
                                   context,
                                   CupertinoPageRoute(
-                                      builder: (context) => FitnessAnalyzerForm(
+                                      builder: (context) =>
+                                          const FitnessAnalyzerForm(
                                             isEdit: true,
                                           )));
                             },
@@ -106,8 +105,8 @@ class FitnessDetails extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text('Weight'),
-                                SizedBox(height: 1.w),
+                                Text('Weight',
+                                    style: CustomTextStyle.textStyle18()),
                                 Text('Editable',
                                     style: CustomTextStyle.textStyle10(
                                         color: AppColors.themeColor,
@@ -115,16 +114,17 @@ class FitnessDetails extends StatelessWidget {
                               ],
                             ),
                             trailing: Text('${userData['weight']} kg',
-                                style: CustomTextStyle.textStyle11()),
+                                style: CustomTextStyle.textStyle14()),
                             iconData: FontAwesomeIcons.gaugeHigh,
                             onTap: () async {
                               Utils.showLoadingSnackBar(context, 'Loading...');
                               await Future.delayed(
-                                  const Duration(milliseconds: 500));
+                                  const Duration(milliseconds: 400));
                               Navigator.push(
                                   context,
                                   CupertinoPageRoute(
-                                      builder: (context) => FitnessAnalyzerForm(
+                                      builder: (context) =>
+                                          const FitnessAnalyzerForm(
                                             isEdit: true,
                                           )));
                             },
@@ -134,7 +134,8 @@ class FitnessDetails extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text('Fitness Goal'),
+                                Text('Fitness Goal',
+                                    style: CustomTextStyle.textStyle18()),
                                 Text('Editable',
                                     style: CustomTextStyle.textStyle10(
                                         color: AppColors.themeColor,
@@ -142,26 +143,27 @@ class FitnessDetails extends StatelessWidget {
                               ],
                             ),
                             trailing: Text(
-                                userData!['fitnessGoal'] ?? 'Not Selected',
-                                style: CustomTextStyle.textStyle11()),
+                                userData['fitnessGoal'] ?? 'Not Selected',
+                                style: CustomTextStyle.textStyle14()),
                             iconData: FontAwesomeIcons.manatSign,
                             onTap: () async {
                               Utils.showLoadingSnackBar(context, 'Loading...');
                               await Future.delayed(
-                                  const Duration(milliseconds: 500));
+                                  const Duration(milliseconds: 400));
                               Navigator.push(
                                   context,
                                   CupertinoPageRoute(
-                                      builder: (context) => FitnessGoalForm(
+                                      builder: (context) =>
+                                          const FitnessGoalForm(
                                             isEdit: true,
                                           )));
                             },
                           ),
                           CustomListTile(
-                            title: const Text('BMI'),
-                            trailing: Text(
-                                userData?['bmi'].toString() ?? 'Not Calculated',
-                                style: CustomTextStyle.textStyle11()),
+                            title: Text('BMI',
+                                style: CustomTextStyle.textStyle18()),
+                            trailing: Text(userData['bmi'].toString(),
+                                style: CustomTextStyle.textStyle14()),
                             iconData: FontAwesomeIcons.calculator,
                             onTap: () {
                               Utils.positiveToastMessage(
@@ -169,21 +171,16 @@ class FitnessDetails extends StatelessWidget {
                             },
                           ),
                           CustomListTile(
-                            title: const Text('Fitness Level'),
+                            title: Text('Fitness Level',
+                                style: CustomTextStyle.textStyle18()),
                             trailing: Text(
-                                userData!['fitnessLevel'] ?? 'Not Calculated',
-                                style: CustomTextStyle.textStyle11()),
+                                userData['fitnessLevel'] ?? 'Not Calculated',
+                                style: CustomTextStyle.textStyle14()),
                             iconData: FontAwesomeIcons.chartLine,
                             onTap: () {
                               Utils.positiveToastMessage(
                                   'You can change your weight or height to update the Fitness Level');
                             },
-                          ),
-                          CustomListTile(
-                            title: const Text('Required Calories'),
-                            trailing: Text(userData!['calories'].toString(),
-                                style: CustomTextStyle.textStyle11()),
-                            iconData: FontAwesomeIcons.rulerVertical,
                           ),
                         ],
                       ),

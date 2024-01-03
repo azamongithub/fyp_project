@@ -1,6 +1,9 @@
+import 'package:CoachBot/common_components/custom_list_tile.dart';
 import 'package:CoachBot/constants/app_string_constants.dart';
+import 'package:CoachBot/theme/color_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../../../routes/route_name.dart';
 import '../../../theme/text_style_util.dart';
@@ -20,6 +23,7 @@ class _PlansTabState extends State<PlansTab> {
     MyPlansController myPlansController =
         Provider.of<MyPlansController>(context, listen: false);
     myPlansController.fetchAllData();
+    myPlansController.fetchAndPassUserDetails();
   }
 
   @override
@@ -27,32 +31,46 @@ class _PlansTabState extends State<PlansTab> {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppStrings.myPlans, style: CustomTextStyle.appBarStyle()),
-        backgroundColor: const Color(0xff3140b0),
+        backgroundColor: AppColors.themeColor,
         automaticallyImplyLeading: false,
       ),
       body: Consumer<MyPlansController>(builder: (context, provider, _) {
         return provider.isLoading
             ? const Center(child: CircularProgressIndicator())
-            : Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const Text(
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding:
+                        EdgeInsets.only(top: 16.h, left: 12.w, right: 12.w),
+                    child: Text(
                       AppStrings.customizedPlans,
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: CustomTextStyle.textStyle24(
+                          fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 20),
-                    Expanded(
+                  ),
+                  const SizedBox(height: 20),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5.w),
                       child: ListView(
                         children: [
-                          myPlansCard(
-                            title: AppStrings.workoutPlan,
-                            description: AppStrings.checkWorkoutPlan,
-                            onPressed: () async {
+                          CustomListTile(
+                            title: Text('Calories required per day',
+                                style: CustomTextStyle.textStyle18()),
+                            trailing: Text(
+                                provider.retrievedCalories.toStringAsFixed(0),
+                                style: CustomTextStyle.textStyle14()),
+                            iconData: Icons.countertops_outlined,
+                          ),
+                          CustomListTile(
+                            title: Text(AppStrings.workoutPlan,
+                                style: CustomTextStyle.textStyle18()),
+                            subTitle: Text(provider.workoutPlan,
+                                style: CustomTextStyle.textStyle14()),
+                            trailing: const Icon(Icons.arrow_forward),
+                            iconData: Icons.fitness_center,
+                            onTap: () async {
                               if (kDebugMode) {
                                 print(
                                     'Workout Plan is: ${provider.workoutPlan}');
@@ -66,10 +84,17 @@ class _PlansTabState extends State<PlansTab> {
                               );
                             },
                           ),
-                          myPlansCard(
-                            title: AppStrings.mealPlan,
-                            description: AppStrings.checkMealPlan,
-                            onPressed: () async {
+
+                          CustomListTile(
+                            title: Text(
+                              AppStrings.mealPlan,
+                              style: CustomTextStyle.textStyle18(),
+                            ),
+                            subTitle: Text(provider.mealPlan,
+                                style: CustomTextStyle.textStyle14()),
+                            trailing: const Icon(Icons.arrow_forward),
+                            iconData: Icons.restaurant,
+                            onTap: () async {
                               if (kDebugMode) {
                                 print('Meal Plan is: ${provider.mealPlan}');
                               }
@@ -86,8 +111,8 @@ class _PlansTabState extends State<PlansTab> {
                         ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               );
       }),
     );
@@ -97,11 +122,13 @@ class _PlansTabState extends State<PlansTab> {
 Widget myPlansCard({
   required String title,
   required String description,
-  required VoidCallback onPressed,
+  VoidCallback? onPressed,
 }) {
   return Card(
+    elevation: 2,
     child: ListTile(
-      title: Text(title),
+      title: Text(title,
+          style: CustomTextStyle.textStyle18(fontWeight: FontWeight.w500)),
       subtitle: Text(description),
       trailing: const Icon(Icons.arrow_forward),
       onTap: onPressed,

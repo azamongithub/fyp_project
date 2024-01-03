@@ -2,7 +2,6 @@ import 'package:CoachBot/modules/health_status/components/none_other_disease.dar
 import 'package:CoachBot/theme/text_style_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../routes/route_name.dart';
@@ -36,7 +35,7 @@ class HealthDetailsScreen extends StatelessWidget {
                   );
                 }
                 final userData = snapshot.data!.data();
-                if (userData!['disease'] == null) {
+                if (userData == null) {
                   return Scaffold(
                     resizeToAvoidBottomInset: false,
                     body: Container(
@@ -74,24 +73,6 @@ class HealthDetailsScreen extends StatelessWidget {
               },
             ),
           ),
-
-          // Padding(
-          //   padding: EdgeInsets.only(top: 5.h, bottom: 20.h),
-          //   child: Center(
-          //     child: CustomButton(
-          //         title: 'Update Your Disease',
-          //         height: 40.h,
-          //         width: 1.sw,
-          //         onTap: () {
-          //           Navigator.push(
-          //               context,
-          //               CupertinoPageRoute(
-          //                   builder: (context) => const HealthStatusForm(
-          //                     isEdit: true,
-          //                   )));
-          //         }),
-          //   ),
-          // ),
         ],
       ),
     );

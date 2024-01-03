@@ -23,9 +23,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
-    DashboardController controller = Provider.of<DashboardController>(
-        context, listen: false);
-    controller.fetchWeeklyProgress();
+    DashboardController controller =
+        Provider.of<DashboardController>(context, listen: false);
+    controller.reNewProgressIfMonday();
+    //controller.fetchWeeklyProgress();
     notificationServices.requestNotificationPermission();
     notificationServices.getDeviceToken().then((value) async {
       notificationServices.firebaseInit(context);
@@ -56,32 +57,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(height: 20.h),
               Card(
+                elevation: 2,
                 child: Padding(
-                  padding: EdgeInsets.all(16.sp),
+                  padding: EdgeInsets.all(12.sp),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Weekly Meal Progress',
-                        style: TextStyle(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        AppStrings.weeklyMealProgress,
+                        style: CustomTextStyle.textStyle16(fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 10.h),
-                      const Text('Progress towards your fitness goals'),
+                      const Text(AppStrings.progressSubtitle),
                       SizedBox(height: 10.h),
                       Consumer<DashboardController>(
-                        builder: (context, dashboardController, child){
-                          //dashboardController.fetchWeeklyProgress();
+                        builder: (context, dashboardController, child) {
                           return Column(
                             children: [
-                              Text( dashboardController.mealProgress == 100 ?
-                                  'Congrats, you have completed your weekly meal plan' :
-                                '${dashboardController.mealProgress.toStringAsFixed(2)}% Completed',
-                                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+                              Text(
+                                dashboardController.mealProgress == 100
+                                    ? AppStrings.mealProgressCompleted
+                                    : '${dashboardController.mealProgress.toStringAsFixed(2)}% Completed',
+                                  style: CustomTextStyle.textStyle16(fontWeight: FontWeight.bold),
                               ),
                             ],
                           );
@@ -93,30 +91,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               SizedBox(height: 20.h),
               Card(
+                elevation: 2,
                 child: Padding(
                   padding: EdgeInsets.all(16.sp),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Weekly Workout Progress',
-                        style: TextStyle(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        AppStrings.weeklyWorkoutProgress,
+                        style: CustomTextStyle.textStyle16(fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 10.h),
-                      const Text('Progress towards your fitness goals'),
+                      const Text(AppStrings.progressSubtitle),
                       SizedBox(height: 10.h),
                       Consumer<DashboardController>(
-                        builder: (context, dashboardController, child){
-                         // dashboardController.fetchWeeklyProgress();
+                        builder: (context, dashboardController, child) {
                           return Column(
                             children: [
-                              Text( dashboardController.workoutProgress == 100 ?
-                              'Congrats, you have completed your weekly workout plan' :
-                              '${dashboardController.workoutProgress.toStringAsFixed(2)}% Completed',
-                                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+                              Text(
+                                dashboardController.workoutProgress == 100
+                                    ? AppStrings.workoutProgressCompleted
+                                    : '${dashboardController.workoutProgress.toStringAsFixed(2)}% Completed',
+                                style: CustomTextStyle.textStyle16(fontWeight: FontWeight.bold),
                               ),
                             ],
                           );
@@ -128,27 +124,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               SizedBox(height: 20.h),
               Card(
+                elevation: 2,
                 child: Padding(
-                  padding: EdgeInsets.all(16.sp),
+                  padding: EdgeInsets.all(12.sp),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         AppStrings.recommendedWorkouts,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: CustomTextStyle.textStyle16(fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 10.h),
-                      const Text('Discover workouts tailored to your goals'),
+                      const Text(AppStrings.recommendedWorkoutsSubtitle),
                       SizedBox(height: 10.h),
                       ElevatedButton(
                         onPressed: () {
                           Navigator.pushNamed(
                               context, RouteName.findWorkoutsScreen);
                         },
-                        child: const Text('View Workouts'),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(AppColors.themeColor),
+                        ),
+                        child: const Text(AppStrings.findWorkouts, style: TextStyle(color: AppColors.whiteColor)),
                       ),
                     ],
                   ),
@@ -156,27 +153,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               SizedBox(height: 20.h),
               Card(
+                elevation: 2,
                 child: Padding(
-                  padding: EdgeInsets.all(16.sp),
+                  padding: EdgeInsets.all(12.sp),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Nutrition',
-                        style: TextStyle(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        AppStrings.nutrition,
+                        style: CustomTextStyle.textStyle16(fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 10.h),
-                      const Text('Find nutrition facts of any Item'),
+                      const Text(AppStrings.nutritionSubtitle),
                       SizedBox(height: 10.h),
                       ElevatedButton(
                         onPressed: () {
                           Navigator.pushNamed(
                               context, RouteName.findNutritionFactsScreen);
                         },
-                        child: const Text('Nutrition Facts'),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(AppColors.themeColor),
+                        ),
+                        child: const Text(AppStrings.findNutrition, style: TextStyle(color: AppColors.whiteColor)),
                       ),
                     ],
                   ),

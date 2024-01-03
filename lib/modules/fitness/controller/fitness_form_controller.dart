@@ -36,13 +36,11 @@ class FitnessFormController extends ChangeNotifier {
             .collection('UserDataCollection')
             .doc(user!.uid)
             .get();
-
         if (snapshot.exists) {
           Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-          weightController.text =
-              data['weight'] == null ? '' : data['weight'].toString();
-          selectedFeet = data['feet'] ?? '';
-          selectedInch = data['inch'] ?? '';
+          weightController.text = data['weight'] == null ? '' : data['weight'].toString();
+          selectedFeet = data['feet'] ?? 0;
+          selectedInch = data['inch'] ?? 0;
           notifyListeners();
         } else {
           print('Fitness data not found');

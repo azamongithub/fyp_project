@@ -110,7 +110,7 @@ class CustomTextStyle {
     double? fontSize,
   }) {
     return TextStyle(
-      color: AppColors.titleColor,
+      color: color,
       fontSize: 14.sp,
       fontWeight: fontWeight,
     );

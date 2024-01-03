@@ -49,7 +49,7 @@ class NoneOtherDisease extends StatelessWidget {
                     children: [
                       Text(
                         disease.name,
-                        style: CustomTextStyle.textStyle24(
+                        style: CustomTextStyle.textStyle22(
                             fontWeight: FontWeight.w600),
                       ),
                       GestureDetector(
@@ -71,39 +71,39 @@ class NoneOtherDisease extends StatelessWidget {
                   ),
                   Text(
                     '${disease.data['description']}',
-                    style: CustomTextStyle.textStyle22(
+                    style: CustomTextStyle.textStyle20(
                         fontWeight: FontWeight.w600),
                   ),
                   Text(
                     '${disease.data['introduction']}',
-                    style: CustomTextStyle.textStyle18(),
+                    style: CustomTextStyle.textStyle16(),
                   ),
                   Text(
                     'Suggestions',
-                    style: CustomTextStyle.textStyle22(
+                    style: CustomTextStyle.textStyle20(
                         fontWeight: FontWeight.w600),
                   ),
                   ...List<Widget>.generate(
                     (disease.data['suggestions'] as List).length,
                     (index) => Text(
                       '> ${disease.data['suggestions'][index]}',
-                      style: CustomTextStyle.textStyle18(),
+                      style: CustomTextStyle.textStyle16(),
                     ),
                   ),
                   Text(
                     'Conclusion',
-                    style: CustomTextStyle.textStyle22(
+                    style: CustomTextStyle.textStyle20(
                         fontWeight: FontWeight.w600),
                   ),
                   Text(
                     '${disease.data['conclusion']}',
-                    style: CustomTextStyle.textStyle18(),
+                    style: CustomTextStyle.textStyle16(),
                   ),
                   diseaseId == 'other'
                       ? Padding(
-                    padding: EdgeInsets.symmetric(vertical: 15.h),
-                        child: Column(
-                            children: [                            
+                          padding: EdgeInsets.symmetric(vertical: 15.h),
+                          child: Column(
+                            children: [
                               GestureDetector(
                                 onTap: () {
                                   Navigator.push(
@@ -114,12 +114,13 @@ class NoneOtherDisease extends StatelessWidget {
                                 },
                                 child: Text('Contact our doctor',
                                     style: CustomTextStyle.customTextStyle(
-                                      color: AppColors.themeColor,
-                                        fontSize: 20.sp, underline: true)),
+                                        color: AppColors.themeColor,
+                                        fontSize: 18.sp,
+                                        underline: true)),
                               ),
                             ],
                           ),
-                      )
+                        )
                       : const SizedBox(),
                 ],
               ),

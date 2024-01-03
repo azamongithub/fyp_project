@@ -1,5 +1,7 @@
 import 'package:CoachBot/constants/app_string_constants.dart';
 import 'package:CoachBot/theme/color_util.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -117,6 +119,21 @@ class _SignupFormState extends State<SignupForm> {
                                       passwordController.text);
                                 }
                               },
+                            ),
+                            ElevatedButton(
+                              onPressed: () async {
+                                UserCredential? userCredential = await provider.signInWithGoogle(context);
+                                if (userCredential != null) {
+                                  if (kDebugMode) {
+                                    print("User signed in: ${userCredential.user?.displayName}");
+                                  }
+                                } else {
+                                  if (kDebugMode) {
+                                    print("Google Sign-In failed");
+                                  }
+                                }
+                              },
+                              child: const Text("Sign in with Google"),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,

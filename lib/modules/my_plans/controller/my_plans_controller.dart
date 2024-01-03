@@ -76,9 +76,9 @@ class MyPlansController extends ChangeNotifier {
       DocumentSnapshot userSnapshot =
           await userFitnessCollection.doc(user!.uid).get();
 
-      retrievedCalories = userSnapshot['calories'];
-      mealPlan = userSnapshot['meal_plan'];
-      workoutPlan = userSnapshot['workout_plan'];
+      retrievedCalories = userSnapshot['calories'] ?? 'Not Found';
+      mealPlan = userSnapshot['meal_plan'] ?? 'Not Found';
+      workoutPlan = userSnapshot['workout_plan'] ?? 'Not Found';
 
       if (kDebugMode) {
         print('Fetched Calories: $retrievedCalories');
@@ -87,8 +87,11 @@ class MyPlansController extends ChangeNotifier {
       }
       notifyListeners();
     } catch (e) {
+      retrievedCalories = 0.0;
+      mealPlan = 'Not Found';
+      workoutPlan = 'Not Found';
       if (kDebugMode) {
-        print('Error fetching calories: $e');
+        print('Error fetching all plans data: $e');
       }
     }
   }

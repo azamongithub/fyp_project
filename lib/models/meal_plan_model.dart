@@ -1,6 +1,6 @@
 class MealPlanModel {
   String id;
-  String name;
+  String? name;
   String? disease;
   String description;
   int? totalCalories;
@@ -8,7 +8,7 @@ class MealPlanModel {
 
   MealPlanModel({
     required this.id,
-    required this.name,
+    this.name,
     this.disease,
     required this.description,
     this.totalCalories,

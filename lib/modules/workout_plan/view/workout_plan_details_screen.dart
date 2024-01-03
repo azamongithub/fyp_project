@@ -1,14 +1,12 @@
 import 'package:CoachBot/theme/color_util.dart';
-import 'package:CoachBot/utils/utils.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../common_components/custom_button.dart';
 import '../../../models/workout_plan_model.dart';
 import '../../../theme/text_style_util.dart';
+import '../services/workout_plan_services.dart';
 
-class WorkoutPlanDetailsScreen extends StatefulWidget {
+class WorkoutPlanDetailsScreen extends StatelessWidget {
   final String day;
   final WorkoutDay dayDetails;
 
@@ -17,104 +15,6 @@ class WorkoutPlanDetailsScreen extends StatefulWidget {
     required this.day,
     required this.dayDetails,
   });
-
-  @override
-  State<WorkoutPlanDetailsScreen> createState() =>
-      _WorkoutPlanDetailsScreenState();
-}
-
-class _WorkoutPlanDetailsScreenState extends State<WorkoutPlanDetailsScreen> {
-  bool isButtonDisabled = false;
-
-  @override
-  void initState() {
-    super.initState();
-    initializeButtonState();
-  }
-
-  Future<void> initializeButtonState() async {
-    final user = FirebaseAuth.instance.currentUser;
-
-    if (user != null) {
-      final workoutProgressRef = FirebaseFirestore.instance
-          .collection('WorkoutProgress')
-          .doc(user.uid);
-      try {
-        DocumentSnapshot progressSnapshot = await workoutProgressRef.get();
-        if (progressSnapshot.exists) {
-          String day = widget.day;
-          DateTime? lastTappedDate = progressSnapshot[day] != null
-              ? (progressSnapshot[day] as Timestamp).toDate()
-              : null;
-
-          // If lastTappedDate is null or more than 7 days old, enable the button
-          setState(() {
-            isButtonDisabled = lastTappedDate == null ||
-                DateTime.now().difference(lastTappedDate) >=
-                    const Duration(seconds: 5);
-          });
-        }
-      } catch (e) {
-        if (kDebugMode) {
-          print('Error initializing button state: $e');
-        }
-      }
-    }
-  }
-
-  Future<void> addProgress(String day) async {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null && !isButtonDisabled) {
-      final workoutProgressRef = FirebaseFirestore.instance
-          .collection('WorkoutProgress')
-          .doc(user.uid);
-      try {
-        DocumentSnapshot progressSnapshot = await workoutProgressRef.get();
-        Map<String, dynamic>? dayData = progressSnapshot.exists
-            ? progressSnapshot.data() as Map<String, dynamic>?
-            : null;
-        int currentProgress = progressSnapshot.exists
-            ? progressSnapshot['totalProgress'] ?? 0
-            : 0;
-        if (dayData == null || !dayData.containsKey(day)) {
-          // Create the day field dynamically
-          dayData ??= {};
-          dayData[day] = FieldValue.serverTimestamp();
-          await workoutProgressRef.set({
-            'totalProgress': currentProgress + 1,
-            ...dayData,
-          });
-          Utils.positiveToastMessage('Progress for $day has added.');
-          if (kDebugMode) {
-            print('Progress for $day added.');
-          }
-        } else {
-          Utils.positiveToastMessage('Progress for $day has already added.');
-          if (kDebugMode) {
-            print('Progress for $day already added.');
-          }
-        }
-        setState(() {
-          isButtonDisabled = true;
-        });
-
-        //Re-enable the button after a delay (adjust as needed)
-        Future.delayed(const Duration(seconds: 1), () async {
-          setState(() {
-            isButtonDisabled = false;
-          });
-          // Print statement to check if the button is being re-enabled
-          if (kDebugMode) {
-            print('Button re-enabled after delay.');
-          }
-        });
-      } catch (e) {
-        if (kDebugMode) {
-          print('Error updating progress: $e');
-        }
-      }
-    }
-  }
 
   List<Widget> buildExerciseWidgets(List<Exercise> exercises) {
     List<Widget> exerciseWidgets = [];
@@ -164,7 +64,7 @@ class _WorkoutPlanDetailsScreenState extends State<WorkoutPlanDetailsScreen> {
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         title: Text(
-          widget.day,
+          day,
           style: CustomTextStyle.appBarStyle(),
         ),
         backgroundColor: AppColors.themeColor,
@@ -182,23 +82,39 @@ class _WorkoutPlanDetailsScreenState extends State<WorkoutPlanDetailsScreen> {
                     style: TextStyle(fontSize: 24),
                   ),
                   SizedBox(height: 20.h),
-                  ...buildExerciseWidgets(widget.dayDetails.exercises),
+                  ...buildExerciseWidgets(dayDetails.exercises),
                   SizedBox(height: 20.h),
                 ],
               ),
             ),
           ),
         ),
-        Container(
-          padding: EdgeInsets.only(bottom: 50.h),
+        Padding(
+          padding: EdgeInsets.only(bottom: 20.h),
           child: Center(
-            child: ElevatedButton(
-              onPressed:
-                  isButtonDisabled ? null : () => addProgress(widget.day),
-              child: const Text('Mark as Done'),
-            ),
-          ),
+              child: CustomButton(
+                title: 'Mark as Done',
+                height: 50.h,
+                width: 240.w,
+                onTap: () {
+                  WorkoutPlanServices.addProgress(day);
+                },
+              )),
         ),
+        // Container(
+        //   padding: EdgeInsets.only(bottom: 50.h),
+        //   child: Center(
+        //     child: ElevatedButton(
+        //
+        //       // onPressed:
+        //       //     isButtonDisabled ? null : () => addProgress(widget.day),
+        //       onPressed: () {
+        //         addProgress(widget.day);
+        //       },
+        //       child: const Text('Mark as Done'),
+        //     ),
+        //   ),
+        // ),
       ]),
     );
   }

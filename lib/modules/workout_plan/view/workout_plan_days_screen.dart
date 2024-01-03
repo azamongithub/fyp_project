@@ -107,11 +107,7 @@ Widget workoutDaysCard({
         child: ListTile(
           title: Text(
             day,
-            style: CustomTextStyle.titleStyle20(),
-          ),
-          subtitle: Text(
-            name!,
-            style: CustomTextStyle.subTitleStyle14(),
+            style: CustomTextStyle.textStyle24(),
           ),
           trailing: Icon(
             Icons.arrow_forward,
@@ -139,7 +135,7 @@ Future<WorkoutPlanModel> fetchWorkoutPlan(String name) async {
     if (workoutPlans.isNotEmpty) {
       return workoutPlans.first;
     } else {
-      return Future.error('No data found for workout plan: $name');
+      return Future.error('No workout plan found');
     }
   } catch (e) {
     if (kDebugMode) {

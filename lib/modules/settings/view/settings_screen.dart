@@ -1,10 +1,13 @@
 import 'package:CoachBot/constants/app_string_constants.dart';
+import 'package:CoachBot/theme/color_util.dart';
 import 'package:CoachBot/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../../../add_diseases/view/add_disease_screen.dart';
 import '../../../common_components/custom_list_tile.dart';
 import '../../../routes/route_name.dart';
@@ -20,88 +23,68 @@ class SettingsTab extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppStrings.settings, style: CustomTextStyle.appBarStyle()),
-        backgroundColor: const Color(0xff3140b0),
+        backgroundColor: AppColors.themeColor,
         automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 5.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomListTile(
-                title: const Text("Profile"),
+                title: Text("Profile", style: CustomTextStyle.textStyle18()),
                 iconData: FontAwesomeIcons.user,
                 onTap: () {
                   Navigator.pushNamed(context, RouteName.profileDetailsScreen);
                 },
               ),
               CustomListTile(
-                title: const Text('Change Password'),
+                title: Text('Change Password', style: CustomTextStyle.textStyle18()),
                 iconData: Icons.lock_outline,
                 onTap: () {
                   Navigator.pushNamed(context, RouteName.changePasswordScreen);
                 },
               ),
               CustomListTile(
-                title: const Text('Send Feedback'),
+                title: Text('Send Feedback', style: CustomTextStyle.textStyle18()),
                 iconData: Icons.feedback_outlined,
                 onTap: () {
                   Navigator.pushNamed(context, RouteName.sendFeedbackScreen);
                 },
               ),
               CustomListTile(
-                title: const Text('Terms & Conditions'),
+                title: Text('Terms & Conditions', style: CustomTextStyle.textStyle18()),
                 iconData: FontAwesomeIcons.file,
                 onTap: () {},
               ),
               CustomListTile(
-                title: const Text('Privacy Policy'),
+                title: Text('Privacy Policy', style: CustomTextStyle.textStyle18()),
                 iconData: FontAwesomeIcons.shieldHalved,
                 onTap: () {},
               ),
-              ListTile(
-                leading: const Icon(FontAwesomeIcons.rightFromBracket),
-                title: const Text('Logout'),
+              CustomListTile(
+                title: Text('Logout', style: CustomTextStyle.textStyle18()),
+                iconData: FontAwesomeIcons.rightFromBracket,
                 onTap: () async {
                   await FirebaseAuth.instance.signOut();
+                  await GoogleSignIn().disconnect();
                   await FirebaseFirestore.instance.terminate();
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    CupertinoPageRoute(builder: (context) => const LoginForm()),
-                    (route) => false,
-                  );
+                  Navigator.pushReplacementNamed(context, RouteName.loginForm);
+                  // Navigator.pushAndRemoveUntil(
+                  //   context,
+                  //   CupertinoPageRoute(builder: (context) => const LoginForm()),
+                  //   (route) => false,
+                  // );
                   Utils.showLoadingSnackBar(context, 'Logging out....');
                 },
               ),
-
-              ListTile(
-                leading: const Icon(FontAwesomeIcons.plus),
-                title: const Text('Add Disease'),
-                onTap: () {
-                  Navigator.push(context,
-                      CupertinoPageRoute(builder: (context) => DiseaseForm()));
-                },
-              ),
-              ListTile(
-                leading: const Icon(FontAwesomeIcons.plus),
-                title: const Text('Health Details'),
-                onTap: () {
-                  Navigator.push(context,
-                      CupertinoPageRoute(builder: (context) => HealthDetailsScreen()));
-                },
-              ),
               // ListTile(
-              //   shape: RoundedRectangleBorder(
-              //     borderRadius: BorderRadius.circular(20),
-              //   ),
-              //   tileColor: _isTapped ? Colors.red : null,
-              //   textColor: _isTapped ? Colors.white : null,
-              //   iconColor: _isTapped ? Colors.white : null,
-              //   leading: const Icon(FontAwesomeIcons.trashAlt),
-              //   title: const Text('Delete Account'),
+              //   leading: const Icon(FontAwesomeIcons.plus),
+              //   title: const Text('Add Disease'),
               //   onTap: () {
-              //     // Action when Delete Account is tapped
+              //     Navigator.push(context,
+              //         CupertinoPageRoute(builder: (context) => DiseaseForm()));
               //   },
               // ),
             ],

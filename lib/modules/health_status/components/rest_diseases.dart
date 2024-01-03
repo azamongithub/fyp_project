@@ -44,7 +44,7 @@ class RestDiseases extends StatelessWidget {
                     children: [
                       Text(
                         disease.name,
-                        style: CustomTextStyle.textStyle24(
+                        style: CustomTextStyle.textStyle22(
                             fontWeight: FontWeight.w600),
                       ),
                       GestureDetector(
@@ -66,30 +66,30 @@ class RestDiseases extends StatelessWidget {
                   ),
                   Text(
                     '${disease.data['description']}',
-                    style: CustomTextStyle.textStyle18(),
+                    style: CustomTextStyle.textStyle16(),
                   ),
                   Text(
                     'Symptoms',
-                    style: CustomTextStyle.textStyle20(
+                    style: CustomTextStyle.textStyle18(
                         fontWeight: FontWeight.w600),
                   ),
                   ...List<Widget>.generate(
                     (disease.data['symptoms'] as List).length,
                     (index) => Text(
                       '> ${disease.data['symptoms'][index]}',
-                      style: CustomTextStyle.textStyle18(),
+                      style: CustomTextStyle.textStyle16(),
                     ),
                   ),
                   Text(
                     'Things to Avoid',
-                    style: CustomTextStyle.textStyle20(
+                    style: CustomTextStyle.textStyle18(
                         fontWeight: FontWeight.w600),
                   ),
                   ...List<Widget>.generate(
                     (disease.data['things_to_avoid'] as List).length,
                     (index) => Text(
                       '> ${disease.data['things_to_avoid'][index]}',
-                      style: CustomTextStyle.textStyle18(),
+                      style: CustomTextStyle.textStyle16(),
                     ),
                   ),
                 ],
