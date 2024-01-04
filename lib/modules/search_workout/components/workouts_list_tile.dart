@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../theme/color_util.dart';
 
-class CustomListTile extends StatelessWidget {
+class WorkoutsListTile extends StatelessWidget {
   final Widget title;
   final Widget? subTitle;
+  final Widget? leading;
   final Widget? trailing;
-  final IconData? iconData;
   final VoidCallback? onTap;
 
-  const CustomListTile({
+  const WorkoutsListTile({
     Key? key,
     required this.title,
     this.subTitle,
+    this.leading,
     this.trailing,
-    this.iconData,
     this.onTap,
   }) : super(key: key);
 
@@ -32,11 +31,7 @@ class CustomListTile extends StatelessWidget {
               ),
               title: title,
               subtitle: subTitle,
-              leading: Icon(
-                iconData,
-                size: 20.sp,
-                  color: AppColors.themeColor
-              ),
+              leading: leading,
               trailing: trailing,
             ),
           ),

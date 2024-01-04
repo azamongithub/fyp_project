@@ -32,6 +32,7 @@ dependencies:
   flutter_local_notifications: ^15.1.0+1
   flutter_screenutil:
   email_launcher: ^1.1.1
+  youtube_player_flutter:
   http:
 
 dev_dependencies:

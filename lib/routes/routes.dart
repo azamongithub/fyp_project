@@ -1,3 +1,4 @@
+import 'package:CoachBot/modules/search_workout/view/workouts_list_screen.dart';
 import 'package:flutter/cupertino.dart';
 import '../common_components/bottom_nav_bar.dart';
 import '../models/workout_plan_model.dart';
@@ -18,7 +19,6 @@ import '../modules/profile/view/profile_form/profile_form.dart';
 import '../modules/send_feedback_screen/view/send_feedback_screen.dart';
 import '../modules/signup/view/signup_screen.dart';
 import '../modules/splash/view/splash_screen.dart';
-import '../modules/workout/find_workout_screen.dart';
 import '../modules/workout_plan/view/workout_plan_days_screen.dart';
 import '../modules/workout_plan/view/workout_plan_details_screen.dart';
 import 'route_name.dart';
@@ -129,8 +129,8 @@ class Routes {
           ),
         );
 
-      case RouteName.findWorkoutsScreen:
-        return CupertinoPageRoute(builder: (_) => FindWorkoutsScreen());
+      case RouteName.workoutListScreen:
+        return CupertinoPageRoute(builder: (_) => WorkoutListScreen());
 
       case RouteName.findNutritionFactsScreen:
         return CupertinoPageRoute(builder: (_) => FindNutritionFactsScreen());

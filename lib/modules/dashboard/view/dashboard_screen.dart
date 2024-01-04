@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../../../routes/route_name.dart';
+import '../../search_workout/services/workout_service.dart';
 import '../controller/dashboard_controller.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -17,6 +18,7 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   NotificationServices notificationServices = NotificationServices();
+  WorkoutService workoutService = WorkoutService();
   double workoutProgress = 0.0;
   double mealProgress = 0.0;
 
@@ -50,6 +52,30 @@ class _DashboardScreenState extends State<DashboardScreen> {
           style: CustomTextStyle.appBarStyle(),
         ),
         automaticallyImplyLeading: false,
+
+        actions: [
+          TextButton(
+            onPressed: () {
+              workoutService.addWorkout(
+                workoutName: 'Powerful Back Blast',
+                youtubeLink: 'https://www.youtube.com/watch?v=example_video_id',
+                steps: [
+                  'Warm-up: 5 minutes of light cardio',
+                  'Step 1: Lat Pulldowns - 4 sets of 12 reps',
+                  'Step 2: Bent Over Rows - 3 sets of 10 reps',
+                  'Step 3: Deadlifts - 4 sets of 8 reps',
+                  'Step 4: Face Pulls - 3 sets of 15 reps',
+                  'Cool Down: 5 minutes of stretching'
+                ],
+                time: '40 minutes',
+                reps: 12,
+                difficultyLevel: 'Intermediate',
+                equipments: ['Barbell', 'Lat Pulldown Machine', 'Dumbbells', 'Cable Machine'],
+                instructions: 'Ensure proper form and controlled movements. Increase weights gradually to challenge yourself. Take 1-2 minutes of rest between sets. Stay hydrated throughout the workout.',
+              );
+            }, child: Icon(Icons.add),
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -140,7 +166,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ElevatedButton(
                         onPressed: () {
                           Navigator.pushNamed(
-                              context, RouteName.findWorkoutsScreen);
+                              context, RouteName.workoutListScreen);
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(AppColors.themeColor),

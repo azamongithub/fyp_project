@@ -8,12 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import '../../../add_diseases/view/add_disease_screen.dart';
 import '../../../common_components/custom_list_tile.dart';
 import '../../../routes/route_name.dart';
 import '../../../theme/text_style_util.dart';
-import '../../health_status/view/health_status_details/health_details_screen.dart';
-import '../../login/view/login_screen.dart';
+import '../../search_workout/view/workouts_list_screen.dart';
 
 class SettingsTab extends StatelessWidget {
   const SettingsTab({super.key});
@@ -62,6 +60,13 @@ class SettingsTab extends StatelessWidget {
                 title: Text('Privacy Policy', style: CustomTextStyle.textStyle18()),
                 iconData: FontAwesomeIcons.shieldHalved,
                 onTap: () {},
+              ),
+              CustomListTile(
+                title: Text('Search Workout', style: CustomTextStyle.textStyle18()),
+                iconData: FontAwesomeIcons.shieldHalved,
+                onTap: () {
+                  Navigator.push(context, CupertinoPageRoute(builder: (context) => WorkoutListScreen()));
+                },
               ),
               CustomListTile(
                 title: Text('Logout', style: CustomTextStyle.textStyle18()),

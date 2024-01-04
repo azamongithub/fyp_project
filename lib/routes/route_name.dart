@@ -11,7 +11,7 @@ class RouteName {
   static const String workoutPlanDaysScreen = 'workoutPlanDaysScreen';
   static const String workoutPlanDetailsScreen = 'workoutPlanDetailsScreen';
 
-  static const String findWorkoutsScreen = 'findWorkoutsScreen';
+  static const String workoutListScreen = 'findWorkoutsScreen';
   static const String findNutritionFactsScreen = 'findNutritionFactsScreen';
 
   static const String profileDetailsScreen = 'profileDetailsScreen';
