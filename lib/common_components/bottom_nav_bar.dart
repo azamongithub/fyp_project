@@ -20,7 +20,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
     PlansTab(),
     const SettingsTab(),
   ];
-
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -32,7 +31,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
               labelTextStyle: MaterialStateProperty.all(
                   const TextStyle(fontSize: 14, fontWeight: FontWeight.w500))),
           child: NavigationBar(
-            backgroundColor: const Color(0xFFf1f5fb),
+            backgroundColor: Theme.of(context).brightness == Brightness.dark
+                ? const Color(0xFF111111)
+                : const Color(0xFFf1f5fb),
             selectedIndex: index,
             onDestinationSelected: (index) =>
                 setState(() => this.index = index),

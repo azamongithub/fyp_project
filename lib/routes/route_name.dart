@@ -4,7 +4,9 @@ class RouteName {
   static const String loginForm = 'loginScreen';
   static const String forgotPasswordScreen = 'forgotPasswordScreen';
   static const String changePasswordScreen = 'changePasswordScreen';
-  static const String accountDetailsScreen = 'accountDetailsScreen';
+  static const String privacyPolicyScreen = 'privacyPolicyScreen';
+  static const String termsAndConditionsScreen = 'termsAndConditionsScreen';
+
   static const String settingsTab = 'settingsTab';
   static const String mealPlanDaysScreen = 'mealPlanDaysScreen';
   static const String mealPlanDetailsScreen = 'mealPlanDetailsScreen';
@@ -25,4 +27,5 @@ class RouteName {
   static const String myPlanTab = 'myPlanTab';
   static const String workoutTab = 'workoutTab';
   static const String mealTab = 'mealTab';
+  static const String deleteAccountScreen = 'deleteAccountScreen';
 }

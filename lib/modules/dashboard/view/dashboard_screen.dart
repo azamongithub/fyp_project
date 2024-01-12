@@ -1,8 +1,6 @@
 import 'package:CoachBot/constants/app_string_constants.dart';
-import 'package:CoachBot/notifications_services/notifications_services.dart';
 import 'package:CoachBot/theme/color_util.dart';
 import 'package:CoachBot/theme/text_style_util.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +15,6 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  NotificationServices notificationServices = NotificationServices();
   WorkoutService workoutService = WorkoutService();
   double workoutProgress = 0.0;
   double mealProgress = 0.0;
@@ -28,54 +25,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
     DashboardController controller =
         Provider.of<DashboardController>(context, listen: false);
     controller.reNewProgressIfMonday();
-    //controller.fetchWeeklyProgress();
-    notificationServices.requestNotificationPermission();
-    notificationServices.getDeviceToken().then((value) async {
-      notificationServices.firebaseInit(context);
-      notificationServices.setupInteractMessage(context);
-      if (kDebugMode) {
-        print('device token');
-      }
-      if (kDebugMode) {
-        print(value);
-      }
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.themeColor,
         title: Text(
           AppStrings.dashboard,
           style: CustomTextStyle.appBarStyle(),
         ),
         automaticallyImplyLeading: false,
-
-        actions: [
-          TextButton(
-            onPressed: () {
-              workoutService.addWorkout(
-                workoutName: 'Powerful Back Blast',
-                youtubeLink: 'https://www.youtube.com/watch?v=example_video_id',
-                steps: [
-                  'Warm-up: 5 minutes of light cardio',
-                  'Step 1: Lat Pulldowns - 4 sets of 12 reps',
-                  'Step 2: Bent Over Rows - 3 sets of 10 reps',
-                  'Step 3: Deadlifts - 4 sets of 8 reps',
-                  'Step 4: Face Pulls - 3 sets of 15 reps',
-                  'Cool Down: 5 minutes of stretching'
-                ],
-                time: '40 minutes',
-                reps: 12,
-                difficultyLevel: 'Intermediate',
-                equipments: ['Barbell', 'Lat Pulldown Machine', 'Dumbbells', 'Cable Machine'],
-                instructions: 'Ensure proper form and controlled movements. Increase weights gradually to challenge yourself. Take 1-2 minutes of rest between sets. Stay hydrated throughout the workout.',
-              );
-            }, child: Icon(Icons.add),
-          )
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -92,7 +52,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     children: [
                       Text(
                         AppStrings.weeklyMealProgress,
-                        style: CustomTextStyle.textStyle16(fontWeight: FontWeight.bold),
+                        style: CustomTextStyle.textStyle16(
+                            fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 10.h),
                       const Text(AppStrings.progressSubtitle),
@@ -105,7 +66,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 dashboardController.mealProgress == 100
                                     ? AppStrings.mealProgressCompleted
                                     : '${dashboardController.mealProgress.toStringAsFixed(2)}% Completed',
-                                  style: CustomTextStyle.textStyle16(fontWeight: FontWeight.bold),
+                                style: CustomTextStyle.textStyle16(
+                                    fontWeight: FontWeight.bold),
                               ),
                             ],
                           );
@@ -125,7 +87,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     children: [
                       Text(
                         AppStrings.weeklyWorkoutProgress,
-                        style: CustomTextStyle.textStyle16(fontWeight: FontWeight.bold),
+                        style: CustomTextStyle.textStyle16(
+                            fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 10.h),
                       const Text(AppStrings.progressSubtitle),
@@ -138,7 +101,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 dashboardController.workoutProgress == 100
                                     ? AppStrings.workoutProgressCompleted
                                     : '${dashboardController.workoutProgress.toStringAsFixed(2)}% Completed',
-                                style: CustomTextStyle.textStyle16(fontWeight: FontWeight.bold),
+                                style: CustomTextStyle.textStyle16(
+                                    fontWeight: FontWeight.bold),
                               ),
                             ],
                           );
@@ -158,7 +122,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     children: [
                       Text(
                         AppStrings.recommendedWorkouts,
-                        style: CustomTextStyle.textStyle16(fontWeight: FontWeight.bold),
+                        style: CustomTextStyle.textStyle16(
+                            fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 10.h),
                       const Text(AppStrings.recommendedWorkoutsSubtitle),
@@ -169,9 +134,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               context, RouteName.workoutListScreen);
                         },
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(AppColors.themeColor),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              AppColors.themeColor),
                         ),
-                        child: const Text(AppStrings.findWorkouts, style: TextStyle(color: AppColors.whiteColor)),
+                        child: const Text(AppStrings.findWorkouts,
+                            style: TextStyle(color: AppColors.whiteColor)),
                       ),
                     ],
                   ),
@@ -187,7 +154,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     children: [
                       Text(
                         AppStrings.nutrition,
-                        style: CustomTextStyle.textStyle16(fontWeight: FontWeight.bold),
+                        style: CustomTextStyle.textStyle16(
+                            fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 10.h),
                       const Text(AppStrings.nutritionSubtitle),
@@ -198,9 +166,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               context, RouteName.findNutritionFactsScreen);
                         },
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(AppColors.themeColor),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              AppColors.themeColor),
                         ),
-                        child: const Text(AppStrings.findNutrition, style: TextStyle(color: AppColors.whiteColor)),
+                        child: const Text(AppStrings.findNutrition,
+                            style: TextStyle(color: AppColors.whiteColor)),
                       ),
                     ],
                   ),

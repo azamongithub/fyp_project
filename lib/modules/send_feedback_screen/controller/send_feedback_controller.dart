@@ -11,6 +11,7 @@ class SendFeedbackController extends ChangeNotifier {
   String? feedbackError;
 
   Future<void> saveFeedback(BuildContext context) async {
+    isLoading = true;
     try {
       final user = FirebaseAuth.instance.currentUser;
       final feedbackData = {
@@ -20,7 +21,6 @@ class SendFeedbackController extends ChangeNotifier {
         'email': user.email,
         'date': DateTime.now(),
       };
-      isLoading = true;
       notifyListeners();
 
       await FirebaseFirestore.instance

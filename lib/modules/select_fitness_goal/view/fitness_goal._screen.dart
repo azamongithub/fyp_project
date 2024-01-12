@@ -85,7 +85,7 @@ class FitnessGoalForm extends StatelessWidget {
                       if (controller.selectedFitnessGoal != null) {
                         controller.setIsLoading(true);
                         controller.saveFitnessGoalDetails(context);
-                        plansController.fetchAndPassUserDetails();
+                        isEdit ? plansController.fetchAndPassUserDetails() : null;
                         isEdit ? Navigator.pop(context) : null;
                       } else {
                         Utils.positiveToastMessage(AppStrings.selectAnyOne);

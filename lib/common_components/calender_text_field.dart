@@ -22,9 +22,9 @@ class CalendarTextField extends StatelessWidget {
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: DateTime(2006),
+      initialDate: DateTime(2004),
       firstDate: DateTime(1933),
-      lastDate: DateTime(2014),
+      lastDate: DateTime(2011),
     );
 
     if (picked != null) {

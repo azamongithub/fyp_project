@@ -1,4 +1,7 @@
+import 'package:CoachBot/modules/delete/view/delete_account_screen.dart';
+import 'package:CoachBot/modules/privacy_policy/privacy_policy_screen.dart';
 import 'package:CoachBot/modules/search_workout/view/workouts_list_screen.dart';
+import 'package:CoachBot/modules/terms_and_conditions/terms_and_conditions_screen.dart';
 import 'package:flutter/cupertino.dart';
 import '../common_components/bottom_nav_bar.dart';
 import '../models/workout_plan_model.dart';
@@ -37,8 +40,12 @@ class Routes {
         return CupertinoPageRoute(builder: (_) => const ForgotPasswordScreen());
       case RouteName.changePasswordScreen:
         return CupertinoPageRoute(builder: (_) => const ChangePasswordScreen());
-      // case RouteName.AccountDetailsScreen:
-      //   return CupertinoPageRoute(builder: (_) => const AccountDetailsScreen());
+
+      case RouteName.privacyPolicyScreen:
+        return CupertinoPageRoute(builder: (_) => PrivacyPolicyScreen());
+
+      case RouteName.termsAndConditionsScreen:
+        return CupertinoPageRoute(builder: (_) => TermsAndConditionsScreen());
 
       case RouteName.bottomNavBar:
         return CupertinoPageRoute(builder: (_) => const BottomNavBar());
@@ -46,31 +53,12 @@ class Routes {
       case RouteName.myPlanTab:
         return CupertinoPageRoute(builder: (_) => const DashboardScreen());
       case RouteName.workoutTab:
-        return CupertinoPageRoute(builder: (_) => PlansTab());
+        return CupertinoPageRoute(builder: (_) => const PlansTab());
       case RouteName.settingsTab:
         return CupertinoPageRoute(builder: (_) => const SettingsTab());
 
       case RouteName.profileForm:
         return CupertinoPageRoute(builder: (_) => const ProfileForm());
-
-      // case RouteName.fitnessAnalyzerForm:
-      //   final argsItem = settings.arguments as Map<String, dynamic>;
-      //   final bool isEdit = argsItem['isEdit'] ?? false;
-      //   return CupertinoPageRoute(
-      //     builder: (_) => FitnessAnalyzerForm(
-      //       isEdit: isEdit,
-      //     ),
-      //   );
-      //
-      // case RouteName.fitnessGoalForm:
-      //   return CupertinoPageRoute(
-      //     builder: (context) {
-      //       //final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-      //       final argsItem = settings.arguments as Map<String, dynamic>;
-      //       final bool isEdit = argsItem['isEdit'] ?? false;
-      //       return FitnessGoalForm(isEdit: isEdit);
-      //     },
-      //   );
 
       case RouteName.fitnessAnalyzerForm:
         return CupertinoPageRoute(builder: (_) => const FitnessAnalyzerForm());
@@ -101,11 +89,9 @@ class Routes {
       case RouteName.mealPlanDaysScreen:
         final argsItem = settings.arguments as Map<String, dynamic>;
         final String name = argsItem['name'];
-        //final int calories = argsItem['calories'];
         return CupertinoPageRoute(
           builder: (_) => MealPlanDaysScreen(
             name: name,
-            // totalCalories: calories,
           ),
         );
 
@@ -133,7 +119,10 @@ class Routes {
         return CupertinoPageRoute(builder: (_) => WorkoutListScreen());
 
       case RouteName.findNutritionFactsScreen:
-        return CupertinoPageRoute(builder: (_) => FindNutritionFactsScreen());
+        return CupertinoPageRoute(builder: (_) => const FindNutritionFactsScreen());
+
+      case RouteName.deleteAccountScreen:
+        return CupertinoPageRoute(builder: (_) => DeleteAccountScreen());
 
       default:
         return CupertinoPageRoute(builder: (_) => const LoginForm());

@@ -11,7 +11,7 @@ class FitnessFormController extends ChangeNotifier {
   final TextEditingController weightController = TextEditingController();
   final TextEditingController caloriesController = TextEditingController();
   final TextEditingController workoutController = TextEditingController();
-  List<int> feetOptions = [3, 4, 5, 6, 7, 8];
+  List<int> feetOptions = [3, 4, 5, 6, 7];
   List<int> inchesOptions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
   int selectedFeet = 4;
   int selectedInch = 9;

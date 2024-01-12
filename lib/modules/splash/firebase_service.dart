@@ -5,13 +5,11 @@ import '../../routes/route_name.dart';
 class FirebaseService {
 
   Future<void> checkFormsFilled(BuildContext context, String userId) async {
+
     try {
       DocumentSnapshot userDoc =
       await FirebaseFirestore.instance.collection('UserDataCollection').doc(userId).get();
       Map<String, dynamic> userData = userDoc.data() as Map<String, dynamic>;
-      // if (!userDoc.exists) {
-      //   Navigator.pushReplacementNamed(context, RouteName.profileForm);
-      // }
 
       if (!userData.containsKey('name')) {
         Navigator.pushReplacementNamed(context, RouteName.profileForm);
@@ -27,7 +25,6 @@ class FirebaseService {
       }
       else {
         Navigator.pushReplacementNamed(context, RouteName.bottomNavBar);
-
       }
     } catch (error) {
       print('Error checking forms in Firestore: $error');

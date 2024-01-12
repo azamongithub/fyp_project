@@ -1,31 +1,36 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 
 class WorkoutService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> addWorkout({
     required String workoutName,
-    required String youtubeLink,
+    required String gifImageLink,
     required List<String> steps,
-    required String time,
-    required int reps,
     required String difficultyLevel,
     required List<String> equipments,
+    required List<String> primaryMuscles,
+    required List<String> secondaryMuscles,
     required String instructions,
+    required List<String> commonMistakes,
   }) async {
     try {
-      await _firestore.collection('WorkoutsDetails').add({
+      await _firestore.collection('WorkoutsDetails').doc(workoutName).set({
         'workoutName': workoutName,
-        'youtubeLink': youtubeLink,
+        'gifImageLink': gifImageLink,
+        'primaryMuscles' : primaryMuscles,
+        'secondaryMuscles' : secondaryMuscles,
         'steps': steps,
-        'time': time,
-        'reps': reps,
         'difficultyLevel': difficultyLevel,
         'equipments': equipments,
         'instructions': instructions,
+        'commonMistakes': commonMistakes,
       });
     } catch (e) {
-      print('Error adding workout: $e');
+      if (kDebugMode) {
+        print('Error adding workout: $e');
+      }
     }
   }
 }

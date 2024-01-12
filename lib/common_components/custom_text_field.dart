@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController myController;
-  final FormFieldValidator onValidator;
+  final FormFieldValidator? onValidator;
   final TextInputType keyBoardType;
   final String? labelText;
   final String? initialValue;
@@ -17,7 +17,7 @@ class CustomTextField extends StatelessWidget {
     required this.keyBoardType,
     this.labelText,
     this.maxLines,
-    required this.onValidator,
+    this.onValidator,
     this.autoFocus = false,
     this.focusNode,
     this.onChange,

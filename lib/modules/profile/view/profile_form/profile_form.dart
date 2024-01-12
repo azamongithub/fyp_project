@@ -167,7 +167,6 @@ class ProfileForm extends StatelessWidget {
                         if (formKey.currentState!.validate()) {
                           if (controller.selectedGender.isNotEmpty) {
                             controller.saveProfileDetails(context);
-                            //plansController.fetchAndPassUserDetails();
                           } else {
                             Utils.positiveToastMessage(AppStrings.selectGender);
                           }

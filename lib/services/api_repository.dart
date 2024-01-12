@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class ApiRepository {
+
   Future<Map<String, dynamic>> fetchData(
       Map<String, dynamic> requestData) async {
     try {

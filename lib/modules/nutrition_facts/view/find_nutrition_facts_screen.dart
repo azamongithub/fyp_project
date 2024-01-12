@@ -1,3 +1,7 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
+import 'package:CoachBot/common_components/custom_button.dart';
+import 'package:CoachBot/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -7,10 +11,7 @@ import '../../../theme/text_style_util.dart';
 import '../controller/nutrition_facts_controller.dart';
 
 class FindNutritionFactsScreen extends StatelessWidget {
-  final TextEditingController _itemController = TextEditingController();
-  late final isLoading;
-
-  FindNutritionFactsScreen({super.key});
+  const FindNutritionFactsScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -22,36 +23,50 @@ class FindNutritionFactsScreen extends StatelessWidget {
           backgroundColor: const Color(0xff3140b0),
         ),
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 25.h),
+          padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
           child: Consumer<NutritionDataController>(
-            builder: (context, nutritionProvider, child) {
-              bool hasSearchResult = nutritionProvider.nutritionFacts != null;
-              bool hasError = nutritionProvider.loading;
+            builder: (context, provider, child) {
+              bool hasSearchResult = provider.nutritionFacts?.name != null;
+              bool isLoading = provider.loading;
               return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomTextField(
-                    myController: _itemController,
-                    keyBoardType: TextInputType.text,
-                    autoFocus: true,
-                    labelText: 'Enter food item',
-                    onChange: (value) {
-                      String query = _itemController.text;
-                      if (query.isNotEmpty) {
-                        Provider.of<NutritionDataController>(context,
-                                listen: false)
-                            .fetchNutritionFactsData(query);
-                      }
-                    },
-                    onValidator: (value) {
-                      if (value == null) {}
-                    },
+                  Text(
+                    'Enter a food item',
+                    style: CustomTextStyle.textStyle22(),
                   ),
-                  SizedBox(height: 70.h),
-                  hasError
-                      ? const Center(
-                          child: Text('searching...'),
-                        )
-                      : hasSearchResult
+                  SizedBox(height: 10.h),
+                  CustomTextField(
+                    myController: provider.itemController,
+                    keyBoardType: TextInputType.text,
+                    labelText: 'Pizza',
+                    autoFocus: true,
+                  ),
+                  SizedBox(height: 20.h),
+                  Center(
+                    child: CustomButton(
+                      loading: provider.loading,
+                        title: 'Search',
+                        onTap: (){
+                          String query = provider.itemController.text;
+                          if (query.isNotEmpty) {
+                            Provider.of<NutritionDataController>(context,
+                                listen: false)
+                                .fetchNutritionFactsData(query);
+                          }
+                          else {
+                            Utils.negativeToastMessage('Please enter a food item first');
+                          }
+                        },
+                        height: 50.h,
+                        width: 150.w,
+                    ),
+                  ),
+                  SizedBox(height: 20.h),
+                  isLoading
+                      ? Container()
+                      :
+                  hasSearchResult
                           ? Expanded(
                               child: ListView(
                                 children: [
@@ -67,7 +82,7 @@ class FindNutritionFactsScreen extends StatelessWidget {
                                   SizedBox(height: 10.h),
                                   Center(
                                     child: Text(
-                                        '${nutritionProvider.nutritionFacts!.name.toUpperCase()}',
+                                        provider.nutritionFacts!.name.toUpperCase(),
                                         style: const TextStyle(
                                           letterSpacing: 5,
                                           fontSize: 20,
@@ -85,7 +100,7 @@ class FindNutritionFactsScreen extends StatelessWidget {
                                       ),
                                     ),
                                     trailing: Text(
-                                        '${nutritionProvider.nutritionFacts!.servingSize.toInt()} gram',
+                                        '${provider.nutritionFacts!.servingSize.toInt()} gram',
                                         style: TextStyle(
                                           letterSpacing: 1,
                                           fontSize: 16.sp,
@@ -96,52 +111,52 @@ class FindNutritionFactsScreen extends StatelessWidget {
                                   NutritionListTile(
                                     title: const Text('Calories'),
                                     trailing: Text(
-                                        '${nutritionProvider.nutritionFacts!.calories}'),
+                                        '${provider.nutritionFacts!.calories}'),
                                   ),
                                   NutritionListTile(
                                     title: const Text('Protien'),
                                     trailing: Text(
-                                        '${nutritionProvider.nutritionFacts!.protein} g'),
+                                        '${provider.nutritionFacts!.protein} g'),
                                   ),
                                   NutritionListTile(
                                     title: const Text('Carbs'),
                                     trailing: Text(
-                                        '${nutritionProvider.nutritionFacts!.totalCarbohydrates} g'),
+                                        '${provider.nutritionFacts!.totalCarbohydrates} g'),
                                   ),
                                   NutritionListTile(
                                     title: const Text('Total Fat'),
                                     trailing: Text(
-                                        '${nutritionProvider.nutritionFacts!.totalFat} g'),
+                                        '${provider.nutritionFacts!.totalFat} g'),
                                   ),
                                   NutritionListTile(
                                     title: const Text('Saturated Fat'),
                                     trailing: Text(
-                                        '${nutritionProvider.nutritionFacts!.saturatedFat} g'),
+                                        '${provider.nutritionFacts!.saturatedFat} g'),
                                   ),
                                   NutritionListTile(
                                     title: const Text('Fiber'),
                                     trailing: Text(
-                                        '${nutritionProvider.nutritionFacts!.fiber} g'),
+                                        '${provider.nutritionFacts!.fiber} g'),
                                   ),
                                   NutritionListTile(
                                     title: const Text('Sugar'),
                                     trailing: Text(
-                                        '${nutritionProvider.nutritionFacts!.sugar} g'),
+                                        '${provider.nutritionFacts!.sugar} g'),
                                   ),
                                   NutritionListTile(
                                     title: const Text('Cholesterol'),
                                     trailing: Text(
-                                        '${nutritionProvider.nutritionFacts!.cholesterol} mg'),
+                                        '${provider.nutritionFacts!.cholesterol} mg'),
                                   ),
                                   NutritionListTile(
                                     title: const Text('Sodium'),
                                     trailing: Text(
-                                        '${nutritionProvider.nutritionFacts!.sodium} mg'),
+                                        '${provider.nutritionFacts!.sodium} mg'),
                                   ),
                                   NutritionListTile(
                                     title: const Text('Potassium'),
                                     trailing: Text(
-                                        '${nutritionProvider.nutritionFacts!.potassium} mg'),
+                                        '${provider.nutritionFacts!.potassium} mg'),
                                   ),
                                 ],
                               ),
@@ -149,9 +164,6 @@ class FindNutritionFactsScreen extends StatelessWidget {
                           : Center(
                               child: Container(),
                             ),
-                  // Center(
-                  //         child: Container(),
-                  //       ),
                 ],
               );
             },

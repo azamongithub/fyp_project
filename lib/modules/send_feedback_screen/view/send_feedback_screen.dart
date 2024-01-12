@@ -13,7 +13,6 @@ class SendFeedbackScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController feedbackController = TextEditingController();
     final formKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
@@ -28,46 +27,48 @@ class SendFeedbackScreen extends StatelessWidget {
           child: Form(
             key: formKey,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(height: 20.h),
-                Center(
-                  child: Text(
-                    AppStrings.sendFeedbackLabel,
-                    style: CustomTextStyle.textStyle22(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20.h),
-                CustomTextField(
-                  myController: feedbackController,
-                  keyBoardType: TextInputType.text,
-                  //labelText: AppStrings.sendFeedbackLabel,
-                  maxLines: 7,
-                  onValidator: (value) {
-                    if (value!.isEmpty) {
-                      return AppStrings.requiredField;
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(height: 70.h),
                 ChangeNotifierProvider(
                   create: (_) => SendFeedbackController(),
                   child: Consumer<SendFeedbackController>(
                       builder: (context, provider, child) {
-                    return CustomButton(
-                      title: AppStrings.sendButton,
-                      loading: provider.isLoading,
-                      height: 50.h,
-                      width: 400.w,
-                      onTap: () {
-                        if (formKey.currentState!.validate()) {
-                          provider.saveFeedback(context);
-                        }
-                      },
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: Text(
+                            AppStrings.sendFeedbackLabel,
+                            style: CustomTextStyle.textStyle22(
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10.h),
+                        CustomTextField(
+                          myController: provider.feedbackController,
+                          keyBoardType: TextInputType.text,
+                          maxLines: 7,
+                          onValidator: (value) {
+                            if (value!.isEmpty) {
+                              return AppStrings.requiredField;
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: 50.h),
+                        CustomButton(
+                          title: AppStrings.sendButton,
+                          loading: provider.isLoading,
+                          height: 50.h,
+                          width: 400.w,
+                          onTap: () {
+                            if (formKey.currentState!.validate()) {
+                              provider.saveFeedback(context);
+                            }
+                          },
+                        ),
+                      ],
                     );
                   }),
                 ),

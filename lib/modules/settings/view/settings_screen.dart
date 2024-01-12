@@ -1,4 +1,7 @@
+import 'package:CoachBot/common_components/custom_button.dart';
 import 'package:CoachBot/constants/app_string_constants.dart';
+import 'package:CoachBot/modules/delete/components/delete_account_bottom_sheet.dart';
+import 'package:CoachBot/modules/delete/view/delete_account_screen.dart';
 import 'package:CoachBot/theme/color_util.dart';
 import 'package:CoachBot/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,11 +10,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import '../../../common_components/custom_list_tile.dart';
 import '../../../routes/route_name.dart';
 import '../../../theme/text_style_util.dart';
-import '../../search_workout/view/workouts_list_screen.dart';
+import '../components/logout_bottom_sheet.dart';
 
 class SettingsTab extends StatelessWidget {
   const SettingsTab({super.key});
@@ -52,50 +54,53 @@ class SettingsTab extends StatelessWidget {
                 },
               ),
               CustomListTile(
-                title: Text('Terms & Conditions', style: CustomTextStyle.textStyle18()),
-                iconData: FontAwesomeIcons.file,
-                onTap: () {},
-              ),
-              CustomListTile(
                 title: Text('Privacy Policy', style: CustomTextStyle.textStyle18()),
                 iconData: FontAwesomeIcons.shieldHalved,
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, RouteName.privacyPolicyScreen);
+                },
               ),
               CustomListTile(
-                title: Text('Search Workout', style: CustomTextStyle.textStyle18()),
-                iconData: FontAwesomeIcons.shieldHalved,
+                title: Text('Terms & Conditions', style: CustomTextStyle.textStyle18()),
+                iconData: FontAwesomeIcons.file,
                 onTap: () {
-                  Navigator.push(context, CupertinoPageRoute(builder: (context) => WorkoutListScreen()));
+                  Navigator.pushNamed(context, RouteName.termsAndConditionsScreen);
                 },
               ),
               CustomListTile(
                 title: Text('Logout', style: CustomTextStyle.textStyle18()),
                 iconData: FontAwesomeIcons.rightFromBracket,
                 onTap: () async {
-                  await FirebaseAuth.instance.signOut();
-                  await GoogleSignIn().disconnect();
-                  await FirebaseFirestore.instance.terminate();
-                  Navigator.pushReplacementNamed(context, RouteName.loginForm);
-                  // Navigator.pushAndRemoveUntil(
-                  //   context,
-                  //   CupertinoPageRoute(builder: (context) => const LoginForm()),
-                  //   (route) => false,
-                  // );
-                  Utils.showLoadingSnackBar(context, 'Logging out....');
+                  await showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return const LogoutConfirmationBottomSheet();
+                    },
+                  );
                 },
               ),
-              // ListTile(
-              //   leading: const Icon(FontAwesomeIcons.plus),
-              //   title: const Text('Add Disease'),
-              //   onTap: () {
-              //     Navigator.push(context,
-              //         CupertinoPageRoute(builder: (context) => DiseaseForm()));
-              //   },
-              // ),
+              CustomListTile(
+                title: Text('Delete Account', style: CustomTextStyle.textStyle18()),
+                iconData: Icons.delete,
+                onTap: () async {
+                  await showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return const DeleteAccountBottomSheet();
+                    },
+                  );
+                },
+              ),
+
+
             ],
           ),
         ),
       ),
     );
   }
+
 }
+
+
+

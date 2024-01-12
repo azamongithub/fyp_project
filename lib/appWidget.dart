@@ -1,5 +1,6 @@
 import 'package:CoachBot/modules/my_plans/controller/my_plans_controller.dart';
 import 'package:CoachBot/theme/color_util.dart';
+import 'package:CoachBot/theme/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -34,18 +35,22 @@ class MyApp extends StatelessWidget {
               child: MaterialApp(
                 debugShowCheckedModeBanner: false,
                 title: AppStrings.appName,
-                theme: ThemeData(
-                  scaffoldBackgroundColor: Colors.white,
-                  primarySwatch: Colors.indigo,
-                  colorScheme:
-                      ColorScheme.fromSeed(seedColor: AppColors.themeColor),
-                  useMaterial3: true,
-                  textTheme: const TextTheme(
-                    bodyMedium: TextStyle(
-                      fontFamily: 'Poppins',
-                    ),
-                  ),
-                ),
+                theme: ThemeManager.lightTheme,
+                darkTheme: ThemeManager.darkTheme,
+                //
+                themeMode: ThemeMode.light,
+                // theme: ThemeData(
+                //   scaffoldBackgroundColor: Colors.white,
+                //   primarySwatch: Colors.indigo,
+                //   colorScheme:
+                //       ColorScheme.fromSeed(seedColor: AppColors.themeColor),
+                //   useMaterial3: true,
+                //   textTheme: const TextTheme(
+                //     bodyMedium: TextStyle(
+                //       fontFamily: 'Poppins',
+                //     ),
+                //   ),
+                // ),
                 initialRoute: RouteName.splashScreen,
                 onGenerateRoute: Routes().onGenerateRoute,
               ),

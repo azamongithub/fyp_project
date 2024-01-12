@@ -165,7 +165,7 @@ class FitnessAnalyzerForm extends StatelessWidget {
                         if (controller.formKey.currentState!.validate()) {
                           controller.setIsLoading(true);
                           controller.saveFitnessDetails(context);
-                          plansController.fetchAndPassUserDetails();
+                          isEdit ? plansController.fetchAndPassUserDetails() : null;
                           isEdit ? Navigator.pop(context) : null;
                         }
                       },

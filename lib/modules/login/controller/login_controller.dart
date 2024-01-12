@@ -1,7 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import '../../../routes/route_name.dart';
 import '../../splash/firebase_service.dart';
 
 class LoginController with ChangeNotifier {
@@ -25,31 +27,17 @@ class LoginController with ChangeNotifier {
         password: password,
       );
       var authCredential = userCredential.user;
-
       if (authCredential!.emailVerified) {
+        setLoading(true);
         firebaseService.checkFormsFilled(context, authCredential.uid);
-        setLoading(false);
-        //Navigator.pushReplacementNamed(context, RouteName.bottomNavBar);
       } else {
         await authCredential.sendEmailVerification();
         setLoading(false);
         Fluttertoast.showToast(
           msg: "Please verify your email before logging in.",
         );
-        // Log the user out
         await FirebaseAuth.instance.signOut();
       }
-      // if (authCredential!.uid.isNotEmpty) {
-      //   setLoading(false);
-      //   Navigator.pushNamedAndRemoveUntil(
-      //     context,
-      //     RouteName.bottomNavBar,
-      //     (route) => false,
-      //   );
-      // } else {
-      //   setLoading(false);
-      //   Fluttertoast.showToast(msg: "Something is wrong");
-      // }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         setLoading(false);
@@ -57,9 +45,28 @@ class LoginController with ChangeNotifier {
       } else if (e.code == 'wrong-password') {
         setLoading(false);
         Fluttertoast.showToast(msg: "Wrong password provided for that user.");
-      } else if (!emailRegex.hasMatch(email)) {
+      }
+      else if (!emailRegex.hasMatch(email)) {
         setLoading(false);
         Fluttertoast.showToast(msg: "Invalid email format");
+      }
+      else if(e.code == 'too-many-requests'){
+        setLoading(false);
+        showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+              title: const Text('Warning'),
+              content: const Text(
+                  'We have blocked all requests from this device due to unusual activity. Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Ok'),
+                )
+              ]),
+        );
       }
     } catch (e) {
       setLoading(false);

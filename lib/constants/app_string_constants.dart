@@ -84,8 +84,7 @@ abstract class AppStrings {
   static const String yourMedicalCondition = 'Your Medical Condition';
   static const String medicalConditionMessage =
       'Share medical conditions or history with us';
-  static const String updateMedicalMessage =
-      'Update your medical condition';
+  static const String updateMedicalMessage = 'Update your medical condition';
   static const String diabetesLabel = 'Diabetes';
   static const String hypercholesterolemiaLabel = 'Hypercholesterolaemia';
   static const String celiacLabel = 'Celiac';
@@ -102,16 +101,20 @@ abstract class AppStrings {
   static const String myPlans = 'My Plans';
   static const String settings = 'Settings';
   static const String weeklyMealProgress = 'Weekly Meal Progress';
-  static const String mealProgressCompleted = 'Congrats, you have completed your weekly meal plan';
+  static const String mealProgressCompleted =
+      'Congrats, you have completed your weekly meal plan';
   static const String weeklyWorkoutProgress = 'Weekly Workout Progress';
-  static const String workoutProgressCompleted = 'Congrats, you have completed your weekly workout plan';
+  static const String workoutProgressCompleted =
+      'Congrats, you have completed your weekly workout plan';
   static const String progressSubtitle = 'Progress towards your fitness goals';
   static const String recommendedWorkouts = 'Recommended Workouts';
-  static const String recommendedWorkoutsSubtitle = 'Discover workouts tailored to your goals';
+  static const String recommendedWorkoutsSubtitle =
+      'Discover workouts tailored to your goals';
   static const String findWorkouts = 'Find Workouts';
   static const String nutrition = 'Nutrition';
-  static const String nutritionSubtitle = 'Find nutrition facts of multiple Item';
-  static const String findNutrition= 'Nutrition Facts';
+  static const String nutritionSubtitle =
+      'Find nutrition facts of multiple Item';
+  static const String findNutrition = 'Nutrition Facts';
 
   //My Plans Tab
   static const String customizedPlans = 'Your Customized Plans';

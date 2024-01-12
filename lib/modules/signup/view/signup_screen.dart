@@ -1,7 +1,6 @@
 import 'package:CoachBot/constants/app_string_constants.dart';
 import 'package:CoachBot/theme/color_util.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +10,8 @@ import '../../../common_components/password_text_field.dart';
 import '../../../constants/assets_constants.dart';
 import '../../../routes/route_name.dart';
 import '../../../theme/text_style_util.dart';
+import '../../privacy_policy/privacy_policy_screen.dart';
+import '../../terms_and_conditions/terms_and_conditions_screen.dart';
 import '../controller/signup_controller.dart';
 
 class SignupForm extends StatefulWidget {
@@ -98,15 +99,75 @@ class _SignupFormState extends State<SignupForm> {
                                       if (value!.isEmpty) {
                                         return AppStrings.emptyPassword;
                                       }
-                                      // else if(!passwordRegExp.hasMatch(value)){
-                                      //   return 'The password must be 8 characters and at least one number';
-                                      // }
+                                      else if(!passwordRegExp.hasMatch(value)){
+                                        return 'The password must be at least 8 characters and at least one uppercase, one lowercase, one number and one special character';
+                                      }
                                       return null;
                                     },
                                   ),
                                 ],
                               ),
                             ),
+                            SizedBox(height: 15.h),
+                            Row(
+                              children: [
+                                Checkbox(
+                                  value: provider.acceptPrivacyPolicyAndTermsAndConditions,
+                                  onChanged: (value) {
+                                    provider.setAcceptPrivacyPolicyAndTermsAndConditions(value ?? false);
+                                  },
+                                ),
+                                Expanded(
+                                  child: RichText(
+                                    text: TextSpan(
+                                      text: 'I accept the ',
+                                      style: CustomTextStyle.textStyle14(color: AppColors.blackColor),
+                                      children: [
+                                        TextSpan(
+                                          text: 'Privacy Policy',
+                                          style: const TextStyle(
+                                            color: AppColors.themeColor,
+                                            decoration: TextDecoration.underline,
+                                          ),
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () {
+                                              // Navigate to the Privacy Policy screen
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => PrivacyPolicyScreen(),
+                                                ),
+                                              );
+                                            },
+                                        ),
+                                        TextSpan(
+                                          text: ' and ',
+                                          style: CustomTextStyle.textStyle14(color: AppColors.blackColor),
+                                        ),
+                                        TextSpan(
+                                          text: 'Terms and Conditions',
+                                          style: const TextStyle(
+                                            color: AppColors.themeColor,
+                                            decoration: TextDecoration.underline,
+                                          ),
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => TermsAndConditionsScreen(),
+                                                ),
+                                              );
+                                            },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+
+
                             SizedBox(height: 55.h),
                             CustomButton(
                               title: AppStrings.signupButton,
@@ -115,25 +176,20 @@ class _SignupFormState extends State<SignupForm> {
                               width: 400.w,
                               onTap: () {
                                 if (_formKey.currentState!.validate()) {
-                                  provider.signUp(context, emailController.text,
-                                      passwordController.text);
-                                }
-                              },
-                            ),
-                            ElevatedButton(
-                              onPressed: () async {
-                                UserCredential? userCredential = await provider.signInWithGoogle(context);
-                                if (userCredential != null) {
-                                  if (kDebugMode) {
-                                    print("User signed in: ${userCredential.user?.displayName}");
+                                  if(provider.acceptPrivacyPolicyAndTermsAndConditions) {
+                                    provider.signUp(context, emailController.text,
+                                        passwordController.text);
                                   }
-                                } else {
-                                  if (kDebugMode) {
-                                    print("Google Sign-In failed");
+                                  else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Please accept the Privacy Policy and Terms and Conditions'),
+                                        backgroundColor: Colors.redAccent,
+                                      ),
+                                    );
                                   }
                                 }
                               },
-                              child: const Text("Sign in with Google"),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,

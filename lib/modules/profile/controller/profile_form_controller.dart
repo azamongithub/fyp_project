@@ -82,17 +82,6 @@ class ProfileFormController extends ChangeNotifier {
     }
   }
 
-  // Future<void> markFormAsFilledOut(String userEmail, String formId) async {
-  //   try {
-  //     var userDocRef = FirebaseFirestore.instance.collection('UserDataCollection').doc(userEmail);
-  //     await userDocRef.update({
-  //       'filledForms.$formId': true,
-  //     });
-  //   } catch (e) {
-  //     print("Error marking form as filled out: $e");
-  //   }
-  // }
-
 
   @override
   void dispose() {

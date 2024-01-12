@@ -12,6 +12,9 @@ class SignUpController with ChangeNotifier {
   bool _loading = false;
   bool get loading => _loading;
   final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
+  bool _acceptPrivacyPolicyAndTermsAndConditions = false;
+
+  bool get acceptPrivacyPolicyAndTermsAndConditions => _acceptPrivacyPolicyAndTermsAndConditions;
 
   setLoading(bool value) {
     _loading = value;
@@ -98,9 +101,14 @@ class SignUpController with ChangeNotifier {
         );
         return await FirebaseAuth.instance.signInWithCredential(credential);
       }
-    } catch (e) {
-      print("Error signing in with Google: $e");
+    } catch (e, stack) {
+      print("Error signing in with Google: $e  : $stack");
       return null;
     }
+  }
+
+  void setAcceptPrivacyPolicyAndTermsAndConditions(bool value) {
+    _acceptPrivacyPolicyAndTermsAndConditions = value;
+    notifyListeners();
   }
 }

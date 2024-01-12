@@ -49,8 +49,7 @@ class NoneOtherDisease extends StatelessWidget {
                     children: [
                       Text(
                         disease.name,
-                        style: CustomTextStyle.textStyle22(
-                            fontWeight: FontWeight.w600),
+                        style: CustomTextStyle.textStyle24(fontWeight: FontWeight.w600),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -63,65 +62,61 @@ class NoneOtherDisease extends StatelessWidget {
                         },
                         child: Icon(
                           Icons.edit,
-                          color: AppColors.themeColor,
                           size: 30.sp,
                         ),
                       ),
                     ],
                   ),
+                  SizedBox(height: 15.h),
                   Text(
                     '${disease.data['description']}',
-                    style: CustomTextStyle.textStyle20(
-                        fontWeight: FontWeight.w600),
+                    style: CustomTextStyle.textStyle20(fontWeight: FontWeight.w600),
                   ),
-                  Text(
-                    '${disease.data['introduction']}',
-                    style: CustomTextStyle.textStyle16(),
-                  ),
-                  Text(
-                    'Suggestions',
-                    style: CustomTextStyle.textStyle20(
-                        fontWeight: FontWeight.w600),
-                  ),
-                  ...List<Widget>.generate(
-                    (disease.data['suggestions'] as List).length,
-                    (index) => Text(
-                      '> ${disease.data['suggestions'][index]}',
-                      style: CustomTextStyle.textStyle16(),
+                  Card(
+                    child: Padding(
+                      padding: EdgeInsets.all(10.sp),
+                      child: Text(
+                        '${disease.data['introduction']}',
+                        style: CustomTextStyle.textStyle16(),
+                      ),
                     ),
                   ),
+                  SizedBox(height: 15.h),
+                  Text(
+                    'Suggestions',
+                    style: CustomTextStyle.textStyle20(fontWeight: FontWeight.w600),
+                  ),
+                  Card(
+                    child: Padding(
+                      padding: EdgeInsets.all(10.sp),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ...List<Widget>.generate(
+                            (disease.data['suggestions'] as List).length,
+                                (index) => Text(
+                              '> ${disease.data['suggestions'][index]}',
+                              style: CustomTextStyle.textStyle16(),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 15.h),
                   Text(
                     'Conclusion',
-                    style: CustomTextStyle.textStyle20(
-                        fontWeight: FontWeight.w600),
+                    style: CustomTextStyle.textStyle20(fontWeight: FontWeight.w600),
                   ),
-                  Text(
-                    '${disease.data['conclusion']}',
-                    style: CustomTextStyle.textStyle16(),
+                  Card(
+                    child: Padding(
+                      padding: EdgeInsets.all(10.sp),
+                      child: Text(
+                        '${disease.data['conclusion']}',
+                        style: CustomTextStyle.textStyle16(),
+                      ),
+                    ),
                   ),
-                  diseaseId == 'other'
-                      ? Padding(
-                          padding: EdgeInsets.symmetric(vertical: 15.h),
-                          child: Column(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      CupertinoPageRoute(
-                                          builder: (context) =>
-                                              const SendMsgToEmailScreen()));
-                                },
-                                child: Text('Contact our doctor',
-                                    style: CustomTextStyle.customTextStyle(
-                                        color: AppColors.themeColor,
-                                        fontSize: 18.sp,
-                                        underline: true)),
-                              ),
-                            ],
-                          ),
-                        )
-                      : const SizedBox(),
                 ],
               ),
             ),

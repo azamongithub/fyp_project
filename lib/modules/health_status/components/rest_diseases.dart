@@ -44,8 +44,7 @@ class RestDiseases extends StatelessWidget {
                     children: [
                       Text(
                         disease.name,
-                        style: CustomTextStyle.textStyle22(
-                            fontWeight: FontWeight.w600),
+                        style: CustomTextStyle.textStyle24(fontWeight: FontWeight.w600),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -64,32 +63,57 @@ class RestDiseases extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Text(
-                    '${disease.data['description']}',
-                    style: CustomTextStyle.textStyle16(),
+                  Card(
+                    child: Padding(
+                      padding: EdgeInsets.all(10.sp),
+                      child: Text(
+                        '${disease.data['description']}',
+                        style: CustomTextStyle.textStyle16(),
+                      ),
+                    ),
                   ),
                   Text(
                     'Symptoms',
-                    style: CustomTextStyle.textStyle18(
+                    style: CustomTextStyle.textStyle20(
                         fontWeight: FontWeight.w600),
                   ),
-                  ...List<Widget>.generate(
-                    (disease.data['symptoms'] as List).length,
-                    (index) => Text(
-                      '> ${disease.data['symptoms'][index]}',
-                      style: CustomTextStyle.textStyle16(),
+                  Card(
+                    child: Padding(
+                      padding: EdgeInsets.all(10.sp),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ...List<Widget>.generate(
+                            (disease.data['symptoms'] as List).length,
+                                (index) => Text(
+                              '> ${disease.data['symptoms'][index]}',
+                              style: CustomTextStyle.textStyle16(),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Text(
                     'Things to Avoid',
-                    style: CustomTextStyle.textStyle18(
+                    style: CustomTextStyle.textStyle20(
                         fontWeight: FontWeight.w600),
                   ),
-                  ...List<Widget>.generate(
-                    (disease.data['things_to_avoid'] as List).length,
-                    (index) => Text(
-                      '> ${disease.data['things_to_avoid'][index]}',
-                      style: CustomTextStyle.textStyle16(),
+                  Card(
+                    child: Padding(
+                      padding: EdgeInsets.all(10.sp),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ...List<Widget>.generate(
+                            (disease.data['things_to_avoid'] as List).length,
+                                (index) => Text(
+                              '> ${disease.data['things_to_avoid'][index]}',
+                              style: CustomTextStyle.textStyle16(),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

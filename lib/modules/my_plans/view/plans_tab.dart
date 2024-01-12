@@ -1,6 +1,7 @@
 import 'package:CoachBot/common_components/custom_list_tile.dart';
 import 'package:CoachBot/constants/app_string_constants.dart';
 import 'package:CoachBot/theme/color_util.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,13 +18,15 @@ class PlansTab extends StatefulWidget {
 }
 
 class _PlansTabState extends State<PlansTab> {
+
   @override
   void initState() {
     super.initState();
     MyPlansController myPlansController =
-        Provider.of<MyPlansController>(context, listen: false);
+    Provider.of<MyPlansController>(context, listen: false);
     myPlansController.fetchAllData();
     myPlansController.fetchAndPassUserDetails();
+    print(FirebaseAuth.instance.currentUser?.uid);
   }
 
   @override
@@ -34,7 +37,7 @@ class _PlansTabState extends State<PlansTab> {
         backgroundColor: AppColors.themeColor,
         automaticallyImplyLeading: false,
       ),
-      body: Consumer<MyPlansController>(builder: (context, provider, _) {
+      body: Consumer<MyPlansController>(builder: (context, provider, child) {
         return provider.isLoading
             ? const Center(child: CircularProgressIndicator())
             : Column(
@@ -117,21 +120,4 @@ class _PlansTabState extends State<PlansTab> {
       }),
     );
   }
-}
-
-Widget myPlansCard({
-  required String title,
-  required String description,
-  VoidCallback? onPressed,
-}) {
-  return Card(
-    elevation: 2,
-    child: ListTile(
-      title: Text(title,
-          style: CustomTextStyle.textStyle18(fontWeight: FontWeight.w500)),
-      subtitle: Text(description),
-      trailing: const Icon(Icons.arrow_forward),
-      onTap: onPressed,
-    ),
-  );
 }

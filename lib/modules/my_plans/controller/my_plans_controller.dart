@@ -3,13 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import '../../../models/all_plan_model.dart';
 import '../../../services/api_repository.dart';
-import '../../../services/firestore_service.dart';
 
 class MyPlansController extends ChangeNotifier {
   final ApiRepository _apiRepository = ApiRepository();
   late PredictionModel _apiData;
   PredictionModel get apiData => _apiData;
-  final FirestoreService _firestoreService = FirestoreService();
   Map<String, dynamic> _responseData = {};
   Map<String, dynamic> get responseData => _responseData;
   double retrievedCalories = 0;
@@ -28,6 +26,7 @@ class MyPlansController extends ChangeNotifier {
 
   Future<void> fetchAndPassUserDetails() async {
     final user = FirebaseAuth.instance.currentUser;
+    print('fetchAndPassUserDetails is called');
     DocumentSnapshot snapshot = await FirebaseFirestore.instance
         .collection('UserDataCollection')
         .doc(user!.uid)
@@ -59,7 +58,7 @@ class MyPlansController extends ChangeNotifier {
   Future<void> fetchDataAndStore(Map<String, dynamic> requestData) async {
     try {
       _responseData = await _apiRepository.fetchData(requestData);
-      await _firestoreService.storeUserData(_responseData);
+      await storeUserData(_responseData);
       notifyListeners();
     } catch (e) {
       if (kDebugMode) {
@@ -69,13 +68,12 @@ class MyPlansController extends ChangeNotifier {
   }
 
   Future<void> fetchAllPlans() async {
+    final user = FirebaseAuth.instance.currentUser;
     try {
-      final user = FirebaseAuth.instance.currentUser;
       CollectionReference userFitnessCollection =
           FirebaseFirestore.instance.collection('UserDataCollection');
       DocumentSnapshot userSnapshot =
           await userFitnessCollection.doc(user!.uid).get();
-
       retrievedCalories = userSnapshot['calories'] ?? 'Not Found';
       mealPlan = userSnapshot['meal_plan'] ?? 'Not Found';
       workoutPlan = userSnapshot['workout_plan'] ?? 'Not Found';
@@ -93,6 +91,20 @@ class MyPlansController extends ChangeNotifier {
       if (kDebugMode) {
         print('Error fetching all plans data: $e');
       }
+    }
+  }
+
+  Future<void> storeUserData(Map<String, dynamic> data) async {
+    final user = FirebaseAuth.instance.currentUser;
+    try {
+      if (user!.uid.isNotEmpty) {
+        await FirebaseFirestore.instance.collection('UserDataCollection').doc(user!.uid).set(data, SetOptions(merge: true));
+      } else {
+        throw Exception('User not authenticated');
+      }
+    } catch (e) {
+      print('Error storing data: $e');
+      throw Exception('Failed to store data');
     }
   }
 }

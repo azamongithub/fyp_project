@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import '../../../notifications_services/notifications_services.dart';
 
 class DashboardController extends ChangeNotifier {
-  NotificationServices notificationServices = NotificationServices();
   double _workoutProgress = 0.0;
   double _mealProgress = 0.0;
   double get workoutProgress => _workoutProgress;
@@ -138,22 +136,4 @@ class DashboardController extends ChangeNotifier {
       }
     }
   }
-
-
-// Future<void> reNewProgressIfMonday() async {
-  //   final user = FirebaseAuth.instance.currentUser;
-  //   DateTime now = DateTime.now();
-  //   int currentDay = now.weekday;
-  //   if (currentDay == DateTime.wednesday) {
-  //     await FirebaseFirestore.instance.collection('MealProgress').doc(user!.email).delete();
-  //     await FirebaseFirestore.instance.collection('WorkoutProgress').doc(user!.email).delete();
-  //     if (kDebugMode) {
-  //       print('Progress deleted on Monday.');
-  //     }
-  //   } else {
-  //     if (kDebugMode) {
-  //       print('Today is not Monday, no action taken.');
-  //     }
-  //   }
-  // }
 }

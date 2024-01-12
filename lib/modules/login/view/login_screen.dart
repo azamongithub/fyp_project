@@ -33,7 +33,6 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    // final height = MediaQuery.of(context).size.height * 1;
     return Scaffold(
         appBar: AppBar(
           backgroundColor: AppColors.themeColor,
